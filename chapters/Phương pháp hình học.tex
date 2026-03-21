@@ -1,0 +1,50 @@
+\section{Phương pháp hình học}
+
+Phương pháp hình học là một công cụ trực quan và cực kỳ hiệu quả để giải quyết các bài toán QHTT có \textbf{hai biến số}. Mặc dù không thể áp dụng cho các bài toán có từ ba biến trở lên (do giới hạn của không gian vẽ hình), phương pháp này lại là nền tảng tuyệt vời nhất để người học có thể "nhìn thấy" bản chất của quá trình tối ưu hóa.
+
+Để giải một bài toán QHTT bằng phương pháp hình học, ta thực hiện theo 3 bước chuẩn mực sau:
+
+\subsubsection{Các bước thực hiện thuật toán}
+
+\textbf{Bước 1: Vẽ tập phương án của bài toán ($\Omega$)}
+\begin{itemize}
+    \item Lần lượt vẽ các đường thẳng ứng với \textit{dấu bằng} ($=$) của các hệ thức ràng buộc lên mặt phẳng tọa độ $Ox_1x_2$.
+    \item Lựa chọn các nửa mặt phẳng thỏa mãn từng bất phương trình ràng buộc (bằng cách thử tọa độ điểm gốc $O(0,0)$ hoặc một điểm bất kỳ).
+    \item Phần không gian giao nhau (phần chung) của tất cả các nửa mặt phẳng này chính là \textbf{tập phương án} của bài toán (ký hiệu là $\Omega$).
+\end{itemize}
+
+\textbf{Bước 2: Vẽ đường mức $\Delta$ (Đường hàm mục tiêu)}
+\begin{itemize}
+    \item Chọn một điểm $(x_1^0, x_2^0)$ bất kỳ nằm trong miền $\Omega$ và thay vào hàm mục tiêu $Z = c_1x_1 + c_2x_2$ để tìm ra một giá trị $Z_0$ cụ thể.
+    \item Vẽ đường thẳng $\Delta$ có phương trình: $c_1x_1 + c_2x_2 = Z_0$.
+    \item Xác định \textbf{vector pháp tuyến} $\vec{n} = (c_1, c_2)$ của đường $\Delta$. Đặc điểm của vector này là nó luôn chỉ về hướng làm cho hàm mục tiêu $Z$ \textbf{tăng lên}.
+\end{itemize}
+
+\textbf{Bước 3: Xác định lời giải bài toán (Tịnh tiến đường mức)}
+Bạn hãy tưởng tượng đường mức $\Delta$ như một chiếc thước kẻ. Cầm chiếc thước này và tịnh tiến nó song song theo hướng của vector pháp tuyến $\vec{n}$ (nếu bài toán tìm Max) hoặc tịnh tiến ngược hướng $\vec{n}$ (nếu bài toán tìm Min):
+\begin{itemize}
+    \item Nếu đường $\Delta$ đạt đến một \textbf{vị trí tới hạn} (là điểm cuối cùng nó chạm vào miền $\Omega$ trước khi rời hẳn ra ngoài) và toàn bộ miền $\Omega$ nằm về một phía của $\Delta$, thì điểm chạm đó chính là \textbf{Phương án tối ưu}.
+    \item Nếu $\Delta$ cứ tịnh tiến mãi mà vẫn luôn cắt miền $\Omega$ (không có điểm dừng cuối cùng), ta kết luận hàm mục tiêu không bị chặn và bài toán \textbf{không có lời giải} [2, 4, 7].
+\end{itemize}
+
+\subsubsection{Phương pháp thay thế nhanh: Đánh giá qua các đỉnh}
+Nếu sau khi vẽ hình ở Bước 1, bạn nhận thấy tập phương án $\Omega$ là một \textbf{đa giác lồi giới nội} (một hình khép kín, bị chặn ở mọi phía), bạn có thể bỏ qua Bước 2 và Bước 3 để áp dụng một quy tắc cực kỳ đơn giản sau:
+
+\begin{enumerate}
+    \item Vì đa giác giới nội luôn có số lượng đỉnh hữu hạn, và mỗi đỉnh chính là một Phương án cơ bản (PACB), bạn chỉ cần tìm chính xác \textbf{tọa độ của tất cả các đỉnh} này [4, 5, 7].
+    \item Lần lượt thay tọa độ của từng đỉnh vào hàm mục tiêu $Z$.
+    \item \textbf{Kết luận:} So sánh các kết quả vừa tính. Phương án nào cho giá trị $Z$ lớn nhất (với bài Max) hoặc nhỏ nhất (với bài Min) thì đó chính là \textbf{Phương án tối ưu} của bài toán.
+\end{enumerate}
+
+\subsubsection{Một số chú ý quan trọng cần ghi nhớ}
+\begin{itemize}
+    \item \textbf{Tập phương án đa dạng:} Miền $\Omega$ có thể là tập rỗng (bài toán vô nghiệm), chỉ là một điểm duy nhất, là đa giác lồi bị chặn (như hình bình hành, tam giác) hoặc đa giác lồi không giới nội (kéo dài vô tận về một hướng).
+    \item \textbf{Bản chất của điểm tối ưu:} Nếu miền $\Omega$ là một tập lồi đa diện, lời giải tối ưu của bài toán (nếu có) \textbf{chắc chắn sẽ đạt được tại ít nhất một đỉnh} của miền đó.
+    \item \textbf{Vô số nghiệm:} Nếu trong quá trình tịnh tiến (Bước 3), đường mức $\Delta$ ở vị trí tới hạn lại hoàn toàn trùng khớp với một cạnh của đa giác $\Omega$, thì bài toán sẽ có \textbf{vô số phương án tối ưu}. Khi đó, mọi điểm nằm trên đoạn thẳng (cạnh) đó đều là lời giải xuất sắc nhất.
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Minh họa bằng đồ thị:}
+\input{figures/Minh họa tập phương án và sự tịnh tiến đường mức Delta tìm đỉnh tối ưu}
+
+\textit{Giải thích hình vẽ:} Trong hình trên, vùng màu xanh là tập phương án $\Omega$ hợp lệ. Đường mức $\Delta$ (nét đứt) được tịnh tiến song song theo hướng của vector pháp tuyến $\vec{n}$. Điểm cuối cùng mà $\Delta$ chạm vào miền $\Omega$ trước khi rời ra ngoài chính là đỉnh $B$. Do đó, $B$ là Phương án tối ưu của bài toán.

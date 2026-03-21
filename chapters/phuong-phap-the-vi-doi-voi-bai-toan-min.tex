@@ -1,0 +1,52 @@
+\section{Phương pháp thế vị đối với bài toán Min}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm and 2.5cm,
+    box/.style={rectangle, draw, rounded corners, text width=3.5cm, align=center, minimum height=1cm, fill=blue!5},
+    decision/.style={diamond, draw, aspect=2, text width=3cm, align=center, inner sep=0pt, fill=green!5},
+    arrow/.style={-{Latex[length=3mm]}, thick},
+    annotation/.style={text width=7cm, align=left, font=\small, draw, dashed, inner sep=10pt, fill=yellow!5}
+]
+
+% --- Khởi tạo các Node ---
+\node[box] (start) {$X^0$ \\ (PACB không suy biến)};
+\node[box, below=of start] (step1) {Tìm hệ thống thế vị \\ $u_i, v_j$};
+\node[decision, below=of step1] (step2) {Tính hệ số ước lượng \\ $\Delta_{ij}$};
+\node[box, right=2.5cm of step2] (end) {Dừng thuật toán \\ (Phương án tối ưu)};
+\node[box, below=of step2] (step3) {Tìm ô vào cơ sở $(m,k)$};
+\node[box, left=2.5cm of step3] (step4) {Xác định lượng hàng điều chỉnh $d$};
+\node[box, above=of step4] (step5) {Tìm ô ra khỏi cơ sở $(p,q)$};
+
+% --- Vẽ các mũi tên (Chu trình) ---
+\draw[arrow] (start) -- node[right] {(6)} (step1);
+\draw[arrow] (step1) -- node[right] {(1)} (step2);
+\draw[arrow] (step2) -- node[right] {(2)} (step3);
+\draw[arrow] (step3) -- node[above] {(3)} (step4);
+\draw[arrow] (step4) -- node[left] {(4)} (step5);
+\draw[arrow] (step5) |- node[near end, above] {(5)} (start);
+
+% --- Mũi tên điều kiện dừng ---
+\draw[arrow] (step2) -- node[above] {$\Delta_{ij} \le 0, \forall i,j$} (end);
+
+% --- Khung chú thích ---
+\node[annotation, right=1.5cm of start, anchor=north west] (notes) {
+    \textbf{Chú thích các bước:}\\
+    \textbf{(1):} Giải hệ $u_i + v_j = c_{ij}$ (cho các ô chọn).\\
+    \textbf{(2):} Tính $\Delta_{ij} = u_i + v_j - c_{ij}$ (cho các ô loại).\\
+    \textbf{(3):} Chọn ô vào là ô có $\max\{\Delta_{ij} > 0\} = \Delta_{mk}$.\\
+    $\rightarrow$ Bổ sung lượng hàng vào ô $(m,k)$.\\
+    $\rightarrow$ Lập chu trình, đánh dấu (+) và (-) xen kẽ (ô vào mang dấu +).\\
+    \textbf{(4):} $d = \min \{x_{ij} \mid x_{ij} \text{ mang dấu (-) }\} = x_{pq}$.\\
+    \textbf{(5):} Ô ra là ô $(p,q)$ có lượng hàng bằng 0 sau điều chỉnh.\\
+    \textbf{(6):} Cập nhật phương án mới $X^1$:\\
+    $x_{ij}^{mới} = \begin{cases}
+    x_{ij}, & \text{nếu ô không có dấu} \\
+    x_{ij} + d, & \text{nếu ô có dấu (+)} \\
+    x_{ij} - d, & \text{nếu ô có dấu (-)}
+    \end{cases}$
+};
+
+\end{tikzpicture}
+\end{figure}

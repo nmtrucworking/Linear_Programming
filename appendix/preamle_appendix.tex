@@ -1,0 +1,22 @@
+% =========================
+% CẤU HÌNH DANH MỤC KÝ HIỆU (nomencl)
+% =========================
+\usepackage{nomencl} 
+\usepackage{etoolbox}
+
+% Khoảng cách từ cột ký hiệu đến cột giải thích
+\setlength{\nomlabelwidth}{3.5cm} 
+
+% Định nghĩa lại cách hiển thị các nhóm (Chỉ nhận 1 tham số)
+\renewcommand{\nomgroup}[1]{%
+  \vspace{0.3cm} % Cách ra một chút cho thoáng giữa các nhóm
+  \item[\large\bfseries
+  \ifstrequal{#1}{A}{1. Các thuật ngữ viết tắt}{%
+  \ifstrequal{#1}{B}{2. Ký hiệu trong Bài toán QHTT cơ bản}{%
+  \ifstrequal{#1}{C}{3. Ký hiệu trong Bài toán Đối ngẫu}{%
+  \ifstrequal{#1}{D}{4. Ký hiệu trong Bài toán Vận tải}{}}}}%
+  ]%
+}
+
+\makenomenclature
+% =========================

@@ -1,0 +1,504 @@
+• Hàm mục tiêu (Z): Một biểu thức tuyến tính thể hiện mục tiêu cần tối ưu hóa (Z → max
+hoặc Z → min).
+• Hệ ràng buộc chính: Các bất phương trình hoặc phương trình thể hiện giới hạn về nguồn
+lực (aij xj ≤ bi ).
+• Hệ số công nghệ (aij ): Các hằng số thể hiện định mức tiêu hao đơn vị.
+
+1.4 Phân loại các dạng bài toán QHTT
+Để áp dụng thuật toán giải, ta cần phân loại mô hình vào 3 dạng chuẩn mực:
+
+1.4.1 Bài toán dạng tổng quát
+Chứa đầy đủ các loại dấu ràng buộc (≤, ≥, =) và các ràng buộc dấu của biến (≥ 0, ≤ 0, tùy ý).
+
+1.4.2 Bài toán dạng chính tắc
+Là dạng bài toán mà:
+• Toàn bộ ràng buộc chính ở dạng đẳng thức (=).
+• Mọi biến số đều không âm (xj ≥ 0).
+
+1.4.3 Bài toán dạng chuẩn
+Đây là dạng bài toán cần thiết để áp dụng thuật toán Đơn hình. Nó phải thỏa mãn các điều kiện
+của dạng chính tắc, đồng thời:
+• Vế phải các ràng buộc không âm (bi ≥ 0).
+• Mỗi phương trình ràng buộc phải có một biến cơ sở (biến có hệ số bằng 1 ở phương trình
+đó và bằng 0 ở các phương trình khác).
+
+1.5 Tính chất cốt lõi
+• Nếu bài toán có tập phương án không rỗng và hàm mục tiêu bị chặn thì chắc chắn tồn tại
+phương án tối ưu.
+• Nếu bài toán có nhiều hơn một phương án tối ưu thì nó sẽ có vô số phương án tối ưu.
+
+2
+
+Chương 2
+Cơ sở lý thuyết và Phương pháp hình học
+2.1
+
+Bài toán dẫn đến bài toán quy hoạch tuyến tính
+
+Trong thực tế, có rất nhiều vấn đề kinh tế, kỹ thuật đòi hỏi chúng ta phải tìm ra phương án hoạt
+động tốt nhất (tối ưu nhất) trong điều kiện các nguồn lực bị giới hạn. Việc chuyển ngữ các vấn
+đề này thành các phương trình, bất phương trình toán học được gọi là quá trình thiết lập mô
+hình.
+Dưới đây là một ví dụ điển hình về việc xây dựng mô hình toán học cho bài toán lập kế
+hoạch sản xuất.
+
+Ví dụ: Bài toán sản xuất tối ưu
+Một Công ty sản xuất bánh trung thu cần sản xuất 3 loại sản phẩm bánh (L1, L2, L3) từ 3 loại
+nguyên liệu chính khác nhau là Đường, Bột và Sữa.
+Giả sử tất cả sản phẩm sản xuất ra đều được tiêu thụ hết. Các thông số về định mức tiêu hao
+nguyên liệu cho 1 đơn vị sản phẩm, tổng khối lượng nguyên liệu dự trữ và giá bán của từng loại
+sản phẩm được cho trong bảng sau:
+Loại nguyên liệu
+
+Khối lượng
+dự trữ (g)
+
+Đường
+Bột
+Sữa
+Giá bán 1 đv sp ($)
+
+10.000
+50.000
+30.000
+-
+
+Định mức cho 1 đv sản phẩm (g)
+L1 L2
+L3
+10 20
+20
+20 30
+30
+20 30
+40
+2
+3
+4
+
+Bảng 2.1: Thông số bài toán sản xuất bánh trung thu
+Yêu cầu: Hãy lập kế hoạch sản xuất tối ưu cho Công ty (sản xuất như thế nào để tổng doanh
+thu đạt được là cao nhất)?
+Thiết lập mô hình toán học: Gọi xj (j = 1, 2, 3) lần lượt là số lượng sản phẩm bánh loại Lj
+cần sản xuất. Vì số lượng sản phẩm không thể mang giá trị âm, ta có điều kiện: x1 , x2 , x3 ≥ 0.
+Tổng khối lượng nguyên liệu các loại dùng để sản xuất 3 sản phẩm không được vượt quá số
+lượng dự trữ:
+• Lượng đường sử dụng: 10x1 + 20x2 + 20x3 ≤ 10000.
+• Lượng bột sử dụng: 20x1 + 30x2 + 30x3 ≤ 50000.
+• Lượng sữa sử dụng: 20x1 + 30x2 + 40x3 ≤ 30000.
+3
+
+Tổng doanh thu Công ty thu được khi bán hết sản phẩm là hàm mục tiêu cần đạt giá trị lớn
+nhất:
+Z = 2x1 + 3x2 + 4x3 → max
+Tóm lại, mô hình toán học của bài toán sản xuất tối ưu trên được viết gọn lại dưới dạng hệ
+như sau:
+Z = 2x1 + 3x2 + 4x3 → max
+s.t. 10x1 + 20x2 + 20x3 ≤ 10000
+20x1 + 30x2 + 30x3 ≤ 50000
+20x1 + 30x2 + 40x3 ≤ 30000
+x1 , x 2 , x 3 ≥ 0
+
+Một số dạng bài toán khác trong thực tế
+Bên cạnh bài toán lập kế hoạch sản xuất, mô hình quy hoạch tuyến tính còn được ứng dụng rộng
+rãi để giải quyết nhiều lớp bài toán thực tế khác như:
+• Bài toán xác định khẩu phần ăn tối ưu: Tìm lượng thức ăn cần mua sao cho thỏa mãn
+đủ các chất dinh dưỡng cần thiết (đạm, béo, vitamin...) với chi phí đi chợ là nhỏ nhất.
+• Bài toán pha trộn: Pha trộn các nguyên liệu đầu vào với tỷ lệ nào để tạo ra sản phẩm đạt
+tiêu chuẩn kỹ thuật với giá thành rẻ nhất.
+• Bài toán bổ nhiệm/phân công: Phân công nhân sự vào các vị trí công việc khác nhau
+sao cho tổng hiệu suất làm việc đạt mức cực đại.
+
+2.2 Phân loại các loại Phương án trong QHTT
+Trong Quy hoạch tuyến tính, việc tìm ra lời giải giống như một quá trình ”sàng lọc” qua nhiều
+cấp độ. Đi từ tập hợp tất cả các con số có thể có, ta lọc ra những con số hợp lệ, sau đó tìm những
+điểm đáng chú ý nhất, và cuối cùng chọn ra người chiến thắng.
+Dưới đây là 3 cấp độ phân loại phương án cốt lõi của bài toán QHTT:
+1. Phương án (PA - Phương án chấp nhận được)
+Định nghĩa 2.2.1 (Phương án). Một vector n chiều x = (x1 , x2 , . . . , xn ) ∈ Rn thỏa mãn toàn
+bộ hệ ràng buộc chính và ràng buộc dấu được gọi là một phương án chấp nhận được (hay gọi
+tắt là Phương án).
+Ký hiệu toán học:
+• Tập hợp tất cả các phương án hợp lệ của bài toán được gọi là Tập phương án (hay miền
+ràng buộc), ký hiệu là Ω.
+• Nếu x ∈ Ω, ta nói x là một phương án.
+Giải thích trực quan: Hãy tưởng tượng bạn có 100.000 VNĐ để đi chợ mua thịt và rau. Bất
+kỳ sự kết hợp nào (ví dụ: mua 2 lạng thịt, 1 mớ rau) mà tổng tiền thanh toán ≤ 100.000 VNĐ
+và số lượng mua không bị âm (≥ 0) thì đều được coi là một ”Phương án”. Tập hợp Ω chính là
+cái giỏ chứa tất cả các cách đi chợ hợp lệ đó.
+
+4
+
+2. Phương án cơ bản (PACB)
+Trong số hàng ngàn phương án hợp lệ, có những phương án nằm ở vị trí đặc biệt (các ”góc”
+hoặc ”đỉnh” của miền ràng buộc). Đó chính là các phương án cơ bản.
+Định nghĩa 2.2.2 (Phương án cơ bản). Một phương án được gọi là Phương án cơ bản (PACB)
+nếu nó thỏa mãn ít nhất n ràng buộc với dấu đẳng thức (=).
+Phân loại chi tiết PACB:
+• PACB không suy biến: Là PACB thỏa mãn đúng n ràng buộc với dấu đẳng thức (=).
+Đây là trường hợp lý tưởng nhất, đại diện cho một đỉnh chuẩn xác trên đồ thị.
+• PACB suy biến: Xảy ra khi có nhiều hơn n ràng buộc vô tình cùng giao nhau tại một
+điểm.
+Giải thích trực quan: Quay lại ví dụ đi chợ, nếu bạn mua một lượng thịt và rau sao cho
+tiêu sạch sành sanh đúng 100.000 VNĐ (dấu = xảy ra ở ràng buộc túi tiền), bạn đang chạm đến
+”giới hạn” khả năng của mình. Trong toán học tối ưu, người ta chứng minh được rằng: Nếu bài
+toán có lời giải tốt nhất, lời giải đó chắc chắn nằm ở một trong các Phương án cơ bản (các đỉnh
+giới hạn) này. Đó là lý do thuật toán Đơn hình chỉ tập trung nhảy từ PACB này sang PACB khác
+chứ không tìm kiếm mò mẫm ở giữa miền.
+3. Phương án tối ưu (PATƯ)
+Đây là đích đến cuối cùng của mọi bài toán QHTT.
+Định nghĩa 2.2.3 (Phương án tối ưu). Một phương án x∗ được gọi là Phương án tối ưu (PATƯ)
+nếu nó vừa là phương án hợp lệ (x∗ ∈ Ω), vừa làm cho hàm mục tiêu Z(x) đạt giá trị lớn nhất
+(Max) hoặc nhỏ nhất (Min) tùy theo yêu cầu bài toán.
+Ký hiệu toán học:
+• x∗ : Vector phương án tối ưu (Lời giải của bài toán).
+• Zmax hoặc Zmin : Giá trị tối ưu của hàm mục tiêu.
+Giải thích trực quan: Trong tất cả các cách tiêu tiền hợp lệ (Tập PA) và các cách tiêu sạch
+tiền (Các PACB), ”Phương án tối ưu” là cách mua sắm mang lại cho bạn bữa ăn có tổng lượng
+dinh dưỡng (Hàm mục tiêu Z) cao nhất.
+
+TÓM TẮT MỐI QUAN HỆ (BỨC TRANH TỔNG THỂ)
+Quá trình tìm lời giải bài toán QHTT tuân theo sơ đồ bao hàm sau:
+PATU ⊂ PACB ⊂ PA ⊂ Rn
+(Lời giải tối ưu luôn nằm trong nhóm các phương án cơ bản; Phương án cơ bản là trường hợp
+đặc biệt của phương án hợp lệ; và phương án hợp lệ được lấy từ không gian số thực n chiều).
+
+2.3
+
+Các dạng đặc biệt và Biến đổi mô hình
+
+2.3.1
+
+Bài toán QHTT tổng quát
+
+Từ các bài toán thực tế, ta có thể tổng quát hóa mô hình toán học của một bài toán Quy hoạch
+tuyến tính (QHTT) dưới dạng sau:
+5
+
+Hình 2.1: Sơ đồ phân loại 3 dạng bài toán QHTT
+Hàm mục tiêu:
+
+Z=
+
+n
+X
+
+cj xj → max(hoặc min)
+
+(2.1)
+
+j=1
+
+Hệ ràng buộc chính:
+ 
+≥
+aij xj ≤ bi ,
+j=1
+=
+
+n
+X
+
+(i = 1, m)
+
+(2.2)
+
+Ràng buộc dấu:
+
+
+
+≥0
+xj  ≤ 0  ,
+tùy ý
+
+(j = 1, n)
+
+(2.3)
+
+Trong đó:
+• xj : Các biến quyết định (ẩn số cần tìm).
+• cj : Các hệ số của hàm mục tiêu.
+• aij : Các hệ số công nghệ (nằm ở dòng i, cột j).
+• bi : Giá trị giới hạn vế phải của các ràng buộc.
+
+2.3.2 Tính chất cốt lõi của bài toán QHTT
+Dựa trên các khái niệm về phương án, một bài toán QHTT luôn tuân theo các tính chất toán học
+sau:
+
+6
+
+• Nếu bài toán tìm Max (hoặc Min) có tập phương án không rỗng và hàm mục tiêu bị chặn
+trên (hoặc chặn dưới), thì bài toán chắc chắn có phương án tối ưu.
+• Nếu bài toán QHTT có nhiều hơn một PATƯ thì nó sẽ có vô số PATƯ.
+• Cụ thể: Nếu x0 và x1 là hai phương án tối ưu phân biệt, thì mọi bao lồi (tổ hợp lồi) của
+chúng có dạng:
+x = αx0 + (1 − α)x1 , với α ∈
+cũng là một phương án tối ưu của bài toán này.
+Để thuận lợi cho việc áp dụng các thuật toán giải quyết trên máy tính, từ bài toán tổng quát,
+người ta phân loại và biến đổi mô hình về 3 dạng đặc biệt sau:
+
+2.3.3
+
+Bài toán QHTT dạng chính tắc
+
+Bài toán QHTT dạng chính tắc là bài toán có tất cả các ràng buộc chính ở dạng đẳng thức (=)
+và mọi ràng buộc dấu đều không âm (xj ≥ 0).
+Mô hình toán học có dạng:
+
+Z=
+
+n
+X
+j=1
+n
+X
+
+cj xj → max(hoặc min)
+aij xj = bi ,
+
+(i = 1, m)
+
+xj ≥ 0,
+
+(j = 1, n)
+
+(2.4)
+
+j=1
+
+Ma trận điều kiện: Ma trận A = (aij ) chứa các hệ số của hệ ràng buộc chính được gọi là
+ma trận điều kiện. Cột thứ j của ma trận A (ký hiệu Aj ) được gọi là vector điều kiện của biến
+xj .
+
+2.3.4
+
+Bài toán QHTT dạng chuẩn
+
+Bài toán QHTT được gọi là có dạng chuẩn nếu nó đã ở dạng chính tắc, vế phải của các ràng
+buộc không âm (bi ≥ 0) và mỗi ràng buộc chính phải có một biến cơ sở.
+Biến cơ sở ứng với một phương trình ràng buộc là biến có hệ số bằng 1 ở phương trình đó
+và có hệ số bằng 0 ở tất cả các phương trình còn lại.
+Mô hình dạng chuẩn được viết phân tách như sau:
+
+Z=
+
+n
+X
+
+→ max(hoặc min)
+
+cj xj
+
+j=1
+
+s.t.
+
+x1 + a1,m+1 xm+1 + · · · + a1n xn
+x2 + a2,m+1 xm+1 + · · · + a2n xn
+...
+xm + am,m+1 xm+1 + · · · + amn xn
+xj ≥ 0, bi ≥ 0
+
+= b1
+= b2
+
+(2.5)
+
+= bm
+
+Trong mô hình trên, các biến x1 , x2 , . . . , xm đóng vai trò là các biến cơ sở, trong khi xm+1 , . . . , xn
+là các biến không cơ sở.
+7
+
+2.3.5 Kỹ thuật biến đổi mô hình QHTT
+Để áp dụng được thuật toán Đơn hình, mọi bài toán QHTT đều phải được đưa về dạng Chuẩn
+tắc. Dưới đây là các phép biến đổi cơ bản:
+1. Biến đổi Ràng buộc chính (Đưa về dấu =):
+• Nếu ràng buộc thứ i có dấu ”≤”: Ta cộng thêm một biến phụ xn+i ≥ 0 vào vế trái.
+• Nếu ràng buộc thứ i có dấu ”≥”: Ta trừ đi một biến phụ xn+i ≥ 0 ở vế trái.
+• Nếu phương trình thiếu biến cơ sở: Ta cộng thêm một biến giả vào vế trái (Kèm theo việc
+thêm hệ số phạt ±M trên hàm mục tiêu).
+2. Biến đổi Ràng buộc dấu (Đưa về ≥ 0):
+• Nếu biến xj ≤ 0: Đặt biến mới x′j = −xj , khi đó x′j ≥ 0. Thay thế −x′j vào mọi vị trí
+của xj trong bài toán.
+−
++
+−
+• Nếu biến xj tùy ý (không ràng buộc dấu): Đặt xj = x+
+j − xj , với điều kiện xj , xj ≥ 0.
+
+8
+
+1. Dạng Tổng Quát
+
+Mô hình Toán học
+
+• Hàm mục tiêu: Z → max hoặc min
+
+Z=
+
+• Ràng buộc chính: Có thể chứa ≤, ≥
+hoặc =
+• Ràng buộc dấu: xj ≥ 0, ≤ 0 hoặc tùy
+ý
+
+n
+X
+
+n
+X
+
+cj xj → max(min)
+
+j=1
+
+aij xj ∈ {≤, ≥, =} bi
+
+j=1
+
+xj ∈ {≥ 0, ≤ 0, tùy ý}
+
+Bước 1: Khử bất phương trình & Dấu âm
+≤ thì cộng biến phụ
+≥ thì trừ biến phụ
+xj ≤ 0 ⇒ Đặt x′j = −xj
+
+xj tùy ý ⇒ Đặt xj = x′j − x′′j
+
+2. Dạng Chính Tắc
+
+Mô hình Toán học
+
+• Hàm mục tiêu: Z → max hoặc min
+
+Z=
+n
+X
+
+• Ràng buộc chính: Bắt buộc là dấu =
+
+n
+X
+
+cj xj → max(min)
+
+j=1
+
+aij xj = bi
+
+j=1
+
+• Ràng buộc dấu: Mọi biến xj ≥ 0
+
+xj ≥ 0
+
+Bước 2: Chuẩn bị cơ sở cho thuật toán
+bi < 0 ⇒ Nhân cả 2 vế phương trình với (−1)
+Thiếu biến cơ sở ⇒ Cộng biến giả (Kèm theo thêm ±M vào Z)
+
+3. Dạng Chuẩn Tắc
+
+Mô hình Toán học
+
+• Hàm mục tiêu: Z → max hoặc min
+
+Z=
+
+• Ràng buộc & Vế phải: Dấu = và bi ≥ 0
+
+n
+X
+
+cj xj → max(min)
+
+j=1
+
+aij xj = bi
+
+j=1
+
+• Cơ sở: Đủ m biến cơ sở (Ma trận Im )
+
+n
+X
+
+xi +
+
+n
+X
+
+(bi ≥ 0)
+
+aik xk = bi
+
+k=m+1
+
+• Ràng buộc dấu: Mọi biến xj ≥ 0
+
+xj ≥ 0
+
+Hình 2.2: Sơ đồ đối chiếu lý thuyết và ký hiệu toán học qua các dạng bài toán
+
+9
+
+2.3.6 Bài toán QHTT tương đương
+Trong nhiều trường hợp tính toán, việc chuyển đổi qua lại giữa bài toán tìm lớn nhất (Max) và
+nhỏ nhất (Min) là cần thiết. Hai bài toán QHTT được gọi là tương đương với nhau khi chúng có
+chung tập phương án và phương án tối ưu.
+Giả sử ta có bài toán gốc tìm Max:
+(P ) :
+
+Z=
+
+n
+X
+
+cj xj → max
+
+j=1
+
+Thì bài toán tương đương của nó sẽ là tìm Min của hàm đối:
+′
+
+(P ) :
+
+′
+
+Z = −Z =
+
+n
+X
+
+(−cj )xj → min
+
+j=1
+
+Điều này có nghĩa là khi giải bài toán, thay vì tìm Max của hàm Z, ta có thể tìm Min của hàm
+−Z.
+
+2.4 Thuật toán Đơn hình mở rộng
+2.5 Phương pháp hình học
+Phương pháp hình học là một công cụ trực quan và cực kỳ hiệu quả để giải quyết các bài toán
+QHTT có hai biến số. Mặc dù không thể áp dụng cho các bài toán có từ ba biến trở lên (do giới
+hạn của không gian vẽ hình), phương pháp này lại là nền tảng tuyệt vời nhất để người học có
+thể ”nhìn thấy” bản chất của quá trình tối ưu hóa.
+Để giải một bài toán QHTT bằng phương pháp hình học, ta thực hiện theo 3 bước chuẩn
+mực sau:
+Các bước thực hiện thuật toán
+Bước 1: Vẽ tập phương án của bài toán (Ω)
+• Lần lượt vẽ các đường thẳng ứng với dấu bằng (=) của các hệ thức ràng buộc lên mặt
+phẳng tọa độ Ox1 x2 .
+• Lựa chọn các nửa mặt phẳng thỏa mãn từng bất phương trình ràng buộc (bằng cách thử
+tọa độ điểm gốc O(0, 0) hoặc một điểm bất kỳ).
+• Phần không gian giao nhau (phần chung) của tất cả các nửa mặt phẳng này chính là tập
+phương án của bài toán (ký hiệu là Ω).
+Bước 2: Vẽ đường mức ∆ (Đường hàm mục tiêu)
+• Chọn một điểm (x01 , x02 ) bất kỳ nằm trong miền Ω và thay vào hàm mục tiêu Z = c1 x1 +
+c2 x2 để tìm ra một giá trị Z0 cụ thể.
+• Vẽ đường thẳng ∆ có phương trình: c1 x1 + c2 x2 = Z0 .
+• Xác định vector pháp tuyến ⃗n = (c1 , c2 ) của đường ∆. Đặc điểm của vector này là nó
+luôn chỉ về hướng làm cho hàm mục tiêu Z tăng lên.
+
+10
+
+

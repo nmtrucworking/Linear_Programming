@@ -1,0 +1,62 @@
+\section{Tính cấp thiết và Giới thiệu chung}
+Quy hoạch tuyến tính (QHTT) là một phần kiến thức căn bản thuộc lĩnh vực tối ưu hóa, đóng vai trò quan trọng trong việc giải quyết các bài toán thực tế về quản lý nguồn lực. Đối với ngành Công nghệ thông tin, QHTT cung cấp nền tảng toán học để tối ưu hóa thuật toán và vận hành hệ thống.
+
+Học phần này tập trung vào việc giúp người học nắm vững ba trụ cột chính: thiết lập mô hình, giải quyết bằng phương pháp đại số (đơn hình) và ứng dụng thực tế thông qua các bài toán đối ngẫu, vận tải.
+
+\section{Bài toán dẫn đến Quy hoạch tuyến tính}
+Trong thực tế, quá trình thiết lập mô hình là việc chuyển ngữ các vấn đề kinh tế, kỹ thuật thành các phương trình và bất phương trình toán học.
+
+\subsection{Ví dụ: Bài toán sản xuất tối ưu (Bánh trung thu)}
+Một công ty cần sản xuất 3 loại bánh (L1, L2, L3) từ 3 loại nguyên liệu: Đường, Bột và Sữa. Định mức tiêu hao và giá bán được cho như sau:
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Loại nguyên liệu} & \textbf{Dự trữ (g)} & \textbf{L1} & \textbf{L2} & \textbf{L3} \\
+        \hline
+        Đường & 10.000 & 10 & 20 & 20 \\
+        Bột & 50.000 & 20 & 30 & 30 \\
+        Sữa & 30.000 & 20 & 30 & 40 \\
+        \hline
+        \textbf{Giá bán (\$/đvsp)} & - & \textbf{2} & \textbf{3} & \textbf{4}\\
+        \hline
+    \end{tabular}
+    \caption{Thông số định mức và nguồn lực bài toán sản xuất }
+\end{table}
+
+\section{Các thành phần của mô hình toán học}
+Từ ví dụ trên, một mô hình QHTT luôn bao gồm các thành phần cốt lõi sau:
+
+\begin{itemize}
+    \item \textbf{Biến quyết định ($x_j$):} Các ẩn số cần tìm đại diện cho phương án hành động (ví dụ: số lượng bánh mỗi loại). Điều kiện thường gặp là $x_j \ge 0$.
+    \item \textbf{Hàm mục tiêu ($Z$):} Một biểu thức tuyến tính thể hiện mục tiêu cần tối ưu hóa ($Z \to \max$ hoặc $Z \to \min$).
+    \item \textbf{Hệ ràng buộc chính:} Các bất phương trình hoặc phương trình thể hiện giới hạn về nguồn lực ($a_{ij} x_j \le b_i$).
+    \item \textbf{Hệ số công nghệ ($a_{ij}$):} Các hằng số thể hiện định mức tiêu hao đơn vị.
+\end{itemize}
+
+\section{Phân loại các dạng bài toán QHTT}
+Để áp dụng thuật toán giải, ta cần phân loại mô hình vào 3 dạng chuẩn mực:
+
+\subsection{Bài toán dạng tổng quát}
+Chứa đầy đủ các loại dấu ràng buộc ($\le, \ge, =$) và các ràng buộc dấu của biến ($ \ge 0, \le 0,$ tùy ý).
+
+\subsection{Bài toán dạng chính tắc}
+Là dạng bài toán mà:
+\begin{itemize}
+    \item Toàn bộ ràng buộc chính ở dạng đẳng thức ($=$).
+    \item Mọi biến số đều không âm ($x_j \ge 0$).
+\end{itemize}
+
+\subsection{Bài toán dạng chuẩn}
+Đây là dạng bài toán cần thiết để áp dụng thuật toán Đơn hình. Nó phải thỏa mãn các điều kiện của dạng chính tắc, đồng thời:
+\begin{itemize}
+    \item Vế phải các ràng buộc không âm ($b_i \ge 0$).
+    \item Mỗi phương trình ràng buộc phải có một \textbf{biến cơ sở} (biến có hệ số bằng 1 ở phương trình đó và bằng 0 ở các phương trình khác).
+\end{itemize}
+
+\section{Tính chất cốt lõi}
+\begin{itemize}
+    \item Nếu bài toán có tập phương án không rỗng và hàm mục tiêu bị chặn thì chắc chắn tồn tại phương án tối ưu.
+    \item Nếu bài toán có nhiều hơn một phương án tối ưu thì nó sẽ có vô số phương án tối ưu.
+\end{itemize}

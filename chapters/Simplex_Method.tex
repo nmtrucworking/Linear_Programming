@@ -1,0 +1,162 @@
+\section{Thuật toán đơn hình (Simplex Method)}
+
+\subsection{Ý tưởng của thuật toán}
+Thuật toán đơn hình là phương pháp đại số lặp để giải bài toán QHTT. 
+Xuất phát từ một phương án cơ bản (PACB) $x^0$, ta tìm cách đánh giá xem $x^0$ đã là phương án tối ưu (PATƯ) chưa. Nếu chưa, ta xây dựng một PACB mới $x^1$ tốt hơn và tiếp tục đánh giá. Quá trình này được lặp lại (mỗi lần lặp là một phép biến đổi Gauss - Jordan) cho đến khi tìm được PATƯ hoặc phát hiện ra bài toán không có lời giải.
+
+\textbf{Yêu cầu đầu vào:} Để đơn giản hóa quá trình, thuật toán đơn hình yêu cầu mô hình bài toán QHTT phải được đưa về \textbf{dạng chuẩn} (có sẵn các biến cơ sở).
+
+\subsection{Các bước thực hiện thuật toán}
+
+\textbf{Bước 1: Xây dựng PACB xuất phát} \\
+Cho tất cả các biến không cơ sở bằng $0$. Khi đó, các biến cơ sở sẽ nhận giá trị bằng đúng vế phải của hệ ràng buộc: $x_i = b_i \quad (i = \overline{1,m})$. \\
+Giá trị hàm mục tiêu xuất phát là: $Z_0 = \sum_{i=1}^{m} C_i b_i$.
+
+\vspace{0.3cm}
+\textbf{Bước 2: Xây dựng tiêu chuẩn tối ưu} \\
+Tính các \textbf{hệ số ước lượng} $\Delta_j$ cho từng biến $x_j$ theo công thức:
+\begin{formula}
+    \Delta_j = \sum_{i=1}^{m} C_i a_{ij} - c_j
+\end{formula}
+\textit{(Chú ý: Đối với các biến đang nằm trong cơ sở, ta luôn có $\Delta_j = 0$).}
+
+Dựa vào giá trị $\Delta_j$, tiêu chuẩn tối ưu được phát biểu như sau:
+\begin{itemize}
+    \item \textbf{Đối với bài toán tìm Max}:
+    \begin{itemize}
+        \item Nếu $\Delta_j \ge 0, \forall j$ thì PACB hiện hành là tối ưu.
+        \item Nếu $\exists k$ sao cho $\Delta_k < 0$ thì PACB hiện hành chưa tối ưu (cần thực hiện Bước 3).
+    \end{itemize}
+    \item \textbf{Đối với bài toán tìm Min}:
+    \begin{itemize}
+        \item Nếu $\Delta_j \le 0, \forall j$ thì PACB hiện hành là tối ưu.
+        \item Nếu $\exists k$ sao cho $\Delta_k > 0$ thì PACB hiện hành chưa tối ưu.
+    \end{itemize}
+\end{itemize}
+
+\input{chapters/tips}
+
+\vspace{0.3cm}
+\textbf{Bước 3: Xây dựng PACB mới tốt hơn (Quy tắc Dantzig)} \\
+Để chuyển sang PACB mới, ta cần xác định một biến từ ngoài đưa \textbf{vào cơ sở} và một biến đang trong cơ sở bị đẩy \textbf{ra khỏi cơ sở}.
+\begin{itemize}
+    \item \textbf{Chọn biến vào cơ sở (Cột xoay):}
+    \begin{itemize}
+        \item \textit{Bài toán Max:} Chọn biến $x_k$ có $\Delta_k < 0$ và đạt giá trị âm nhỏ nhất (trị tuyệt đối lớn nhất).
+        \item \textit{Bài toán Min:} Chọn biến $x_k$ có $\Delta_k > 0$ và đạt giá trị dương lớn nhất.
+    \end{itemize}
+    
+    \item \textbf{Chọn biến ra khỏi cơ sở (Dòng xoay):} \\
+    Lập tỷ số đơn hình $\lambda_i$ giữa cột phương án ($b_i$) và cột của biến vào cơ sở ($a_{ik}$) với điều kiện chỉ xét các $a_{ik} > 0$:
+    \begin{formula}
+        \lambda_i = \frac{b_i}{a_{ik}}, \quad \text{với } a_{ik} > 0
+    \end{formula}
+    Chọn biến cơ sở có tỷ số $\lambda_i$ \textbf{nhỏ nhất} (Min $\lambda$) để đưa ra khỏi cơ sở.
+\end{itemize}
+
+Phần tử nằm ở giao điểm của dòng xoay và cột xoay ($a_{ik}$) được gọi là \textbf{phần tử trụ} (hay phần tử chốt). Nếu có $\Delta_k$ vi phạm tiêu chuẩn tối ưu nhưng tất cả các $a_{ik} \le 0$, ta kết luận ngay bài toán không có lời giải (hàm mục tiêu không bị chặn).
+
+\vspace{0.3cm}
+\textbf{Bước 4: Xoay bảng (Biến đổi Gauss - Jordan)} \\
+Lập bảng đơn hình mới dựa trên phần tử trụ vừa tìm được bằng phép biến đổi Gauss - Jordan:
+\begin{itemize}
+    \item \textbf{Dòng xoay mới} = Dòng xoay cũ chia cho phần tử trụ.
+    \item \textbf{Các dòng khác mới} = Dòng cũ tương ứng $-$ (Hệ số ở cột xoay của dòng đó $\times$ Dòng xoay mới).
+\end{itemize}
+Sau khi tính xong bảng mới, ta quay lại \textbf{Bước 2} để kiểm tra tiêu chuẩn tối ưu cho đến khi thuật toán dừng lại.
+
+\subsection{Sơ đồ và Cấu trúc Bảng đơn hình}
+
+Để tiện cho việc tính toán và theo dõi các bước lặp, thuật toán đơn hình thường được trình bày dưới dạng bảng. Dưới đây là sơ đồ tổng quát của một bảng đơn hình cơ bản:
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA ($b_i$)}} & $x_1$ & $x_2$ & $\dots$ & $x_n$ & \multirow{2}{*}{\textbf{Tỷ số $\lambda$}} \\
+        \cline{4-7}
+        & & & $c_1$ & $c_2$ & $\dots$ & $c_n$ & \\
+        \hline
+        $x_1$ & $C_1$ & $b_1$ & $a_{11}$ & $a_{12}$ & $\dots$ & $a_{1n}$ & $\lambda_1$ \\
+        \hline
+        $x_2$ & $C_2$ & $b_2$ & $a_{21}$ & $a_{22}$ & $\dots$ & $a_{2n}$ & $\lambda_2$ \\
+        \hline
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\vdots$ \\
+        \hline
+        $x_m$ & $C_m$ & $b_m$ & $a_{m1}$ & $a_{m2}$ & $\dots$ & $a_{mn}$ & $\lambda_m$ \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & $\mathbf{Z(x^0)}$ & $\Delta_1$ & $\Delta_2$ & $\dots$ & $\Delta_n$ & \\
+        \hline
+    \end{tabular}
+    \caption{Sơ đồ cấu trúc tổng quát của Bảng đơn hình}
+\end{table}
+
+\vspace{0.5cm}
+\subsection{Biểu diễn Bảng đơn hình dưới góc nhìn Ma trận khối}
+
+Để hiểu sâu sắc bản chất của thuật toán Đơn hình, ta có thể gộp các con số rời rạc trong bảng thành các ma trận khối (Block Matrices). Giả sử tại một bước lặp bất kỳ, bài toán có ma trận hệ số $A$. Ta chia $A$ thành hai phần: 
+\begin{itemize}
+    \item $B$: Ma trận cơ sở (gồm các cột ứng với biến cơ sở hiện tại). Khả nghịch và có ma trận nghịch đảo là $B^{-1}$.
+    \item $N$: Ma trận không cơ sở (gồm các cột ứng với biến ngoài cơ sở).
+\end{itemize}
+Tương tự, vector biến $X$ được chia thành $X_B$ và $X_N$; vector hệ số hàm mục tiêu $C$ được chia thành $C_B$ và $C_N$. 
+
+Khi đó, toàn bộ Bảng đơn hình ở bất kỳ bước lặp nào cũng tuân theo cấu trúc ma trận khối tuyệt đẹp sau:
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{2} % Giãn dòng cho ma trận dễ nhìn
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA ($b$)}} & \textbf{Biến cơ sở} ($X_B$) & \textbf{Biến không cơ sở} ($X_N$) \\
+        \cline{4-5}
+        & & & $C_B$ & $C_N$ \\
+        \hline
+        $X_B$ & $C_B$ & $\mathbf{B^{-1}b}$ & $\mathbf{I}$ \textit{(Ma trận đơn vị)} & $\mathbf{B^{-1}N}$ \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & $\mathbf{Z = C_B^T B^{-1}b}$ & $\mathbf{0}$ & $\mathbf{C_B^T B^{-1}N - C_N}$ \\
+        \hline
+    \end{tabular}
+    \caption{Bảng đơn hình tổng quát dưới dạng ma trận khối}
+    \label{tab:matrix_simplex}
+\end{table}
+
+\textbf{Những hệ quả rút ra từ góc nhìn Ma trận:}
+\begin{enumerate}
+    \item \textbf{Cột Phương án (PA):} Luôn được tính bằng $B^{-1}b$. Đây chính là lý do phép biến đổi Gauss-Jordan luôn cập nhật đúng giá trị của phương án mới.
+    \item \textbf{Vùng hệ số công nghệ trung tâm:} Các cột của biến cơ sở luôn tạo thành ma trận đơn vị $I$ (gồm các số 1 trên đường chéo và 0 ở vị trí khác). Phần còn lại chính là $B^{-1}N$.
+    \item \textbf{Dòng hệ số ước lượng ($\Delta_j$):} 
+    \begin{itemize}
+        \item Đối với các biến cơ sở: $\Delta_B = C_B^T I - C_B = 0$. (Điều này giải thích vì sao $\Delta_j$ của biến trong cơ sở \textbf{luôn luôn bằng 0}).
+        \item Đối với các biến ngoài cơ sở: $\Delta_N = C_B^T (B^{-1}N) - C_N$. (Đây chính là công thức tính bằng vector $\Delta_j = C_b^T \times A_j - c_j$ mà ta thường dùng).
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Giải thích các thành phần trong bảng đơn hình:}
+\begin{itemize}
+    \item \textbf{Dòng thứ 1 ($x_j$):} Ghi danh sách tất cả các biến số của bài toán.
+    \item \textbf{Dòng thứ 2 ($c_j$):} Ghi các hệ số của hàm mục tiêu tương ứng với từng biến $x_j$.
+    \item \textbf{Cột Cơ sở:} Liệt kê các biến đang đóng vai trò là biến cơ sở trong phương án hiện tại.
+    \item \textbf{Cột $\mathbf{C_b}$ (hay $c_i$):} Ghi hệ số hàm mục tiêu của các biến cơ sở đang nằm trong cột Cơ sở.
+    \item \textbf{Cột PA ($b_i$):} Cột Phương Án, ghi giá trị vế phải ứng với các biến cơ sở (đây chính là giá trị của phương án cơ bản hiện hành).
+    \item \textbf{Miền trung tâm ($a_{ij}$):} Chứa các hệ số công nghệ (hay các vector điều kiện) của hệ ràng buộc.
+    \item \textbf{Cột Tỷ số $\lambda$:} Dùng để lập tỷ số đơn hình $\lambda_i = \frac{b_i}{a_{ik}}$ (với $a_{ik} > 0$) nhằm mục đích chọn biến ra khỏi cơ sở theo quy tắc Dantzig.
+    \item \textbf{Dòng $\Delta_j$:} Ghi các hệ số ước lượng của từng biến $x_j$. Ô đầu tiên của dòng này (nằm dưới cột PA) là giá trị của hàm mục tiêu $Z(x^0)$ tại phương án cơ bản đang xét. Cách tính $\Delta_j$ là lấy tích vô hướng của cột $C_b$ với vector điều kiện $A_j$ của biến $x_j$, sau đó trừ đi hệ số $c_j$ của biến đó.
+\end{itemize}
+
+\subsubsection*{Ví dụ trực quan: Tách bài toán thành các ma trận}
+
+Để thân thiện với việc in ấn đen trắng, ta sử dụng các đường viền khác nhau (nét đứt, nét chấm, viền đôi, khoanh hình oval) kết hợp mũi tên chỉ hướng để ánh xạ dữ liệu từ mô hình toán học vào các ma trận khối tương ứng:
+
+\input{figures/Ánh xạ từ Mô hình Toán học sang cấu trúc Ma trận (Bản in Trắng Đen)}
+
+\textbf{Nhận xét từ sơ đồ trên:}
+\begin{itemize}[itemsep=0pt, parsep=0pt, topsep=5pt]
+    \item \textbf{Khối cơ sở xuất phát ($B$):} Các biến phụ (được đóng khung viền kép) tạo thành ma trận cơ sở $\mathbf{B}$ và vector hệ số hàm mục tiêu $\mathbf{C_B}$ (viền chấm).
+    \item \textbf{Khối ngoài cơ sở ($N$):} Các biến chính (khung viền đơn) sinh ra ma trận $\mathbf{N}$ và vector hệ số $\mathbf{C_N}$ (viền đứt).
+    \item \textbf{Cột phương án ($b$):} Các con số sau dấu bằng (khoanh Oval) chính là vector vế phải $\mathbf{b}$.
+    \item Lập Bảng đơn hình xuất phát thực chất là việc bê nguyên cụm ma trận $[\mathbf{A} \;|\; \mathbf{b}]$ và $[\mathbf{C}]$ đã được gom nhóm này đặt vào khung kẻ bảng.
+\end{itemize}
+
+\input{Sơ đồ lập bảng đơn hình}

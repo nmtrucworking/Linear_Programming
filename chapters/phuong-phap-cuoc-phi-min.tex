@@ -1,0 +1,141 @@
+\subsection{Phương pháp chi phí thấp nhất (Least Cost Method)}
+
+Phương pháp chi phí thấp nhất là một kỹ thuật giải quyết bài toán vận tải bằng cách ưu tiên phân bổ hàng hóa từ trạm phát đến trạm thu dựa trên cước phí vận chuyển thấp nhất. Dưới đây là các bước thực hiện phương pháp này:
+
+\begin{enumerate}
+    \item \textbf{Xác định chi phí thấp nhất:} Tìm ô có cước phí vận chuyển $c_{ij}$ thấp nhất trong phần bảng chưa bị gạch bỏ. Nếu có nhiều ô cùng chi phí thấp nhất, ưu tiên chọn ô ở góc Tây - Bắc (trên cùng bên trái).
+    
+    \item \textbf{Phân bổ hàng hóa:} Phân bổ lượng hàng hóa tối đa có thể vào ô vừa chọn theo công thức: $x_{ij} = \min(a_i, b_j)$ (với $a_i$ là khả năng cung cấp còn lại của trạm phát $P_i$, và $b_j$ là nhu cầu còn lại của trạm thu $T_j$).
+    
+    \item \textbf{Cập nhật và Gạch bỏ:} 
+    \begin{itemize}
+        \item Cập nhật lại lượng cung: $a_i \leftarrow a_i - x_{ij}$.
+        \item Cập nhật lại lượng cầu: $b_j \leftarrow b_j - x_{ij}$.
+        \item Trạm nào (phát hoặc thu) giảm về 0 trước thì gạch bỏ dòng hoặc cột tương ứng khỏi bảng để không xét trong các bước tiếp theo.
+    \end{itemize}
+    
+    \item \textbf{Lặp lại:} Lặp lại quá trình trên cho đến khi tất cả nhu cầu của các trạm thu được đáp ứng (tổng cung và tổng cầu đều về 0).
+\end{enumerate}
+
+\textbf{Lưu ý:} Phương pháp chi phí thấp nhất không đảm bảo rằng phương án cơ bản xuất phát thu được sẽ là phương án tối ưu.
+
+\textbf{Tổng quát Phương pháp}:
+\begin{itemize}
+    \item Phân phối lượng hàng tôi đa có thể (Dựa theo Công thức ) vào ô có chi phí thấp nhất ($\min(c_{ij})$) trước tiên.
+    \item Cập nhật lại cung và cầu sau mỗi bước phân bổ, và gạch bỏ các trạm đã hoàn thành (cung hoặc cầu về 0) để thu hẹp phạm vi xét tiếp theo.
+    \item Trường hợp $> 1$ ô $c_{ij} = \min(c_{ij})$ -> Chọn bất kỳ.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.95\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.2]},
+        line cap=rect,
+        line join=miter,
+        cell/.style={
+            rectangle,
+            draw=black,
+            line width=0.5pt,
+            minimum width=3.5cm,
+            minimum height=1.5cm,
+            align=center,
+            anchor=center,
+            inner sep=2pt
+        },
+        ampersand replacement=\&
+    ]
+        % 1. Vẽ ma trận 3x4 (Đã bổ sung đầy đủ alias cho các ô)
+        \matrix (M) [
+            matrix of nodes,
+            nodes={cell},
+            nodes in empty cells,
+            column sep=-0.5pt,
+            row sep=-0.5pt
+        ]
+        {
+            |[alias=diag]| \& |[alias=b1]| $\cancel{300} \rightarrow 0 : T_1$ \& |[alias=b2]| $\cancel{500} \rightarrow \cancel{200} \rightarrow 0 : T_2$ \& |[alias=b3]| $\cancel{100} \rightarrow 0 : T_3$ \\
+            |[alias=a1]| $\cancel{700} \rightarrow \cancel{600} \rightarrow \cancel{300} \rightarrow 0: P_1$ \& |[alias=cell11]| $5 \mid 300$ \& |[alias=cell12]| $6 \mid 300$ \& |[alias=cell13]| $4 \mid 100$ \\
+            |[alias=a2]| $\cancel{200} \rightarrow 0 : P_2$ \& |[alias=cell21]| $8 \mid 0$ \& |[alias=cell22]| $9 \mid 200$ \& |[alias=cell23]| $5 \mid 0$ \\
+        };
+
+        % Ký hiệu x_ij ở góc dưới-trái từng ô
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell11.south west) {$x_{11}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell12.south west) {$x_{12}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell13.south west) {$x_{13}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell21.south west) {$x_{21}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell22.south west) {$x_{22}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell23.south west) {$x_{23}$};
+
+        % 2. Xử lý ô 1x1 (Đường chéo và Label)
+        % Đường chéo
+        \draw[black!70, thick] (diag.north west) -- (diag.south east);
+
+        % Trạm thu (trên phải)
+        \node[
+            anchor=north east,
+            xshift=-3pt,
+            yshift=-3pt,
+            font=\footnotesize,
+            fill=white,
+            inner sep=1pt
+        ] at (diag.north east)
+        {Trạm thu ($T_j$)};
+
+        % Trạm phát (dưới trái)
+        \node[
+            anchor=south west,
+            xshift=3pt,
+            yshift=3pt,
+            font=\footnotesize,
+            fill=white,
+            inner sep=1pt
+        ] at (diag.south west)
+        {Trạm phát ($P_i$)};
+
+        % (Tùy chọn) Khoanh đỏ ô bắt đầu bằng TikZ tiêu chuẩn thay vì \koval
+        \draw[red, thick, rounded corners] ([xshift=5pt,yshift=-5pt]cell13.north west) rectangle ([xshift=-5pt,yshift=5pt]cell13.south east);
+
+    \end{tikzpicture}
+    }
+    \caption{Ví dụ Phương pháp chi phí thấp nhất trong bài toán vận tải}
+    \label{fig:least-cost-method-transport}
+\end{figure}
+
+\textbf{Diễn giải chi tiết các bước điền:}
+\begin{enumerate}
+    \item Tìm $\min c_{ij}$ trên toàn bảng: $\min c_{ij} = c_{13} = 4$.
+    \begin{itemize}
+        \item Phân bổ: $x_{13} = \min(b_3^{(1)}, a_1^{(1)}) = \min(100, 700) = 100$.
+        \item Cập nhật: $a_1^{(2)} = 700 - 100 = 600$; $b_3^{(2)} = 100 - 100 = 0$.
+        \item Do $b_3 = 0$, ta \textbf{gạch bỏ cột $T_3$} khỏi các bước xét tiếp theo.
+    \end{itemize}
+    
+    \item Tìm $\min c_{ij}$ trong các ô còn lại (cột 1 và cột 2): $\min c_{ij} = c_{11} = 5$.
+    \begin{itemize}
+        \item Phân bổ: $x_{11} = \min(b_1^{(1)}, a_1^{(2)}) = \min(300, 600) = 300$.
+        \item Cập nhật: $a_1^{(3)} = 600 - 300 = 300$; $b_1^{(2)} = 300 - 300 = 0$.
+        \item Do $b_1 = 0$, ta \textbf{gạch bỏ cột $T_1$}.
+    \end{itemize}
+    
+    \item Tìm $\min c_{ij}$ trong các ô còn lại (chỉ còn cột 2): $\min c_{ij} = c_{12} = 6$.
+    \begin{itemize}
+        \item Phân bổ: $x_{12} = \min(b_2^{(1)}, a_1^{(3)}) = \min(500, 300) = 300$.
+        \item Cập nhật: $a_1^{(4)} = 300 - 300 = 0$; $b_2^{(2)} = 500 - 300 = 200$.
+        \item Do $a_1 = 0$, ta \textbf{gạch bỏ dòng $P_1$}.
+    \end{itemize}
+    
+    \item Ô duy nhất còn lại chưa bị gạch là $x_{22}$ với $c_{22} = 9$.
+    \begin{itemize}
+        \item Phân bổ: $x_{22} = \min(b_2^{(2)}, a_2^{(1)}) = \min(200, 200) = 200$.
+        \item Cập nhật: $a_2^{(2)} = 0$; $b_2^{(3)} = 0$.
+        \item Tất cả cung và cầu đều đã về 0. Quá trình kết thúc.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Kết luận:} Phương án cơ bản xuất phát thu được là:
+\[ X^0 = \begin{pmatrix} 300 & 300 & 100 \\ 0 & 200 & 0 \end{pmatrix} \]
+$X^0$ có 4 ô chọn = $m + n - 1 = 2 + 3 - 1 = 4$ \\
+$=> X^0$ là phương án cơ bản không suy biến \\
+Với tổng cước phí vận chuyển ban đầu là: 
+$Z = (300 \times 5) + (300 \times 6) + (100 \times 4) + (200 \times 9) = 1500 + 1800 + 400 + 1800 = 5500$.

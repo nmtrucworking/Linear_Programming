@@ -1,0 +1,100 @@
+\section{Đề thi mẫu (Mã đề 255)}
+
+\begin{center}
+    \textbf{\Large TRƯỜNG ĐẠI HỌC NGUYỄN TẤT THÀNH} \\
+    \textbf{\large KHOA CÔNG NGHỆ THÔNG TIN} \\
+    \vspace{0.3cm}
+    \textbf{\Large ĐỀ THI MẪU} \\
+    \textbf{Môn thi: Quy hoạch tuyến tính} \\
+    \textbf{Mã đề thi: 255}
+\end{center}
+
+\vspace{0.3cm}
+\noindent\textit{Thời gian làm bài: 60 phút. Sinh viên được sử dụng tài liệu giấy, cán bộ coi thi không giải thích gì thêm.}
+\vspace{0.5cm}
+
+\begin{questionblock}{Câu I (6 điểm)}
+Một cơ sở sản xuất dự định sản xuất ba loại sản phẩm A, B và C. Các sản phẩm được chế tạo từ ba loại nguyên liệu I, II và III. Giả sử số lượng dự trữ của từng loại và số lượng từng loại nguyên liệu (đơn vị: gam) cần dùng để sản xuất ra một sản phẩm được cho ở bảng sau:
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Loại Nguyên liệu}} & \multirow{2}{*}{\textbf{Nguyên liệu dự trữ}} & \multicolumn{3}{c|}{\textbf{Nguyên liệu cần dùng để SX một đvsp}} \\
+        \cline{3-5}
+        & & \textbf{A} & \textbf{B} & \textbf{C} \\
+        \hline
+        I & 21000 & 5 & 4 & 4 \\
+        \hline
+        II & 15000 & 3 & 6 & 3 \\
+        \hline
+        III & 26000 & 3 & 7 & 5 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Giả sử tiền lãi thu được khi bán một sản phẩm loại A, B và C lần lượt là 11 nghìn đồng, 9 nghìn đồng và 15 nghìn đồng. Cơ sở sản xuất cần lập kế hoạch sản xuất để họ không bị động về nguyên liệu và tổng tiền lãi họ thu được là lớn nhất.
+
+Gọi $x_1, x_2, x_3$ theo thứ tự lần lượt là số sản phẩm loại A, loại B và loại C. Bằng ngôn ngữ toán học, mô hình của bài toán lập kế hoạch sản xuất được viết lại như sau:
+\begin{alignat*}{4}
+    z = \quad & 11x_1 & {}+{} & 9x_2 & {}+{} & 15x_3 & \rightarrow \max \\
+    \text{s.t.} \quad & 5x_1 & {}+{} & 4x_2 & {}+{} & 4x_3 & \le 21000 \\
+    & 3x_1 & {}+{} & 6x_2 & {}+{} & 3x_3 & \le 15000 \\
+    & 3x_1 & {}+{} & 7x_2 & {}+{} & 5x_3 & \le 26000 \\
+    & \rlap{$x_j \ge 0, \quad j = \overline{1,3}$}
+\end{alignat*}
+
+\textbf{Yêu cầu:}
+\begin{enumerate}
+    \item Hãy chuyển bài toán $(P)$ về dạng chuẩn (1 điểm).
+    \item Bằng phương pháp đơn hình hãy giải bài toán $(P)$ tìm phương án sản xuất tối ưu và tính tổng tiền lãi lớn nhất (3 điểm).
+    \item Lập bài toán đối ngẫu $(D)$ của bài toán $(P)$ (2 điểm).
+\end{enumerate}
+\end{questionblock}
+
+\vspace{0.8cm}
+\begin{questionblock}{Câu II (4 điểm)}
+Một đơn vị vận chuyển cần vận chuyển máy tính từ 2 công ty (trạm phát) $P_1$ và $P_2$ đến 3 nơi tiêu thụ (trạm thu) $T_1, T_2$ và $T_3$. Số lượng máy tính ở mỗi công ty cần chuyển và nhu cầu máy tính tại các nơi tiêu thụ (đơn vị: cái) cũng như cước phí vận chuyển (đơn vị: chục nghìn đồng) cho mỗi máy tính được chuyển từ công ty $P_i$ đến nơi tiêu thụ $T_j$ ($i = 1,2; j = 1,2,3$) được cho ở bảng sau:
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \multicolumn{2}{|c|}{\multirow{2}{*}{}} & \multicolumn{3}{c|}{\textbf{Trạm thu ($T_j$)}} \\
+        \cline{3-5}
+        \multicolumn{2}{|c|}{} & \textbf{300} & \textbf{500} & \textbf{100} \\
+        \hline
+        \multirow{2}{*}{\textbf{Trạm phát ($P_i$)}} & \textbf{700} & 5 & 6 & 4 \\
+        \cline{2-5}
+        & \textbf{200} & 8 & 9 & 5 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Đơn vị vận chuyển cần lập kế hoạch vận chuyển để: các công ty phải phân phối hết số máy tính hiện có; các nơi tiêu thụ nhận đủ số máy theo nhu cầu và tổng cước phí vận chuyển là thấp nhất.
+
+Gọi $x_{ij}$ là số máy tính sẽ vận chuyển từ công ty ($P_i$) đến nơi tiêu thụ ($T_j$), $\forall i=1,2; j=1,2,3$. Bằng ngôn ngữ toán học, mô hình của bài toán lập kế hoạch vận chuyển được viết lại như sau:
+
+\begin{alignat*}{6}
+    z = \quad & 5x_{11} & {}+{} & 6x_{12} & {}+{} & 4x_{13} & {}+{} & 8x_{21} & {}+{} & 9x_{22} & {}+{} & 5x_{23} \rightarrow \min \\
+    \text{s.t.} \quad & x_{11} & {}+{} & x_{12} & {}+{} & x_{13} & & & & & & = 700 \\
+    & & & & & & & x_{21} & {}+{} & x_{22} & {}+{} & x_{23} = 200 \\
+    & x_{11} & & & & & {}+{} & x_{21} & & & & = 300 \\
+    & & & x_{12} & & & {}+{} & & & x_{22} & & = 500 \\
+    & & & & & x_{13} & {}+{} & & & & & x_{23} = 100 \\
+    & \rlap{$x_{ij} \ge 0, \quad i=1,2; j=1,2,3$}
+\end{alignat*}
+
+\textbf{Yêu cầu:}
+\begin{enumerate}
+    \item Tìm một phương án vận chuyển xuất phát (không suy biến) của bài toán trên (1 điểm).
+    \item Bằng phương pháp thế vị hãy giải bài toán vận tải trên tìm phương án vận chuyển tối ưu và tính tổng cước phí nhỏ nhất (3 điểm).
+\end{enumerate}
+\end{questionblock}
+
+\vspace{0.5cm}
+\begin{center}
+    --- Hết ---
+\end{center}

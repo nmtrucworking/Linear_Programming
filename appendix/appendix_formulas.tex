@@ -1,0 +1,169 @@
+\chapter{Tổng hợp Công thức trọng tâm}
+\label{app:cong_thuc}
+
+Phụ lục này tổng hợp các mô hình toán học và công thức tính toán quan trọng nhất trong học phần Quy hoạch tuyến tính. Tài liệu được sắp xếp theo từng chương để sinh viên tiện tra cứu trong quá trình làm bài tập và ôn thi.
+
+\section{Bài toán Quy hoạch tuyến tính \& Thuật toán đơn hình}
+\subsection{Mô hình bài toán QHTT dạng chuẩn}
+Hàm mục tiêu:
+\begin{equation}
+    Z = \sum_{j=1}^{n} c_j x_j \rightarrow \max \text{ (hoặc } \min\text{)}
+\end{equation}
+
+Hệ ràng buộc chính (đã có biến cơ sở):
+\begin{equation}
+    \sum_{j=1}^{n} a_{ij} x_j = b_i \quad (i = \overline{1,m})
+\end{equation}
+
+Ràng buộc dấu:
+\begin{equation}
+    x_j \ge 0 \quad (j = \overline{1,n}), \quad b_i \ge 0 \quad (i = \overline{1,m})
+\end{equation}
+
+\subsection{Thuật toán đơn hình}
+\textbf{a. Công thức tính hệ số ước lượng ($\Delta_j$):}\\
+Dùng để đánh giá và kiểm tra tiêu chuẩn tối ưu của phương án cơ bản hiện hành.
+\begin{equation}
+    \Delta_j = \sum_{i=1}^{m} C_i a_{ij} - c_j \quad \text{hoặc viết dưới dạng ma trận: } \quad \Delta_j = C_b^T \times A_j - c_j
+\end{equation}
+\textit{Trong đó:} $C_i$ (hay $C_b$) là hệ số hàm mục tiêu của các biến cơ sở hiện tại, $a_{ij}$ (hay $A_j$) là hệ số công nghệ ở cột tương ứng, $c_j$ là hệ số hàm mục tiêu của biến đang xét. Đối với các biến đang nằm trong cơ sở, ta luôn có $\Delta_j = 0$.
+
+\textbf{b. Giá trị hàm mục tiêu tại bước lặp hiện hành ($Z_0$):}
+\begin{equation}
+    Z_0 = \sum_{i=1}^{m} C_i b_i = C_b^T \times PA
+\end{equation}
+
+\textbf{c. Quy tắc Dantzig (Chọn biến vào và biến ra cơ sở):}
+\begin{itemize}
+    \item \textbf{Cột xoay (Biến vào cơ sở):} Chọn biến $x_k$ tương ứng với hệ số ước lượng vi phạm tiêu chuẩn tối ưu nhiều nhất.
+    \begin{itemize}
+        \item Với bài toán Max: Chọn $\min \Delta_j < 0$.
+        \item Với bài toán Min: Chọn $\max \Delta_j > 0$.
+    \end{itemize}
+    \item \textbf{Dòng xoay (Biến ra cơ sở) - Tính tỷ số đơn hình $\lambda$:}
+    \begin{equation}
+        \lambda_i = \frac{b_i}{a_{ik}} \quad \text{chỉ xét với các } a_{ik} > 0
+    \end{equation}
+    Chọn biến cơ sở có tỷ số $\lambda_i$ nhỏ nhất ($\min \lambda_i$) để đưa ra khỏi cơ sở. Giao điểm của dòng xoay và cột xoay là phần tử trụ $a_{hk}$.
+\end{itemize}
+
+\textbf{d. Phép biến đổi Gauss-Jordan (Xoay bảng):}
+\begin{itemize}
+    \item Dòng xoay mới = Dòng xoay cũ chia cho phần tử trụ ($a_{hk}$).
+    \item Các dòng khác mới = Dòng cũ tương ứng $-$ (Hệ số ở cột xoay của dòng đó $\times$ Dòng xoay mới).
+\end{itemize}
+
+\section{Bài toán Đối ngẫu}
+\subsection{Cặp bài toán Đối ngẫu}
+Quy tắc lập bài toán đối ngẫu (Gốc Max $\leftrightarrow$ Đối ngẫu Min):
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{p{7cm}|p{7cm}}
+        \toprule
+        \textbf{Bài toán Gốc (Max)} & \textbf{Bài toán Đối ngẫu (Min)} \\
+        \midrule
+        Hệ số hàm mục tiêu $c_j$ & Vế phải hệ ràng buộc chính $c_j$ \\
+        Vế phải hệ ràng buộc chính $b_i$ & Hệ số hàm mục tiêu $b_i$ \\
+        Ma trận hệ số công nghệ $A$ & Ma trận hệ số công nghệ chuyển vị $A^T$ \\
+        Dấu ràng buộc chính $\le$ & Biến đối ngẫu $\ge 0$ \\
+        Dấu ràng buộc chính $\ge$ & Biến đối ngẫu $\le 0$ \\
+        Dấu ràng buộc chính $=$ & Biến đối ngẫu tùy ý \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Các Định lý Đối ngẫu}
+\begin{itemize}
+    \item \textbf{Định lý đối ngẫu mạnh:} Nếu bài toán gốc đạt tối ưu tại $x^*$ và đối ngẫu đạt tối ưu tại $y^*$, thì giá trị hàm mục tiêu của chúng bằng nhau: $Z(x^*) = Z'(y^*)$.
+    \item \textbf{Định lý độ lệch bù yếu (Complementary Slackness):}\\
+    Điều kiện cần và đủ để phương án $x^0$ và $y^0$ là phương án tối ưu của bài toán gốc và đối ngẫu là chúng thỏa mãn hệ:
+    \begin{equation}
+        \begin{cases}
+            x_j^0 \left( \sum_{i=1}^{m} a_{ij} y_i^0 - c_j \right) = 0 & \forall j = \overline{1,n} \\
+            y_i^0 \left( \sum_{j=1}^{n} a_{ij} x_j^0 - b_i \right) = 0 & \forall i = \overline{1,m}
+        \end{cases}
+    \end{equation}
+    \textit{Phát biểu tương đương:} Trong một cặp ràng buộc đối ngẫu, nếu một ràng buộc của bài toán này thỏa mãn lỏng (dấu bất đẳng thức thực sự) thì biến tương ứng ở bài toán kia phải bằng 0.
+\end{itemize}
+
+\section{Bài toán Vận tải}
+\subsection{Mô hình toán học Bài toán Vận tải đóng}
+Hàm mục tiêu (Tổng cước phí vận chuyển):
+\begin{equation}
+    Z = \sum_{i=1}^{m} \sum_{j=1}^{n} c_{ij} x_{ij} \rightarrow \min
+\end{equation}
+Hệ ràng buộc (Cân bằng thu phát):
+\begin{equation}
+    \begin{cases}
+        \sum_{j=1}^{n} x_{ij} = a_i & \forall i = \overline{1,m} \quad \text{(Phát hết hàng)} \\
+        \sum_{i=1}^{m} x_{ij} = b_j & \forall j = \overline{1,n} \quad \text{(Nhận đủ hàng)}
+    \end{cases}
+\end{equation}
+Điều kiện cân bằng: $\sum_{i=1}^{m} a_i = \sum_{j=1}^{n} b_j$.
+Phương án cơ bản không suy biến có đúng số ô chọn là: $m + n - 1$.
+
+\subsection{Phương pháp Thế vị}
+\textbf{a. Tính hệ thống thế vị ($u_i, v_j$):}\\
+Chỉ áp dụng các phương trình cho các \textbf{ô chọn (ô cơ sở)}:
+\begin{equation}
+    u_i + v_j = c_{ij}
+\end{equation}
+Để giải hệ, ta luôn cho một thế vị tùy ý bằng 0 (thường cho $u_1 = 0$).
+
+\textbf{b. Tính hệ số ước lượng ($\Delta_{ij}$):}\\
+Chỉ tính cho các \textbf{ô loại (ô không cơ sở)}:
+\begin{equation}
+    \Delta_{ij} = u_i + v_j - c_{ij}
+\end{equation}
+
+\textbf{c. Tiêu chuẩn tối ưu:}
+\begin{itemize}
+    \item \textbf{Bài toán tìm Min (Cước phí thấp nhất):} PACB là tối ưu nếu $\Delta_{ij} \le 0, \forall (i,j)$. Nếu tồn tại $\Delta_{ij} > 0$, chọn ô đưa vào cơ sở là ô có $\max \Delta_{ij}$.
+    \item \textbf{Bài toán tìm Max (Hiệu suất cao nhất):} PACB là tối ưu nếu $\Delta_{ij} \ge 0, \forall (i,j)$. Nếu tồn tại $\Delta_{ij} < 0$, chọn ô đưa vào cơ sở là ô có $\Delta_{ij}$ âm và trị tuyệt đối lớn nhất.
+\end{itemize}
+
+\textbf{d. Chu trình điều chỉnh (Xây dựng PACB mới):}
+\begin{itemize}
+    \item Từ ô mới đưa vào cơ sở (đánh dấu +), vẽ một đường gãy khúc khép kín (chỉ rẽ góc vuông tại các ô đang là ô chọn), đánh dấu luân phiên ($-$), (+), ($-$).
+    \item \textbf{Lượng hàng điều chỉnh:} Là lượng hàng nhỏ nhất trong số các ô mang dấu ($-$) của chu trình.
+    \item \textbf{Cập nhật bảng:} Ô dấu (+) được cộng thêm lượng điều chỉnh, ô dấu ($-$) bị trừ đi lượng điều chỉnh. Ô mang dấu ($-$) có lượng hàng bị trừ về 0 sẽ trở thành ô ra khỏi cơ sở.
+\end{itemize}
+
+\vspace{1cm}
+\section{Phụ lục Đại số: Phép biến đổi Gauss - Jordan}
+\label{app:gauss_jordan}
+
+Phép biến đổi Gauss - Jordan là một thuật toán cốt lõi của Đại số tuyến tính dùng để giải hệ phương trình tuyến tính hoặc tìm ma trận nghịch đảo. Trong Quy hoạch tuyến tính, nó được sử dụng tại \textbf{Bước xoay bảng (Pivot)} để đưa một biến mới vào cơ sở và đẩy một biến cũ ra khỏi cơ sở.
+
+\subsection*{1. Mục tiêu trong thuật toán Đơn hình}
+Khi chọn được phần tử trụ (chốt) $a_{hk}$ nằm ở dòng $h$ (biến ra) và cột $k$ (biến vào), mục tiêu của phép biến đổi là làm cho cột $k$ trở thành một \textbf{vector đơn vị}, tức là:
+\begin{itemize}
+    \item Phần tử trụ $a_{hk}$ phải được biến đổi thành số $\mathbf{1}$.
+    \item Tất cả các phần tử khác trong cùng cột $k$ (các $a_{ik}$ với $i \neq h$) phải được biến đổi thành số $\mathbf{0}$.
+\end{itemize}
+
+\subsection*{2. Các phép biến đổi sơ cấp trên dòng}
+Để hệ phương trình ràng buộc luôn duy trì tính tương đương, thuật toán chỉ sử dụng hai phép biến đổi sơ cấp cơ bản:
+\begin{itemize}
+    \item Nhân (hoặc chia) một dòng với một số thực khác $0$.
+    \item Cộng vào một dòng một bội số của một dòng khác.
+\end{itemize}
+
+\subsection*{3. Quy tắc tính toán (Quy tắc xoay bảng)}
+Giả sử ta coi mỗi dòng của bảng đơn hình (từ cột Phương án $PA$ đến các cột biến $x_j$) là một vector dòng $R_i$.
+\begin{itemize}
+    \item \textbf{Bước 1 - Cập nhật dòng xoay (Dòng chứa phần tử trụ):} \\
+    Lấy toàn bộ dòng xoay cũ chia cho giá trị của phần tử trụ $a_{hk}$.
+    \begin{equation}
+        R_h^{(m\text{ới})} = \frac{R_h^{(c\tilde{u})}}{a_{hk}}
+    \end{equation}
+    \textit{Hệ quả:} Tại vị trí giao của dòng $h$ và cột $k$, ta thu được số $1$ (vì $a_{hk}/a_{hk} = 1$).
+    
+    \item \textbf{Bước 2 - Cập nhật các dòng còn lại (Khử các phần tử cùng cột):} \\
+    Đối với mọi dòng $i \neq h$, để khử phần tử $a_{ik}$ thành số $0$, ta lấy dòng $i$ hiện tại trừ đi \textit{đúng phần tử $a_{ik}$ đó} nhân với \textit{Dòng xoay mới}.
+    \begin{equation}
+        R_i^{(m\text{ới})} = R_i^{(c\tilde{u})} - a_{ik} \times R_h^{(m\text{ới})}
+    \end{equation}
+    \textit{Hệ quả:} Tại vị trí giao của dòng $i$ và cột $k$, giá trị mới sẽ là $a_{ik} - a_{ik} \times 1 = 0$. Quá trình khử hoàn tất.
+\end{itemize}

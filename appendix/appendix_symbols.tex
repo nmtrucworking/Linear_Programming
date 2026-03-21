@@ -1,0 +1,54 @@
+% ==========================================
+% NHÓM A: THUẬT NGỮ VIẾT TẮT
+% ==========================================
+\nomenclature[A]{QHTT}{Quy hoạch tuyến tính}
+\nomenclature[A]{PA}{Phương án (Một vector thỏa mãn toàn bộ hệ ràng buộc chính và ràng buộc dấu)}
+\nomenclature[A]{PACB}{Phương án cơ bản}
+\nomenclature[A]{PATƯ}{Phương án tối ưu}
+\nomenclature[A]{BTVT}{Bài toán vận tải}
+
+% ==========================================
+% NHÓM B: KÝ HIỆU TRONG BÀI TOÁN QHTT CƠ BẢN
+% ==========================================
+\nomenclature[B]{$x_j$ (hoặc $x$)}{Các biến quyết định (ẩn số) cần tìm của bài toán, $j = \overline{1,n}$}
+\nomenclature[B]{$Z$ (hoặc $f(x)$)}{Hàm mục tiêu cần tối ưu hóa ($\max$ hoặc $\min$)}
+\nomenclature[B]{$c_j$}{Hệ số của Hàm mục tiêu đi kèm với biến $x_j$}
+\nomenclature[B]{$a_{ij}$}{Hệ số công nghệ, nằm ở dòng $i$ và cột $j$ trong ma trận hệ thống}
+\nomenclature[B]{$b_i$}{Giá trị giới hạn vế phải của ràng buộc thứ $i$}
+\nomenclature[B]{$n$}{Tổng số lượng biến số của bài toán}
+\nomenclature[B]{$m$}{Tổng số lượng ràng buộc chính}
+\nomenclature[B]{$A_j$}{Vector điều kiện, là cột thứ $j$ của ma trận hệ số, đại diện cho các hệ số gắn với biến $x_j$}
+\nomenclature[B]{$\Omega$}{Tập phương án (hay miền chấp nhận được), là tập hợp tất cả các vector $x$ thỏa mãn hệ ràng buộc}
+\nomenclature[B]{$\Delta_j$}{Hệ số ước lượng, dùng để kiểm tra tính tối ưu của phương án hiện tại ($\Delta_j = \sum C_i a_{ij} - c_j$)}
+\nomenclature[B]{$\lambda$}{Tỷ số đơn hình, dùng để xác định biến nào sẽ rời khỏi cơ sở (biến ra)}
+\nomenclature[B]{$M$}{Số dương lớn vô cùng, dùng làm hệ số phạt cho các biến giả trong phương pháp M-lớn (Big-M)}
+
+% ==========================================
+% NHÓM C: KÝ HIỆU TRONG BÀI TOÁN ĐỐI NGẪU
+% ==========================================
+\nomenclature[C]{$(P)$}{Bài toán gốc (Primal Problem)}
+\nomenclature[C]{$(D)$}{Bài toán đối ngẫu (Dual Problem)}
+\nomenclature[C]{$y_i$ (hoặc $y$)}{Các biến quyết định (biến đối ngẫu) của bài toán $(D)$, $i = \overline{1,m}$}
+\nomenclature[C]{$x^*$}{Vector phương án tối ưu của bài toán gốc $(P)$}
+\nomenclature[C]{$y^*$}{Vector phương án tối ưu của bài toán đối ngẫu $(D)$}
+
+% ==========================================
+% NHÓM D: KÝ HIỆU TRONG BÀI TOÁN VẬN TẢI
+% ==========================================
+\nomenclature[D]{$A_i$}{Trạm phát thứ $i$ trong mô hình vận tải, $i = \overline{1,m}$}
+\nomenclature[D]{$B_j$}{Trạm thu thứ $j$ trong mô hình vận tải, $j = \overline{1,n}$}
+\nomenclature[D]{$P_i,\ T_j$}{Ký hiệu thay thế cho trạm phát/trạm thu khi trình bày trên bảng phân phát}
+\nomenclature[D]{$a_i$}{Lượng cung ban đầu (trữ lượng) tại trạm phát $A_i$}
+\nomenclature[D]{$b_j$}{Lượng cầu ban đầu (nhu cầu) tại trạm thu $B_j$}
+\nomenclature[D]{$p_i^{(k)}$}{Lượng cung còn lại tại trạm phát $i$ sau bước phân bổ thứ $k$}
+\nomenclature[D]{$t_j^{(k)}$}{Lượng cầu còn lại tại trạm thu $j$ sau bước phân bổ thứ $k$}
+\nomenclature[D]{$c_{ij}$}{Cước phí vận chuyển một đơn vị hàng từ trạm phát $i$ đến trạm thu $j$}
+\nomenclature[D]{$x_{ij}$}{Lượng hàng phân bổ từ trạm phát $i$ đến trạm thu $j$}
+\nomenclature[D]{$X^0$}{Ma trận phương án cơ bản xuất phát của bài toán vận tải}
+\nomenclature[D]{$c_{\min 1},\ c_{\min 2}$}{Hai mức cước phí nhỏ nhất trên một dòng/cột đang xét (dùng trong phương pháp Vogel)}
+\nomenclature[D]{$\Delta_i,\ \Delta_j$}{Độ chênh lệch cước phí (penalty) của dòng $i$ hoặc cột $j$ trong phương pháp Vogel, $\Delta = c_{\min 2} - c_{\min 1}$}
+
+% ==========================================
+% IN DANH MỤC KÝ HIỆU
+% ==========================================
+\printnomenclature

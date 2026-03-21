@@ -1,0 +1,74 @@
+% section: Mô hình Bài toán Vận tải
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        & \textbf{Trạm thu $B_1$} & \textbf{Trạm thu $B_2$} & \textbf{Trạm thu $B_3$} \\
+        \hline
+        \textbf{Trạm phát $A_1$} & $c_{11}$ & $c_{12}$ & $c_{13}$ \\
+        \hline
+        \textbf{Trạm phát $A_2$} & $c_{21}$ & $c_{22}$ & $c_{23}$ \\
+        \hline
+        \textbf{Trạm phát $A_3$} & $c_{31}$ & $c_{32}$ & $c_{33}$ \\
+        \hline
+    \end{tabular}
+    \caption{Cước phí vận chuyển từ các trạm phát đến các trạm thu}
+\end{table}
+
+\input{figures/mo-hinh-hoa-bang-phan-phat-bai-toan-van-tai.tex}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.95\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.2]},
+        cell/.style={rectangle, draw=black, minimum width=3.5cm, minimum height=1.5cm, align=center, anchor=center},
+        ampersand replacement=\&
+    ]
+        % 1. Vẽ ma trận 3x4
+        \matrix (M) [matrix of nodes, nodes={cell}, column sep=-\pgflinewidth, row sep=-\pgflinewidth, nodes in empty cells]
+        {
+            |[alias=diag]| \& |[alias=b1]| $300 : t_1$ \& |[alias=b2]| $500 : t_2$ \& |[alias=b3]| $100 : t_3$ \\
+            |[alias=a1]| $700 : p_1$ \& |[alias=cell11]| $5 \mid x_{11}$ \& $6 \mid x_{12}$ \& $4 \mid x_{13}$ \\
+            |[alias=a2]| $200 : p_2$ \& $8 \mid x_{21}$ \& $9 \mid x_{22}$ \& $5 \mid x_{23}$ \\
+        };
+
+        % 2. Xử lý ô 1x1 (Đường chéo và Label)
+        % Đường chéo
+        \draw[black!70, thick] (diag.north west) -- (diag.south east);
+
+        % Trạm thu (trên phải)
+        \node[
+            anchor=north east,
+            xshift=-3pt,
+            yshift=-3pt,
+            font=\footnotesize,
+            fill=white,
+            inner sep=1pt
+        ] at (diag.north east)
+        {Trạm thu ($T_j$)};
+
+        % Trạm phát (dưới trái)
+        \node[
+            anchor=south west,
+            xshift=3pt,
+            yshift=3pt,
+            font=\footnotesize,
+            fill=white,
+            inner sep=1pt
+        ] at (diag.south west)
+        {Trạm phát ($P_i$)};
+
+    \end{tikzpicture}
+    }
+    \caption{Ví dụ Về Mô hình hóa Bảng phân phát bài toán vận tải}
+    \label{fig:mohinh-phanphat-vantai}
+\end{figure}
+
+
+Nhận xét: \\
+$$\sum \text{phát} = 700 + 200 = 900$$
+$$\sum \text{thu} = 300 + 500 + 100 = 900$$
+$$=> \sum \text{phát} = \sum \text{thu}$$
+Trong mô hình bài toán vận tải, chúng ta có một tập hợp các trạm phát (các điểm cung cấp hàng hóa) và một tập hợp các trạm thu (các điểm tiêu thụ hàng hóa). Mỗi trạm phát có một lượng hàng hóa cụ thể cần được vận chuyển đến các trạm thu, và mỗi trạm thu có một nhu cầu cụ thể cần được đáp ứng. Cước phí vận chuyển từ mỗi trạm phát đến mỗi trạm thu được biểu diễn bằng một ma trận chi phí $c_{ij}$, trong đó $i$ là chỉ số của trạm phát và $j$ là chỉ số của trạm thu. Mục tiêu của bài toán là tìm ra phương án vận chuyển tối ưu sao cho tổng chi phí vận chuyển được tối thiểu hóa, đồng thời đảm bảo rằng tất cả các nhu cầu của các trạm thu được đáp ứng và không vượt quá khả năng cung cấp của các trạm phát.

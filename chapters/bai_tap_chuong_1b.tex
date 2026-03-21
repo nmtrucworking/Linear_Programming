@@ -1,0 +1,104 @@
+\subsection[Giải bài tập mẫu: Phương pháp chuyển hàm mục tiêu f(x) -> max]{Giải bài tập mẫu: Phương pháp chuyển hàm mục tiêu $f(x) \rightarrow \max$}
+
+\textbf{Đề bài (Bài d - Bài tập chương 1b):} Giải bài toán Quy hoạch tuyến tính sau bằng phương pháp đơn hình:
+\begin{alignat*}{4}
+    f(x) = \quad & 5x_1 & {}-{} & 3x_2 & {}-{} & 3x_3 & \rightarrow \min \\
+    \text{s.t.} \quad & x_1 & {}+{} & x_2 & {}+{} & x_3 & \le 11 \\
+    & 2x_1 & {}+{} & 3x_2 & {}+{} & x_3 & \le 8 \\
+    & x_1 & {}+{} & 2x_2 & {}+{} & x_3 & \le 4 \\
+    & \rlap{$x_j \ge 0, \quad j = \overline{1,3}$}
+\end{alignat*}
+
+\textbf{LỜI GIẢI CHI TIẾT:}
+
+\textbf{Bước 1: Chuyển đổi mô hình và đưa về dạng chuẩn} \\
+Vì bài toán yêu cầu tìm Min, ta chuyển sang bài toán tương đương tìm Max bằng cách đặt hàm mục tiêu mới $f'(x) = -f(x)$. Đồng thời, ta thêm 3 biến phụ $x_4, x_5, x_6 \ge 0$ vào hệ ràng buộc để tạo thành đẳng thức. Ta có bài toán dạng chuẩn như sau:
+\begin{alignat*}{4}
+    f'(x) = \quad & -5x_1 & {}+{} & 3x_2 & {}+{} & 3x_3 & {}+{} 0x_4 + 0x_5 + 0x_6 \rightarrow \max \\
+    \text{s.t.} \quad & x_1 & {}+{} & x_2 & {}+{} & x_3 & {}+{} x_4 = 11 \\
+    & 2x_1 & {}+{} & 3x_2 & {}+{} & x_3 & {}+{} x_5 = 8 \\
+    & x_1 & {}+{} & 2x_2 & {}+{} & x_3 & {}+{} x_6 = 4 \\
+    & \rlap{$x_j \ge 0, \quad j = \overline{1,6}$}
+\end{alignat*}
+
+\textbf{Bước 2: Giải bằng thuật toán đơn hình cho bài toán Max}
+
+% BẢNG ĐƠN HÌNH 1
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA}} & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & \multirow{2}{*}{\textbf{Tỷ số $\lambda$}} \\
+        \cline{4-9}
+        & & & -5 & 3 & 3 & 0 & 0 & 0 & \\
+        \hline
+        $x_4$ & 0 & 11 & 1 & 1 & 1 & 1 & 0 & 0 & 11 \\
+        \hline
+        $x_5$ & 0 & 8 & 2 & 3 & 1 & 0 & 1 & 0 & $8/3 \approx 2.67$ \\
+        \hline
+        $x_6$ & 0 & 4 & 1 & \textbf{2} & 1 & 0 & 0 & 1 & \textbf{2} $\rightarrow$ \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & $\mathbf{f' = 0}$ & 5 & \textbf{-3} $\uparrow$ & -3 & 0 & 0 & 0 & \\
+        \hline
+    \end{tabular}
+    \caption{Bảng 1: Phương án xuất phát}
+\end{table}
+
+\textit{Nhận xét Bảng 1:} Do đang giải bài toán Max, ta thấy có $\Delta_2 = \Delta_3 = -3 < 0$. Ta chọn ưu tiên $x_2$ đưa vào cơ sở. Cột tỷ số nhỏ nhất $\min(11, 8/3, 2) = 2$ tương ứng với $x_6$. Chọn $x_6$ ra khỏi cơ sở. Phần tử trụ là $a_{32} = 2$. Thực hiện xoay bảng Gauss-Jordan.
+
+% BẢNG ĐƠN HÌNH 2
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA}} & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & \multirow{2}{*}{\textbf{Tỷ số $\lambda$}} \\
+        \cline{4-9}
+        & & & -5 & 3 & 3 & 0 & 0 & 0 & \\
+        \hline
+        $x_4$ & 0 & 9 & 1/2 & 0 & 1/2 & 1 & 0 & -1/2 & 18 \\
+        \hline
+        $x_5$ & 0 & 2 & 1/2 & 0 & -1/2 & 0 & 1 & -3/2 & - \\
+        \hline
+        $x_2$ & 3 & 2 & 1/2 & 1 & \textbf{1/2} & 0 & 0 & 1/2 & \textbf{4} $\rightarrow$ \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & $\mathbf{f' = 6}$ & 6.5 & 0 & \textbf{-1.5} $\uparrow$ & 0 & 0 & 1.5 & \\
+        \hline
+    \end{tabular}
+    \caption{Bảng 2: Bước lặp thứ nhất}
+\end{table}
+
+\textit{Nhận xét Bảng 2:} Vẫn còn $\Delta_3 = -1.5 < 0$, phương án chưa tối ưu. Chọn $x_3$ vào cơ sở. Cột tỷ số $\min(18, 4) = 4$ tương ứng với $x_2$ (dòng $x_5$ không tính do hệ số âm). Chọn $x_2$ ra khỏi cơ sở. Phần tử trụ là $a_{33} = 1/2$. Tiếp tục xoay bảng.
+
+% BẢNG ĐƠN HÌNH 3
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA}} & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\
+        \cline{4-9}
+        & & & -5 & 3 & 3 & 0 & 0 & 0 \\
+        \hline
+        $x_4$ & 0 & 7 & 0 & -1 & 0 & 1 & 0 & -1 \\
+        \hline
+        $x_5$ & 0 & 4 & 1 & 1 & 0 & 0 & 1 & -1 \\
+        \hline
+        $x_3$ & 3 & 4 & 1 & 2 & 1 & 0 & 0 & 1 \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & $\mathbf{f' = 12}$ & 8 & 3 & 0 & 0 & 0 & 3 \\
+        \hline
+    \end{tabular}
+    \caption{Bảng 3: Bảng đơn hình tối ưu}
+\end{table}
+
+\textbf{Bước 3: Kết luận} \\
+Tại Bảng 3, tất cả các hệ số ước lượng đều không âm ($\Delta_j \ge 0, \forall j$), do đó tiêu chuẩn tối ưu của bài toán Max đã được thỏa mãn. 
+\begin{itemize}
+    \item Phương án tối ưu của bài toán tương đương là: $x^* = (0, 0, 4, 7, 4, 0)$.
+    \item Lời giải của bài toán gốc ban đầu là: $x_1 = 0, x_2 = 0, x_3 = 4$.
+    \item Giá trị lớn nhất của hàm tương đương: $f'_{max} = 12$.
+    \item Suy ra giá trị nhỏ nhất của hàm mục tiêu gốc: $\mathbf{f_{min} = -f'_{max} = -12}$.
+\end{itemize}
+\textit{Kiểm tra lại bằng hàm gốc:} $f(x) = 5(0) - 3(0) - 3(4) = -12$ (Hoàn toàn chính xác).

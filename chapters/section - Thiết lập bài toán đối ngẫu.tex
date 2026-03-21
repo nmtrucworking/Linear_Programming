@@ -1,0 +1,406 @@
+% \section{Phương pháp Bảng cấu trúc ánh xạ}
+
+Để lập bài toán đối ngẫu một cách chính xác mà không bị nhầm lẫn về dấu, ta sử dụng phương pháp Bảng cấu trúc ánh xạ. Quá trình này giúp phân rã cấu trúc bài toán gốc và ánh xạ trực tiếp sang bài toán đối ngẫu.
+
+\subsection{Quy tắc ánh xạ dấu}
+Nguyên lý: \textit{Ràng buộc dấu (RBD) của bài toán này sẽ quyết định dấu của Ràng buộc chính (RBC) trong bài toán kia, và ngược lại.} Dựa vào dạng bài toán gốc, ta sẽ xác định được đâu là "dấu chuẩn" để khoanh tròn (\khoanh{}) và đâu là dấu ngược quy tắc để gạch bỏ (\cancel{}).
+
+\textbf{1. Chuyển từ bài toán Max sang Min:}\\
+Đối với bài toán gốc tìm Max, RBC mang dấu ``$\le$'' và biến ``$\ge 0$'' được coi là các dấu chuẩn.
+\begin{itemize}
+    \item \textbf{Từ RBC gốc $\rightarrow$ Dấu biến Đối ngẫu:} Dấu $\le \longrightarrow y_i \ge 0$ ; Dấu $\ge \longrightarrow y_i \le 0$ ; Dấu $=$ $\longrightarrow y_i$ tùy ý.
+    \item \textbf{Từ Dấu biến gốc $\rightarrow$ RBC Đối ngẫu:} Biến $\ge 0 \longrightarrow$ Dấu $\ge$ ; Biến $\le 0 \longrightarrow$ Dấu $\le$ ; Biến tùy ý $\longrightarrow$ Dấu $=$.
+\end{itemize}
+
+\textbf{2. Chuyển từ bài toán Min sang Max:}\\
+Đối với bài toán gốc tìm Min, RBC mang dấu ``$\ge$'' và biến ``$\ge 0$'' được coi là các dấu chuẩn.
+\begin{itemize}
+    \item \textbf{Từ RBC gốc $\rightarrow$ Dấu biến Đối ngẫu:} Dấu $\ge \longrightarrow y_i \ge 0$ ; Dấu $\le \longrightarrow y_i \le 0$ ; Dấu $=$ $\longrightarrow y_i$ tùy ý.
+    \item \textbf{Từ Dấu biến gốc $\rightarrow$ RBC Đối ngẫu:} Biến $\ge 0 \longrightarrow$ Dấu $\le$ ; Biến $\le 0 \longrightarrow$ Dấu $\ge$ ; Biến tùy ý $\longrightarrow$ Dấu $=$.
+\end{itemize}
+
+\subsection{Biểu mẫu cấu trúc bảng ánh xạ}
+Dưới đây là biểu mẫu ma trận ánh xạ tổng quát cho bài toán $3 \times 3$. Trong thực hành, ta lập Bảng phân rã cho bài toán Gốc, sau đó bốc các hệ số dựa vào ký hiệu để điền vào Bảng cấu trúc Đối ngẫu và khoanh dấu.
+
+\textbf{Bước 1: Lập bảng phân rã cấu trúc bài toán Gốc (P)}
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c c c|c|}
+        \hline
+        \textbf{Hàm/RBC} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số}} & \multicolumn{3}{c|}{\textbf{Dấu RBC}} & \textbf{Hệ số $b$} \\
+        \hline
+        $Z (\max/\min)$ & \TL{c_1}{} & $x_1$ & $+$ & \TL{c_2}{} & $x_2$ & $+$ & \TL{c_3}{} & $x_3$ & \multicolumn{3}{c|}{} & \\
+        \hline
+        $R_1$ & \TL{a_{11}}{} & $x_1$ & $+$ & \TL{a_{12}}{} & $x_2$ & $+$ & \TL{a_{13}}{} & $x_3$ & $\ge$ & $\le$ & $=$ & \TL{b_1}{} \\
+        \hline
+        $R_2$ & \TL{a_{21}}{} & $x_1$ & $+$ & \TL{a_{22}}{} & $x_2$ & $+$ & \TL{a_{23}}{} & $x_3$ & $\ge$ & $\le$ & $=$ & \TL{b_2}{} \\
+        \hline
+        $R_3$ & \TL{a_{31}}{} & $x_1$ & $+$ & \TL{a_{32}}{} & $x_2$ & $+$ & \TL{a_{33}}{} & $x_3$ & $\ge$ & $\le$ & $=$ & \TL{b_3}{} \\
+        \hline
+        \multirow{3}{*}{\shortstack{Dấu \\ Biến số}} 
+        & \multicolumn{2}{c}{$x_1$} & \multicolumn{6}{l|}{$\ge 0$ \quad $\le 0$ \quad Tùy ý} & \multicolumn{4}{c|}{} \\
+        & \multicolumn{2}{c}{$x_2$} & \multicolumn{6}{l|}{$\ge 0$ \quad $\le 0$ \quad Tùy ý} & \multicolumn{4}{c|}{} \\
+        & \multicolumn{2}{c}{$x_3$} & \multicolumn{6}{l|}{$\ge 0$ \quad $\le 0$ \quad Tùy ý} & \multicolumn{4}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Bảng phân rã cấu trúc bài toán Gốc (P)}
+\end{table}
+
+\textbf{Bước 2: Lập bảng cấu trúc bài toán Đối ngẫu (D)} \\
+\textit{(Áp dụng quy tắc ánh xạ ở mục trên để gạch bỏ $\cancel{}$ hoặc khoanh tròn \khoanh{} các dấu tương ứng)}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c c c|c|}
+        \hline
+        \textbf{Hàm/RBC} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số}} & \multicolumn{3}{c|}{\textbf{Dấu RBC ĐN}} & \textbf{Hệ số $c$} \\
+        \hline
+        $Z' (\min/\max)$ & \TL{b_1}{} & $y_1$ & $+$ & \TL{b_2}{} & $y_2$ & $+$ & \TL{b_3}{} & $y_3$ & \multicolumn{3}{c|}{} & \\
+        \hline
+        $R'_1$ & \TL{a_{11}}{} & $y_1$ & $+$ & \TL{a_{21}}{} & $y_2$ & $+$ & \TL{a_{31}}{} & $y_3$ & $\ge$ & $\le$ & $=$ & \TL{c_1}{} \\
+        \hline
+        $R'_2$ & \TL{a_{12}}{} & $y_1$ & $+$ & \TL{a_{22}}{} & $y_2$ & $+$ & \TL{a_{32}}{} & $y_3$ & $\ge$ & $\le$ & $=$ & \TL{c_2}{} \\
+        \hline
+        $R'_3$ & \TL{a_{13}}{} & $y_1$ & $+$ & \TL{a_{23}}{} & $y_2$ & $+$ & \TL{a_{33}}{} & $y_3$ & $\ge$ & $\le$ & $=$ & \TL{c_3}{} \\
+        \hline
+        \multirow{3}{*}{\shortstack{Dấu Biến \\ Đối ngẫu}} 
+        & \multicolumn{2}{c}{$y_1$} & \multicolumn{6}{l|}{$\ge 0$ \quad $\le 0$ \quad Tùy ý} & \multicolumn{4}{c|}{} \\
+        & \multicolumn{2}{c}{$y_2$} & \multicolumn{6}{l|}{$\ge 0$ \quad $\le 0$ \quad Tùy ý} & \multicolumn{4}{c|}{} \\
+        & \multicolumn{2}{c}{$y_3$} & \multicolumn{6}{l|}{$\ge 0$ \quad $\le 0$ \quad Tùy ý} & \multicolumn{4}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Bảng cấu trúc bài toán Đối ngẫu (D) sau khi ánh xạ}
+\end{table}
+
+\section{Phương pháp Bảng cấu trúc ánh xạ trực tiếp}
+
+\subsection{Biểu mẫu ánh xạ: Bài toán gốc (MAX) \texorpdfstring{$\longrightarrow$}{→} Đối ngẫu (MIN)}
+
+Đối với bài toán gốc MAX, dấu chuẩn của Ràng buộc chính (RBC) là $\le$ (sinh ra biến đối ngẫu $\ge 0$) và dấu chuẩn của biến là $\ge 0$ (sinh ra RBC đối ngẫu $\ge$).
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán GỐC} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số gốc ($x_j$)}} & \textbf{Ánh xạ Dấu} & \textbf{Hệ số $b$} \\
+        \hline
+        $Z (\max)$ & \kh{blue}{$c_1$} & $x_1$ & $+$ & \kh{blue}{$c_2$} & $x_2$ & $+$ & \kh{blue}{$c_3$} & $x_3$ & \multicolumn{2}{c|}{\textit{(Đối ngẫu: $Z' \rightarrow \min$)}} \\
+        \hline
+        \textbf{RBC $\rightarrow$ Biến ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số $A$ chuyển vị thành $A^T$}} & \textbf{RBC gốc $\rightarrow$ Dấu biến ĐN ($y_i$)} & \\
+        \hline
+        $R_1 \longrightarrow y_1$ & \khdouble{green}{$a_{11}$} & $x_1$ & $+$ & \khdouble{green}{$a_{12}$} & $x_2$ & $+$ & \khdouble{green}{$a_{13}$} & $x_3$ & 
+        $\le \longrightarrow y_1 \ge 0$ \quad $\ge \longrightarrow y_1 \le 0$ \quad $= \longrightarrow$ tùy ý & \khdash{red}{$b_1$} \\
+        \hline
+        $R_2 \longrightarrow y_2$ & $a_{21}$ & $x_1$ & $+$ & $a_{22}$ & $x_2$ & $+$ & $a_{23}$ & $x_3$ & 
+        $\le \longrightarrow y_2 \ge 0$ \quad $\ge \longrightarrow y_2 \le 0$ \quad $= \longrightarrow$ tùy ý & \khdash{red}{$b_2$} \\
+        \hline
+        $R_3 \longrightarrow y_3$ & $a_{31}$ & $x_1$ & $+$ & $a_{32}$ & $x_2$ & $+$ & $a_{33}$ & $x_3$ & 
+        $\le \longrightarrow y_3 \ge 0$ \quad $\ge \longrightarrow y_3 \le 0$ \quad $= \longrightarrow$ tùy ý & \khdash{red}{$b_3$} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu Biến gốc} \\ $\downarrow$ \\ \textbf{Dấu RBC ĐN}}} 
+        & \multicolumn{2}{c}{$x_1$} & \multicolumn{6}{l|}{$\ge 0 \longrightarrow \ge$ \qquad $\le 0 \longrightarrow \le$ \qquad Tùy ý $\longrightarrow =$ } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Các cột này} \\ \textit{trở thành} \\ \textit{RBC đối ngẫu} \\ \textit{$R'_1, R'_2, R'_3$}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_2$} & \multicolumn{6}{l|}{$\ge 0 \longrightarrow \ge$ \qquad $\le 0 \longrightarrow \le$ \qquad Tùy ý $\longrightarrow =$ } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_3$} & \multicolumn{6}{l|}{$\ge 0 \longrightarrow \ge$ \qquad $\le 0 \longrightarrow \le$ \qquad Tùy ý $\longrightarrow =$ } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Bảng phân rã và ánh xạ trực tiếp cho bài toán gốc MAX}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán ĐỐI NGẪU} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số ĐN ($y_i$)}} & \textbf{Dấu RBC ĐN} & \textbf{Hệ số $c$} \\
+        \hline
+        $Z' (\min)$ & \khdash{red}{$b_1$} & $y_1$ & $+$ & \khdash{red}{$b_2$} & $y_2$ & $+$ & \khdash{red}{$b_3$} & $y_3$ & \multicolumn{2}{c|}{\textit{(Nguồn: Hệ số tự do gốc)}} \\
+        \hline
+        \textbf{Biến gốc $\rightarrow$ RBC ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số chuyển vị $A^T$}} & \textbf{Dấu biến gốc $\rightarrow$ Dấu RBC ĐN} & \\
+        \hline
+        $x_1 \longrightarrow R'_1$ & \khdouble{green}{$a_{11}$} & $y_1$ & $+$ & $a_{21}$ & $y_2$ & $+$ & $a_{31}$ & $y_3$ & 
+        $\ge 0 \longrightarrow \ge$ \quad $\le 0 \longrightarrow \le$ \quad Tùy ý $\longrightarrow =$ & \kh{blue}{$c_1$} \\
+        \hline
+        $x_2 \longrightarrow R'_2$ & \khdouble{green}{$a_{12}$} & $y_1$ & $+$ & $a_{22}$ & $y_2$ & $+$ & $a_{32}$ & $y_3$ & 
+        $\ge 0 \longrightarrow \ge$ \quad $\le 0 \longrightarrow \le$ \quad Tùy ý $\longrightarrow =$ & \kh{blue}{$c_2$} \\
+        \hline
+        $x_3 \longrightarrow R'_3$ & \khdouble{green}{$a_{13}$} & $y_1$ & $+$ & $a_{23}$ & $y_2$ & $+$ & $a_{33}$ & $y_3$ & 
+        $\ge 0 \longrightarrow \ge$ \quad $\le 0 \longrightarrow \le$ \quad Tùy ý $\longrightarrow =$ & \kh{blue}{$c_3$} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu RBC gốc} \\ $\downarrow$ \\ \textbf{Dấu Biến ĐN}}} 
+        & \multicolumn{2}{c}{$y_1$} & \multicolumn{6}{l|}{$\le \longrightarrow \ge 0$ \qquad $\ge \longrightarrow \le 0$ \qquad $= \longrightarrow$ Tùy ý } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Ma trận A} \\ \textit{đã được} \\ \textit{xoay ngang} \\ \textit{thành dọc}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_2$} & \multicolumn{6}{l|}{$\le \longrightarrow \ge 0$ \qquad $\ge \longrightarrow \le 0$ \qquad $= \longrightarrow$ Tùy ý } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_3$} & \multicolumn{6}{l|}{$\le \longrightarrow \ge 0$ \qquad $\ge \longrightarrow \le 0$ \qquad $= \longrightarrow$ Tùy ý } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Bảng phân rã bài toán Đối ngẫu (MIN) và ánh xạ hệ số từ bài toán Gốc}
+\end{table}
+
+\subsubsection*{Ví dụ áp dụng: Bài toán lập kế hoạch sản xuất}
+Xét bài toán gốc (P) tìm phương án sản xuất tối ưu để đạt lợi nhuận lớn nhất:
+\begin{align*}
+    Z &= 11x_1 + 9x_2 + 15x_3 \rightarrow \max \\
+\text{sao cho:} \quad
+    &5x_1 + 4x_2 + 4x_3 \le 21000 \quad (R_1)\\
+    &3x_1 + 6x_2 + 3x_3 \le 15000 \quad (R_2)\\
+    &3x_1 + 7x_2 + 5x_3 \le 26000 \quad (R_3)\\
+    &x_1, x_2, x_3 \ge 0
+\end{align*}
+
+Dưới đây là quá trình phân rã dữ kiện và ánh xạ hệ số từ bài toán Gốc (P) sang bài toán Đối ngẫu (D):
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán GỐC} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số gốc ($x_j$)}} & \textbf{Ánh xạ Dấu} & \textbf{Hệ số $b$} \\
+        \hline
+        $Z (\max)$ & \TL{c_1}{\kh{blue}{11}} & $x_1$ & $+$ & \TL{c_2}{\kh{blue}{9}} & $x_2$ & $+$ & \TL{c_3}{\kh{blue}{15}} & $x_3$ & \multicolumn{2}{c|}{\textit{(Đối ngẫu: $Z' \rightarrow \min$)}} \\
+        \hline
+        \textbf{RBC $\rightarrow$ Biến ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số $A$ chuyển vị thành $A^T$}} & \textbf{RBC gốc $\rightarrow$ Dấu biến ĐN ($y_i$)} & \\
+        \hline
+        $R_1 \longrightarrow y_1$ & \TL{a_{11}}{\khdash{red}{5}} & $x_1$ & $+$ & \TL{a_{12}}{\khdash{red}{4}} & $x_2$ & $+$ & \TL{a_{13}}{\khdash{red}{4}} & $x_3$ & 
+        \kv{green}{$\le$} / $\ge$ / $=$ $\longrightarrow$ \kv{green}{$\ge 0$} / $\le 0$ / Tùy ý & \TL{b_1}{\koval{green}{21000}} \\
+        \hline
+        $R_2 \longrightarrow y_2$ & \TL{a_{21}}{3} & $x_1$ & $+$ & \TL{a_{22}}{6} & $x_2$ & $+$ & \TL{a_{23}}{3} & $x_3$ & 
+        \kv{green}{$\le$} / $\ge$ / $=$ $\longrightarrow$ \kv{green}{$\ge 0$} / $\le 0$ / Tùy ý & \TL{b_2}{\koval{green}{15000}} \\
+        \hline
+        $R_3 \longrightarrow y_3$ & \TL{a_{31}}{3} & $x_1$ & $+$ & \TL{a_{32}}{7} & $x_2$ & $+$ & \TL{a_{33}}{5} & $x_3$ & 
+        \kv{green}{$\le$} / $\ge$ / $=$ $\longrightarrow$ \kv{green}{$\ge 0$} / $\le 0$ / Tùy ý & \TL{b_3}{\koval{green}{26000}} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu Biến gốc} \\ $\downarrow$ \\ \textbf{Dấu RBC ĐN}}} 
+        & \multicolumn{2}{c}{$x_1$} & \multicolumn{6}{l|}{\kvd{red}{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \kvd{red}{$\ge$} / $\le$ / $=$ } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Các cột này} \\ \textit{trở thành} \\ \textit{RBC đối ngẫu} \\ \textit{$R'_1, R'_2, R'_3$}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_2$} & \multicolumn{6}{l|}{\kvd{red}{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \kvd{red}{$\ge$} / $\le$ / $=$ } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_3$} & \multicolumn{6}{l|}{\kvd{red}{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \kvd{red}{$\ge$} / $\le$ / $=$ } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Phân rã dữ kiện và cấu trúc dấu của bài toán Gốc (MAX)}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán ĐỐI NGẪU} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số ĐN ($y_i$)}} & \textbf{Dấu RBC ĐN} & \textbf{Hệ số $c$} \\
+        \hline
+        $Z' (\min)$ & \TL{b_1}{\koval{green}{21000}} & $y_1$ & $+$ & \TL{b_2}{\koval{green}{15000}} & $y_2$ & $+$ & \TL{b_3}{\koval{green}{26000}} & $y_3$ & \multicolumn{2}{c|}{\textit{(Từ hệ số mục tiêu gốc)}} \\
+        \hline
+        \textbf{Biến gốc $\rightarrow$ RBC ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số chuyển vị $A^T$}} & \textbf{Dấu biến gốc $\rightarrow$ Dấu RBC ĐN} & \\
+        \hline
+        $x_1 \longrightarrow R'_1$ & \TL{a_{11}}{\khdash{red}{5}} & $y_1$ & $+$ & \TL{a_{21}}{3} & $y_2$ & $+$ & \TL{a_{31}}{3} & $y_3$ & 
+        \kvd{red}{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \kvd{red}{$\ge$} / $\le$ / $=$ & \TL{c_1}{\kh{blue}{11}} \\
+        \hline
+        $x_2 \longrightarrow R'_2$ & \TL{a_{12}}{\khdash{red}{4}} & $y_1$ & $+$ & \TL{a_{22}}{6} & $y_2$ & $+$ & \TL{a_{32}}{7} & $y_3$ & 
+        \kvd{red}{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \kvd{red}{$\ge$} / $\le$ / $=$ & \TL{c_2}{\kh{blue}{9}} \\
+        \hline
+        $x_3 \longrightarrow R'_3$ & \TL{a_{13}}{\khdash{red}{4}} & $y_1$ & $+$ & \TL{a_{23}}{3} & $y_2$ & $+$ & \TL{a_{33}}{5} & $y_3$ & 
+        \kvd{red}{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \kvd{red}{$\ge$} / $\le$ / $=$ & \TL{c_3}{\kh{blue}{15}} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu RBC gốc} \\ $\downarrow$ \\ \textbf{Dấu Biến ĐN}}} 
+        & \multicolumn{2}{c}{$y_1$} & \multicolumn{6}{l|}{\kv{green}{$\le$} / $\ge$ / $=$ $\longrightarrow$ \kv{green}{$\ge 0$} / $\le 0$ / Tùy ý } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Các cột này} \\ \textit{thể hiện} \\ \textit{chiều biến} \\ \textit{đối ngẫu}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_2$} & \multicolumn{6}{l|}{\kv{green}{$\le$} / $\ge$ / $=$ $\longrightarrow$ \kv{green}{$\ge 0$} / $\le 0$ / Tùy ý } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_3$} & \multicolumn{6}{l|}{\kv{green}{$\le$} / $\ge$ / $=$ $\longrightarrow$ \kv{green}{$\ge 0$} / $\le 0$ / Tùy ý } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Ánh xạ hệ số và thiết lập bài toán Đối ngẫu (MIN)}
+\end{table}
+
+\noindent Từ Bảng 2, ta dễ dàng viết được bài toán Đối ngẫu (D) một cách trực quan và chính xác:
+\begin{align*}
+    Z' &= 21000y_1 + 15000y_2 + 26000y_3 \rightarrow \min \\
+\text{sao cho:} \quad
+    &5y_1 + 3y_2 + 3y_3 \ge 11 \\
+    &4y_1 + 6y_2 + 7y_3 \ge 9 \\
+    &4y_1 + 3y_2 + 5y_3 \ge 15 \\
+    &y_1, y_2, y_3 \ge 0
+\end{align*}
+\subsection{Biểu mẫu ánh xạ: Bài toán gốc (MIN) \texorpdfstring{$\longrightarrow$}{→} Đối ngẫu (MAX)}
+
+Đối với bài toán gốc MIN, mọi quy tắc đảo ngược lại: dấu chuẩn của RBC là $\ge$ (sinh ra biến đối ngẫu $\ge 0$) và dấu chuẩn của biến là $\ge 0$ (sinh ra RBC đối ngẫu $\le$).
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán GỐC} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số gốc ($x_j$)}} & \textbf{Ánh xạ Dấu} & \textbf{Hệ số $b$} \\
+        \hline
+        $Z (\min)$ & \kh{blue}{$c_1$} & $x_1$ & $+$ & \kh{blue}{$c_2$} & $x_2$ & $+$ & \kh{blue}{$c_3$} & $x_3$ & \multicolumn{2}{c|}{\textit{(Đối ngẫu: $Z' \rightarrow \max$)}} \\
+        \hline
+        \textbf{RBC $\rightarrow$ Biến ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số $A$ chuyển vị thành $A^T$}} & \textbf{RBC gốc $\rightarrow$ Dấu biến ĐN ($y_i$)} & \\
+        \hline
+        $R_1 \longrightarrow y_1$ & \kh{green}{$a_{11}$} & $x_1$ & $+$ & \kh{green}{$a_{12}$} & $x_2$ & $+$ & \kh{green}{$a_{13}$} & $x_3$ & 
+        $\ge \longrightarrow y_1 \ge 0$ \quad $\le \longrightarrow y_1 \le 0$ \quad $= \longrightarrow$ tùy ý & \kh{red}{$b_1$} \\
+        \hline
+        $R_2 \longrightarrow y_2$ & \kh{green}{$a_{21}$} & $x_1$ & $+$ & \kh{green}{$a_{22}$} & $x_2$ & $+$ & \kh{green}{$a_{23}$} & $x_3$ & 
+        $\ge \longrightarrow y_2 \ge 0$ \quad $\le \longrightarrow y_2 \le 0$ \quad $= \longrightarrow$ tùy ý & \kh{red}{$b_2$} \\
+        \hline
+        $R_3 \longrightarrow y_3$ & \kh{green}{$a_{31}$} & $x_1$ & $+$ & \kh{green}{$a_{32}$} & $x_2$ & $+$ & \kh{green}{$a_{33}$} & $x_3$ & 
+        $\ge \longrightarrow y_3 \ge 0$ \quad $\le \longrightarrow y_3 \le 0$ \quad $= \longrightarrow$ tùy ý & \kh{red}{$b_3$} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu Biến gốc} \\ $\downarrow$ \\ \textbf{Dấu RBC ĐN}}} 
+        & \multicolumn{2}{c}{$x_1$} & \multicolumn{6}{l|}{$\ge 0 \longrightarrow \le$ \qquad $\le 0 \longrightarrow \ge$ \qquad Tùy ý $\longrightarrow =$ } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Các cột này} \\ \textit{trở thành} \\ \textit{RBC đối ngẫu} \\ \textit{$R'_1, R'_2, R'_3$}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_2$} & \multicolumn{6}{l|}{$\ge 0 \longrightarrow \le$ \qquad $\le 0 \longrightarrow \ge$ \qquad Tùy ý $\longrightarrow =$ } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_3$} & \multicolumn{6}{l|}{$\ge 0 \longrightarrow \le$ \qquad $\le 0 \longrightarrow \ge$ \qquad Tùy ý $\longrightarrow =$ } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Bảng phân rã và ánh xạ trực tiếp cho bài toán gốc MIN}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán ĐỐI NGẪU} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số ĐN ($y_i$)}} & \textbf{Dấu RBC ĐN} & \textbf{Hệ số $c$} \\
+        \hline
+        $Z' (\max)$ & \kh{red}{$b_1$} & $y_1$ & $+$ & \kh{red}{$b_2$} & $y_2$ & $+$ & \kh{red}{$b_3$} & $y_3$ & \multicolumn{2}{c|}{\textit{(Nguồn: Hệ số tự do gốc)}} \\
+        \hline
+        \textbf{Biến gốc $\rightarrow$ RBC ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số chuyển vị $A^T$}} & \textbf{Dấu biến gốc $\rightarrow$ Dấu RBC ĐN} & \\
+        \hline
+        $x_1 \longrightarrow R'_1$ & \kh{green}{$a_{11}$} & $y_1$ & $+$ & \kh{green}{$a_{21}$} & $y_2$ & $+$ & \kh{green}{$a_{31}$} & $y_3$ & 
+        $\ge 0 \longrightarrow \le$ \quad $\le 0 \longrightarrow \ge$ \quad Tùy ý $\longrightarrow =$ & \kh{blue}{$c_1$} \\
+        \hline
+        $x_2 \longrightarrow R'_2$ & \kh{green}{$a_{12}$} & $y_1$ & $+$ & \kh{green}{$a_{22}$} & $y_2$ & $+$ & \kh{green}{$a_{32}$} & $y_3$ & 
+        $\ge 0 \longrightarrow \le$ \quad $\le 0 \longrightarrow \ge$ \quad Tùy ý $\longrightarrow =$ & \kh{blue}{$c_2$} \\
+        \hline
+        $x_3 \longrightarrow R'_3$ & \kh{green}{$a_{13}$} & $y_1$ & $+$ & \kh{green}{$a_{23}$} & $y_2$ & $+$ & \kh{green}{$a_{33}$} & $y_3$ & 
+        $\ge 0 \longrightarrow \le$ \quad $\le 0 \longrightarrow \ge$ \quad Tùy ý $\longrightarrow =$ & \kh{blue}{$c_3$} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu RBC gốc} \\ $\downarrow$ \\ \textbf{Dấu Biến ĐN}}} 
+        & \multicolumn{2}{c}{$y_1$} & \multicolumn{6}{l|}{$\ge \longrightarrow \ge 0$ \qquad $\le \longrightarrow \le 0$ \qquad $= \longrightarrow$ Tùy ý } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Ma trận A} \\ \textit{đã được} \\ \textit{xoay ngang} \\ \textit{thành dọc}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_2$} & \multicolumn{6}{l|}{$\ge \longrightarrow \ge 0$ \qquad $\le \longrightarrow \le 0$ \qquad $= \longrightarrow$ Tùy ý } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_3$} & \multicolumn{6}{l|}{$\ge \longrightarrow \ge 0$ \qquad $\le \longrightarrow \le 0$ \qquad $= \longrightarrow$ Tùy ý } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Bảng phân rã bài toán Đối ngẫu (MAX) và ánh xạ hệ số từ bài toán Gốc}
+\end{table}
+
+\subsubsection*{Ví dụ áp dụng: Bài toán chi phí tối thiểu}
+Xét bài toán gốc (P) tìm phương án tối ưu để đạt chi phí nhỏ nhất:
+\begin{align*}
+    Z &= 12x_1 + 27x_2 + 6x_3 \rightarrow \min \\
+\text{sao cho:} \quad
+    &2x_1 + 3x_2 + 2x_3 \ge 12 \quad (R_1)\\
+    &x_1 + 3x_2 + x_3 \ge 6 \quad (R_2)\\
+    &6x_1 + 9x_2 + 2x_3 \ge 24 \quad (R_3)\\
+    &x_1, x_2, x_3 \ge 0
+\end{align*}
+
+Dưới đây là quá trình phân rã dữ kiện và ánh xạ hệ số từ bài toán Gốc (P) sang bài toán Đối ngẫu (D):
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán GỐC} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số gốc ($x_j$)}} & \textbf{Ánh xạ Dấu} & \textbf{Hệ số $b$} \\
+        \hline
+        $Z (\min)$ & \TL{c_1}{12} & $x_1$ & $+$ & \TL{c_2}{27} & $x_2$ & $+$ & \TL{c_3}{6} & $x_3$ & \multicolumn{2}{c|}{\textit{(Đối ngẫu: $Z' \rightarrow \max$)}} \\
+        \hline
+        \textbf{RBC $\rightarrow$ Biến ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số $A$ chuyển vị thành $A^T$}} & \textbf{RBC gốc $\rightarrow$ Dấu biến ĐN ($y_i$)} & \\
+        \hline
+        $R_1 \longrightarrow y_1$ & \TL{a_{11}}{2} & $x_1$ & $+$ & \TL{a_{12}}{3} & $x_2$ & $+$ & \TL{a_{13}}{2} & $x_3$ & 
+        \khoanh{$\ge$} / $\le$ / $=$ $\longrightarrow$ \khoanh{$\ge 0$} / $\le 0$ / Tùy ý & \TL{b_1}{12} \\
+        \hline
+        $R_2 \longrightarrow y_2$ & \TL{a_{21}}{1} & $x_1$ & $+$ & \TL{a_{22}}{3} & $x_2$ & $+$ & \TL{a_{23}}{1} & $x_3$ & 
+        \khoanh{$\ge$} / $\le$ / $=$ $\longrightarrow$ \khoanh{$\ge 0$} / $\le 0$ / Tùy ý & \TL{b_2}{6} \\
+        \hline
+        $R_3 \longrightarrow y_3$ & \TL{a_{31}}{6} & $x_1$ & $+$ & \TL{a_{32}}{9} & $x_2$ & $+$ & \TL{a_{33}}{2} & $x_3$ & 
+        \khoanh{$\ge$} / $\le$ / $=$ $\longrightarrow$ \khoanh{$\ge 0$} / $\le 0$ / Tùy ý & \TL{b_3}{24} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu Biến gốc} \\ $\downarrow$ \\ \textbf{Dấu RBC ĐN}}} 
+        & \multicolumn{2}{c}{$x_1$} & \multicolumn{6}{l|}{\khoanh{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \khoanh{$\le$} / $\ge$ / $=$ } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Các cột này} \\ \textit{trở thành} \\ \textit{RBC đối ngẫu} \\ \textit{$R'_1, R'_2, R'_3$}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_2$} & \multicolumn{6}{l|}{\khoanh{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \khoanh{$\le$} / $\ge$ / $=$ } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$x_3$} & \multicolumn{6}{l|}{\khoanh{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \khoanh{$\le$} / $\ge$ / $=$ } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Phân rã dữ kiện và cấu trúc dấu của bài toán Gốc (MIN)}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.8}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c c c c c c c c|c|c|}
+        \hline
+        \textbf{Bài toán ĐỐI NGẪU} & \multicolumn{8}{c|}{\textbf{Hệ số \& Biến số ĐN ($y_i$)}} & \textbf{Dấu RBC ĐN} & \textbf{Hệ số $c$} \\
+        \hline
+        $Z' (\max)$ & \TL{b_1}{12} & $y_1$ & $+$ & \TL{b_2}{6} & $y_2$ & $+$ & \TL{b_3}{24} & $y_3$ & \multicolumn{2}{c|}{\textit{(Từ hệ số mục tiêu gốc)}} \\
+        \hline
+        \textbf{Biến gốc $\rightarrow$ RBC ĐN} & \multicolumn{8}{c|}{\textit{Ma trận hệ số chuyển vị $A^T$}} & \textbf{Dấu biến gốc $\rightarrow$ Dấu RBC ĐN} & \\
+        \hline
+        $x_1 \longrightarrow R'_1$ & \TL{a_{11}}{2} & $y_1$ & $+$ & \TL{a_{21}}{1} & $y_2$ & $+$ & \TL{a_{31}}{6} & $y_3$ & 
+        \khoanh{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \khoanh{$\le$} / $\ge$ / $=$ & \TL{c_1}{12} \\
+        \hline
+        $x_2 \longrightarrow R'_2$ & \TL{a_{12}}{3} & $y_1$ & $+$ & \TL{a_{22}}{3} & $y_2$ & $+$ & \TL{a_{32}}{9} & $y_3$ & 
+        \khoanh{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \khoanh{$\le$} / $\ge$ / $=$ & \TL{c_2}{27} \\
+        \hline
+        $x_3 \longrightarrow R'_3$ & \TL{a_{13}}{2} & $y_1$ & $+$ & \TL{a_{23}}{1} & $y_2$ & $+$ & \TL{a_{33}}{2} & $y_3$ & 
+        \khoanh{$\ge 0$} / $\le 0$ / Tùy ý $\longrightarrow$ \khoanh{$\le$} / $\ge$ / $=$ & \TL{c_3}{6} \\
+        \hline
+        \multirow{4}{*}{\shortstack{\textbf{Dấu RBC gốc} \\ $\downarrow$ \\ \textbf{Dấu Biến ĐN}}} 
+        & \multicolumn{2}{c}{$y_1$} & \multicolumn{6}{l|}{\khoanh{$\ge$} / $\le$ / $=$ $\longrightarrow$ \khoanh{$\ge 0$} / $\le 0$ / Tùy ý } & \multicolumn{2}{c|}{ \multirow{4}{*}{\shortstack{\textit{Các cột này} \\ \textit{thể hiện} \\ \textit{chiều biến} \\ \textit{đối ngẫu}}} } \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_2$} & \multicolumn{6}{l|}{\khoanh{$\ge$} / $\le$ / $=$ $\longrightarrow$ \khoanh{$\ge 0$} / $\le 0$ / Tùy ý } & \multicolumn{2}{c|}{} \\
+        \cline{2-9}
+        & \multicolumn{2}{c}{$y_3$} & \multicolumn{6}{l|}{\khoanh{$\ge$} / $\le$ / $=$ $\longrightarrow$ \khoanh{$\ge 0$} / $\le 0$ / Tùy ý } & \multicolumn{2}{c|}{} \\
+        \hline
+    \end{tabular}
+    }
+    \caption{Ánh xạ hệ số và thiết lập bài toán Đối ngẫu (MAX)}
+\end{table}
+
+\noindent Từ Bảng ánh xạ, ta dễ dàng viết được bài toán Đối ngẫu (D) một cách trực quan và chính xác:
+\begin{align*}
+    Z' &= 12y_1 + 6y_2 + 24y_3 \rightarrow \max \\
+\text{sao cho:} \quad
+    &2y_1 + y_2 + 6y_3 \le 12 \\
+    &3y_1 + 3y_2 + 9y_3 \le 27 \\
+    &2y_1 + y_2 + 2y_3 \le 6 \\
+    &y_1, y_2, y_3 \ge 0
+\end{align*}
+
+\textbf{Cách sử dụng:}
+\begin{enumerate}
+    \item Đọc đề bài, xác định bài toán là MAX hay MIN để chọn đúng 1 trong 2 bảng trên.
+    \item Điền các hệ số $a_{ij}$, $c_j$ và $b_i$ vào các vị trí tương ứng.
+    \item Tại cột \textbf{Ánh xạ Dấu}, nhìn vào dấu của đề bài và dùng lệnh \verb|\khoanh{}| để đóng khung cụm chuyển đổi đúng, dùng \verb|\cancel{}| để gạch bỏ các cụm dư thừa.
+    \item Đọc bảng theo chiều dọc để viết ra hệ Ràng buộc chính đối ngẫu ($R'_1, R'_2, R'_3$), và dọc theo hệ số $b$ để viết hàm mục tiêu đối ngẫu.
+\end{enumerate}

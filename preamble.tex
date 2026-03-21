@@ -1,0 +1,320 @@
+\usepackage{amsmath, amssymb, amsfonts}
+
+\usepackage{amsthm}
+\newtheorem{definition}{Định nghĩa}[section]
+\newtheorem{theorem}{Định lý}[section]
+
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{xstring}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+
+
+% appendix
+\usepackage{nomencl} 
+\usepackage{etoolbox} % Định nghĩa các nhóm trong Danh mục
+
+\usepackage{tikz}
+% --- THÊM DÒNG NÀY ĐỂ SỬA LỖI ---
+% --------------------------------
+
+\usepackage{booktabs, multirow, multicol}
+\usepackage{diagbox} % Dùng để kẻ ô chéo trong bảng vận tải (góc Tây - Bắc)
+
+\usepackage{emptypage} % Xóa số trang ở các trang trắng tự động
+\usepackage{enumitem} % Dùng để tùy chỉnh khoảng cách các danh sách
+
+\usetikzlibrary{
+  arrows.meta, 
+  positioning, 
+  calc, 
+  shapes.geometric, 
+  shadows,
+  matrix,
+  positioning,
+  fit,
+  arrows.meta
+  }
+
+
+% =========================
+% GÓI LỆNH VÀ LỆNH TỰ TẠO CHO BẢNG ĐỐI NGẪU
+% =========================
+\usepackage{cancel} % Dùng để gạch chéo các dấu không thỏa mãn
+
+% 1. Lệnh chèn ký hiệu góc trên bên trái (Top-Left) và giá trị vào ô
+\newcommand{\TL}[2]{%
+  \tikz[baseline=(val.base)]{
+    % 1. Ký hiệu góc trên
+    \node[anchor=south west, inner sep=0pt, font=\scriptsize, text=gray] (label) {$#1$};
+    
+    % 2. Giá trị chính nằm ngay dưới ký hiệu (yshift điều chỉnh khoảng cách dòng)
+    \node[anchor=north west, inner sep=0pt, font=\normalsize\bfseries, text=black] (val) at ([yshift=-1.5mm]label.south west) {#2};
+    
+    % 3. Tạo một khung bao tàng hình (bounding box) có khoảng đệm 4pt để ép LaTeX nới rộng hàng, không chạm viền bảng
+    \path ([shift={(-4pt, 4pt)}]label.north west) rectangle ([shift={(4pt, -4pt)}]val.south east);
+  }%
+}
+
+% 2. Lệnh khoanh tròn dấu (dùng fbox để đóng khung)
+\newcommand{\khoanh}[1]{\setlength{\fboxsep}{3pt}\fbox{#1}}
+% =========================
+
+% Định nghĩa lệnh khoanh tròn màu sắc
+\newcommand{\kh}[2]{\tikz[baseline=(char.base)] \node[shape=circle, draw=#1, fill=#1!10, text=black, inner sep=1.5pt, font=\bfseries] (char) {#2};}
+% Định nghĩa lệnh khoanh tròn nét đôi (phù hợp in cả màu và trắng đen)
+\newcommand{\khdouble}[2]{\tikz[baseline=(char.base)] \node[shape=circle, draw=#1, double, double distance=1pt, text=black, inner sep=1.5pt, font=\bfseries] (char) {#2};}
+% Dash
+\newcommand{\khdash}[2]{\tikz[baseline=(char.base)] \node[shape=circle, draw=#1, dashed, text=black, inner sep=1.5pt, font=\bfseries] (char) {#2};}
+
+% =========================================================
+% BỘ LỆNH ĐÓNG KHUNG TIKZ DÀNH CHO QUY HOẠCH TUYẾN TÍNH
+% Cần đảm bảo đã gọi: \usepackage{tikz} 
+\usetikzlibrary{shapes.geometric} % (nếu dùng hình oval)
+% =========================================================
+% 0. Rectangle
+\newcommand{\kv}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, fill=#1!10, text=black, inner sep=1.5pt, font=\bfseries] (char) {#2};}
+% 1. Khung nét đôi
+\newcommand{\kvd}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, double, double distance=1pt, text=black, inner sep=2pt, font=\bfseries] (char) {#2};}
+% 2. Khung nét đứt (Dashed) - Thường dùng cho hệ số ngoài cơ sở
+\newcommand{\kdash}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, dashed, text=black, inner sep=2pt, font=\bfseries] (char) {#2};}
+% 3. Khung nét chấm bi (Dotted) - Thường dùng cho hệ số cơ sở
+\newcommand{\kdot}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, dotted, thick, text=black, inner sep=2pt, font=\bfseries] (char) {#2};}
+% 4. Khung nét đậm (Thick) - Dùng để nhấn mạnh phần tử trụ (Pivot)
+\newcommand{\kthick}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, very thick, text=black, inner sep=2pt, font=\bfseries] (char) {#2};}
+% 5. Khung bo tròn góc (Rounded) - Nhìn mềm mại hơn khung vuông sắc cạnh
+\newcommand{\kround}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, rounded corners=3pt, text=black, inner sep=2pt, font=\bfseries] (char) {#2};}
+% 6. Khung có màu nền nhạt (Fill) - Dùng làm nổi bật hẳn 1 ô (in xám trắng vẫn thấy nền)
+\newcommand{\kfill}[2]{\tikz[baseline=(char.base)] \node[shape=rectangle, draw=#1, fill=#1!15, text=black, inner sep=2pt, font=\bfseries] (char) {#2};}
+% 7. Khung hình Oval - Dùng cho cột Phương án (PA) như sơ đồ trong giáo trình
+\newcommand{\koval}[2]{\tikz[baseline=(char.base)] \node[shape=ellipse, draw=#1, text=black, inner sep=1.5pt, font=\bfseries] (char) {#2};}
+
+
+\usepackage[most]{tcolorbox}
+% \tcbuselibrary{theorems, ams}
+
+% Định nghĩa một môi trường mới cho phương trình có khung
+\newtcolorbox{formula}[1][]{
+    ams equation,       % Tích hợp môi trường equation của amsmath
+    enhanced,           % Kích hoạt các tính năng đồ họa nâng cao
+    colback=white,      % Màu nền trắng (phù hợp in ấn học thuật)
+    colframe=black,     % Màu viền đen
+    boxrule=0.5pt,      % Độ dày viền tiêu chuẩn
+    sharp corners,      % Góc vuông để giữ vẻ chuyên nghiệp
+    fonttitle=\bfseries,
+    title=#1,           % Tham số tùy chọn để đặt tên cho công thức
+    before skip=10pt,   % Khoảng cách phía trên box
+    after skip=10pt     % Khoảng cách phía dưới box
+}
+
+\newcommand{\LPsemanticheading}[3]{%
+  \par\medskip
+  \LPsidebarlabel{#1}%
+  {\noindent\color{#2}\rule{\linewidth}{0.5pt}\par}
+  {\noindent\bfseries\color{#2} #3\par}
+  {\noindent\color{#2!70!black}\rule{0.38\linewidth}{0.4pt}\par\smallskip}
+}
+
+\NewDocumentEnvironment{exampleblock}{m}{%
+  \LPsemanticheading{Ví dụ}{blue!60!black}{#1}%
+}{\par\medskip}
+
+\NewDocumentEnvironment{exerciseblock}{m}{%
+  \LPsemanticheading{Bài tập}{orange!70!black}{#1}%
+}{\par\medskip}
+
+\NewDocumentEnvironment{questionblock}{m}{%
+  \LPsemanticheading{Câu hỏi}{red!70!black}{#1}%
+}{\par\medskip}
+
+\NewDocumentEnvironment{remarkblock}{m}{%
+  \LPsemanticheading{Ghi chú}{green!50!black}{#1}%
+}{\par\medskip}
+
+\NewDocumentEnvironment{solutionblock}{m}{%
+  \LPsemanticheading{Lời giải}{black!70}{#1}%
+}{\par\medskip}
+
+\makenomenclature
+
+% =========================
+% FONT TIẾNG VIỆT
+% =========================
+\usepackage{iftex}
+
+\ifPDFTeX
+\usepackage[T5]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\else
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+\defaultfontfeatures{Ligatures=TeX}
+\IfFontExistsTF{Times New Roman}{
+  \setmainfont{Times New Roman}
+}{
+  \setmainfont{TeX Gyre Termes}
+}
+\fi
+
+\usepackage{geometry} % Chỉ gọi tên gói
+\geometry{
+  a4paper,
+  top=2cm,
+  bottom=2cm,
+  inner=2.5cm,
+  outer=0.7cm,
+  marginparsep=0.9cm,
+  marginparwidth=4.5cm,
+  includemp,
+  twoside
+}
+
+\raggedbottom
+
+% ===== BỐ CỤC 3/7: CỘT GHI CHÚ + NỘI DUNG CHÍNH =====
+\newif\ifLPshowsidebarlayout
+\LPshowsidebarlayouttrue
+
+\normalmarginpar
+\setlength{\marginparpush}{10pt}
+\newlength{\LPsidebaroffset}
+\setlength{\LPsidebaroffset}{\dimexpr0.7cm+4.5cm+0.5\marginparsep\relax}
+
+\definecolor{sidebarline}{gray}{0.75}
+\definecolor{sidebartext}{gray}{0.30}
+
+\newcommand{\LPsidebarlabel}[1]{%
+  \marginpar{%
+    \raggedright
+    \sffamily
+    \footnotesize
+    \color{sidebartext}
+    \rule{\marginparwidth}{0.4pt}\par
+    \vspace{2pt}
+    \textbf{\MakeUppercase{#1}}\par
+    \vspace{2pt}
+    \rule{0.62\marginparwidth}{0.4pt}%
+  }%
+}
+
+\newcommand{\LPheadinglabel}[1]{%
+  \begingroup
+  \IfSubStr{#1}{Ví dụ}{\LPsidebarlabel{Ví dụ}}{%
+    \IfSubStr{#1}{Bài tập}{\LPsidebarlabel{Bài tập}}{%
+      \IfSubStr{#1}{Đề bài}{\LPsidebarlabel{Câu hỏi}}{%
+        \IfSubStr{#1}{Đề thi mẫu}{\LPsidebarlabel{Đề thi}}{%
+          \IfSubStr{#1}{ĐÁP ÁN}{\LPsidebarlabel{Đáp án}}{%
+            \IfSubStr{#1}{Đáp án}{\LPsidebarlabel{Đáp án}}{}%
+          }%
+        }%
+      }%
+    }%
+  }%
+  \endgroup
+}
+
+\BeforeBeginEnvironment{definition}{\LPsidebarlabel{Định nghĩa}}
+\BeforeBeginEnvironment{theorem}{\LPsidebarlabel{Định lý}}
+\BeforeBeginEnvironment{formula}{\LPsidebarlabel{Công thức}}
+
+\AddToHook{shipout/background}{%
+  \ifLPshowsidebarlayout
+    \begin{tikzpicture}[remember picture,overlay]
+      \ifodd\value{page}
+        \draw[line width=0.4pt, sidebarline]
+          ([xshift=-\LPsidebaroffset,yshift=-2cm]current page.north east) --
+          ([xshift=-\LPsidebaroffset,yshift=2cm]current page.south east);
+      \else
+        \draw[line width=0.4pt, sidebarline]
+          ([xshift=\LPsidebaroffset,yshift=-2cm]current page.north west) --
+          ([xshift=\LPsidebaroffset,yshift=2cm]current page.south west);
+      \fi
+    \end{tikzpicture}%
+  \fi
+}
+
+% ===== TIÊU ĐỀ CÁC CẤP MỤC =====
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\renewcommand{\chaptername}{Chương}
+\renewcommand{\thesubsubsection}{%
+  \ifnum\value{subsection}=0
+    \thesection.\arabic{subsubsection}%
+  \else
+    \thesubsection.\arabic{subsubsection}%
+  \fi
+}
+
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\centering}
+  {\Large \chaptername~\thechapter}
+  {0.5ex}
+  {\Huge}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {Mục~\thesection.}
+  {0.75em}
+  {}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {Tiểu mục~\thesubsection.}
+  {0.75em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}
+  {Mục nhỏ~\thesubsubsection.}
+  {0.75em}
+  {}
+
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{10pt}{4pt}
+
+\let\LPsection\section
+\RenewDocumentCommand{\section}{s o m}{%
+  \LPheadinglabel{#3}%
+  \IfBooleanTF{#1}
+    {\LPsection*{#3}}
+    {\IfNoValueTF{#2}{\LPsection{#3}}{\LPsection[#2]{#3}}}%
+}
+
+\let\LPsubsection\subsection
+\RenewDocumentCommand{\subsection}{s o m}{%
+  \LPheadinglabel{#3}%
+  \IfBooleanTF{#1}
+    {\LPsubsection*{#3}}
+    {\IfNoValueTF{#2}{\LPsubsection{#3}}{\LPsubsection[#2]{#3}}}%
+}
+
+\let\LPsubsubsection\subsubsection
+\RenewDocumentCommand{\subsubsection}{s o m}{%
+  \LPheadinglabel{#3}%
+  \IfBooleanTF{#1}
+    {\LPsubsubsection*{#3}}
+    {\IfNoValueTF{#2}{\LPsubsubsection{#3}}{\LPsubsubsection[#2]{#3}}}%
+}
+
+% ===== RENAME: Đổi tên danh mục =====
+\renewcommand{\contentsname}{MỤC LỤC}
+\renewcommand{\listfigurename}{DANH MỤC HÌNH ẢNH}
+\renewcommand{\listtablename}{DANH MỤC BẢNG BIỂU}
+\renewcommand{\nomname}{DANH MỤC KÝ HIỆU}
+

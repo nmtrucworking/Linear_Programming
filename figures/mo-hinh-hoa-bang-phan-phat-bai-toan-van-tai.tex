@@ -1,0 +1,67 @@
+\begin{figure}[H]
+    \centering
+    \resizebox{0.95\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.2]},
+        cell/.style={rectangle, draw=black, minimum width=3.5cm, minimum height=1.5cm, align=center, anchor=center},
+        ampersand replacement=\&
+    ]
+        % 1. Vẽ ma trận 3x4
+        \matrix (M) [matrix of nodes, nodes={cell}, column sep=-\pgflinewidth, row sep=-\pgflinewidth, nodes in empty cells]
+        {
+            |[alias=diag]| \& |[alias=b1]| $T_1 : t_1$ \& |[alias=b2]| $T_2 : t_2$ \& |[alias=b3]| $T_3 : t_3$ \\
+            |[alias=a1]| $P_1 : p_1$ \& |[alias=cell11]| $c_{11} \mid x_{11}$ \& $c_{12} \mid x_{12}$ \& $c_{13} \mid x_{13}$ \\
+            |[alias=a2]| $P_2 : p_2$ \& $c_{21} \mid x_{21}$ \& $c_{22} \mid x_{22}$ \& $c_{23} \mid x_{23}$ \\
+        };
+
+        % 2. Xử lý ô 1x1 (Đường chéo và Label)
+        % Đường chéo
+        \draw[black!70, thick] (diag.north west) -- (diag.south east);
+
+        % Trạm thu (trên phải)
+        \node[
+            anchor=north east,
+            xshift=-3pt,
+            yshift=-3pt,
+            font=\footnotesize,
+            fill=white,
+            inner sep=1pt
+        ] at (diag.north east)
+        {Trạm thu ($T_j$)};
+
+        % Trạm phát (dưới trái)
+        \node[
+            anchor=south west,
+            xshift=3pt,
+            yshift=3pt,
+            font=\footnotesize,
+            fill=white,
+            inner sep=1pt
+        ] at (diag.south west)
+        {Trạm phát ($P_i$)};
+
+        % 3. Khoanh vùng 1x2 -> 1x4 (Lượng hàng trạm thu)
+        \node[draw=blue, thick, rounded corners, inner sep=-4pt, fit=(b1) (b3)] (groupT) {};
+        \draw[<-, blue, thick] (groupT.north) -- ++(0,1) node[above, font=\bfseries] {Nhu cầu tại trạm thu $T_j$ ($T_j$)};
+
+        % 4. Khoanh vùng 2x1 -> 3x1 (Lượng hàng trạm phát)
+        \node[draw=orange, thick, rounded corners, inner sep=-4pt, fit=(a1) (a2)] (groupP) {};
+        \draw[<-, orange, thick] (groupP.south) -- ++(0,-1.2) node[below, align=center, font=\bfseries] {Lượng phát tại trạm $P_i$ ($p_i$)};
+
+        % 5. Mũi tên giải thích cho c_ij và x_ij (Lấy ô cell11 làm chuẩn)
+        % Tạo node ảo lùi về trái/phải để mũi tên chỉ đúng vào c_11 và x_11
+        \node at (cell11.center) [xshift=-0.6cm] (cij) {};
+        \node at (cell11.center) [xshift=0.6cm] (xij) {};
+
+        % Mũi tên cho c_ij (Cước phí)
+        \draw[<-, red, ultra thick] (cij) -- ++(2,-2.6) node[below, align=center, text=red, font=\small] {Chi phí vận chuyển một đơn vị \\ từ trạm $P_i$ đến trạm $T_j$};
+        
+        % Mũi tên cho x_ij (Lượng hàng)
+        % 
+        \draw[<-, purple, ultra thick] (xij) -- ++(5,-3.5) node[below, align=center, text=purple, font=\small] {Lượng hàng vận chuyển thực tế \\ từ trạm $P_i$ đến trạm $T_j$};
+
+    \end{tikzpicture}
+    }
+    \caption{Mô hình hóa Bảng phân phát bài toán vận tải}
+    \label{fig:mohinh-phanphat-vantai}
+\end{figure}

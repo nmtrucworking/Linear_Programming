@@ -1,0 +1,55 @@
+% Chương này đã được khai báo trong main.tex.
+
+\section{Mô hình hóa bài toán vận tải}
+    \input{chapters/section-mo-hing-hoa-bai-toan-van-tai.tex}
+
+\section{Các khái niệm}
+\subsection{Các khái niệm về cấu trúc mô hình bài toán}
+\begin{itemize}
+    \item \textbf{Trạm phát (Supply Point):} Là các điểm cung cấp hàng hóa, thường được ký hiệu là $A_i$ với $i = \overline{1,m}$, mỗi trạm phát có một lượng hàng hóa cụ thể $a_i$ (trữ lượng).
+    \item \textbf{Trạm thu (Demand Point):} Là các điểm tiêu thụ hàng hóa, thường được ký hiệu là $B_j$ với $j = \overline{1,n}$, mỗi trạm thu có một nhu cầu cụ thể $b_j$.
+    \item \textbf{Cước phí vận chuyển (Transportation Cost):} Là chi phí hoặc hiệu suất liên quan đến việc vận chuyển một đơn vị hàng hóa từ trạm phát $A_i$ đến trạm thu $B_j$, được ký hiệu là $c_{ij}$.
+    \item \textbf{Biến quyết định (Decision Variable):} Là các biến $x_{ij}$ đại diện cho lượng hàng hóa được vận chuyển từ trạm phát $A_i$ đến trạm thu $B_j$, cần được xác định để tối ưu hóa mục tiêu của bài toán.
+    \item \textbf{Hàm mục tiêu (Objective Function):} Là hàm cần được tối ưu hóa (tối thiểu hóa tổng chi phí hoặc tối đa hóa hiệu suất), thường được biểu diễn dưới dạng $Z = \sum_{i=1}^{m} \sum_{j=1}^{n} c_{ij} x_{ij}$.
+\end{itemize}
+\subsection{Các khái niệm về Phương án và Ô phân bổ}
+\begin{itemize}
+    \item \textbf{Phương án (Solution):} Là một tập hợp các giá trị $x_{ij}$ đại diện cho lượng hàng hóa được vận chuyển từ trạm phát $A_i$ đến trạm thu $B_j$. Một phương án phải thỏa mãn tất cả các ràng buộc về cung cấp và nhu cầu.
+    \item \textbf{Ô phân bổ (Basic Variable):} Là các biến $x_{ij}$ có giá trị dương trong một phương án cơ bản. Số lượng ô phân bổ tối đa là $m + n - 1$ để đảm bảo tính khả thi của phương án.
+    \item \textbf{Ô không phân bổ (Non-basic Variable):} Là các biến $x_{ij}$ có giá trị bằng 0 trong một phương án cơ bản. Các ô không phân bổ không đóng góp vào tổng chi phí hoặc hiệu suất của phương án.
+\end{itemize}
+
+
+\subsection{Phân loại Phương án Cơ bản}
+\begin{itemize}
+    \item \textbf{Phương án cơ bản (PACB)}: Là phương án mà các ô chọn cấu thành nên nó không tạo ra bất kỳ chu trình nào.
+    \item \textbf{PACB không suy biến}: Xảy ra khi số lượng ô chọn trong phương án đạt đúng số lượng $m + n - 1$ (với $m$ là số trạm phát và $n$ là số trạm thu), đảm bảo rằng không có ô nào bị suy biến (tức là không có ô nào có giá trị bằng 0).
+    \item \textbf{PACB suy biến}: Xảy ra khi số lượng ô chọn trong phương án nhỏ hơn $m + n - 1$, dẫn đến việc có ít nhất một ô có giá trị bằng 0.
+\end{itemize}
+
+\section{Các phương pháp giải bài toán vận tải}
+Quy tắc phân phối chung: Phân phối hàng hóa từ trạm phát đến trạm thu sao cho tổng chi phí vận chuyển được tối thiểu hóa, đồng thời đảm bảo rằng tất cả các nhu cầu của các trạm thu được đáp ứng và không vượt quá khả năng cung cấp của các trạm phát. \\
+Tổng quát bằng công thức toán học:
+\begin{formula}
+    x_{ij} = \min(p_i^{(k)}, t_j^{(k)})
+\end{formula}
+Trong đó: 
+\begin{itemize}
+    \item $x_{ij}$: Lượng hàng hóa được phân bổ từ trạm phát $p_i$ đến trạm thu $t_j$.
+    \item $p_i^{(k)}$: Lượng hàng hóa còn lại tại trạm phát $p_i$ sau khi đã phân bổ trong bước thứ $k$.
+    \item $t_j^{(k)}$: Nhu cầu còn lại tại trạm thu $t_j$ sau khi đã phân bổ trong bước thứ $k$.
+\end{itemize}
+
+Cập nhật lại Cung và Cầu cho bước $k+1$:
+$$ p_i^{(k+1)} = p_i^{(k)} - x_{ij} $$
+$$ t_j^{(k+1)} = t_j^{(k)} - x_{ij} $$
+Điều kiện gạch bỏ: 
+\begin{itemize}
+    \item Nếu $p_i^{(k+1)} = 0$, gạch bỏ trạm phát $p_i$ khỏi bảng phân phối. 
+    \item Nếu $t_j^{(k+1)} = 0$, gạch bỏ trạm thu $t_j$ khỏi bảng phân phối.
+\end{itemize}
+
+    \input{chapters/phuong-phap-cuoc-phi-min.tex}
+    \input{chapters/phuong-phap-goc-tay-bac.tex}
+    \input{chapters/phuong-phap-fogels.tex}
+    \input{chapters/phuong-phap-the-vi-doi-voi-bai-toan-min.tex}

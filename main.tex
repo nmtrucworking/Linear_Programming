@@ -1,0 +1,66 @@
+\documentclass[12pt,a4paper]{book}
+
+% =========================
+% PACKAGES 
+\input{preamble.tex} % Nạp cấu hình từ preamble.tex
+\input{appendix/preamle_appendix}
+
+% ======== DOCUMENT ========  
+\begin{document} % Bắt đầu tài liệu (BẮT BUỘC)
+
+% === Trang bìa
+\pagenumbering{gobble}
+\input{cover.tex} 
+
+% === Mục lục và Danh mục
+\cleardoublepage
+\frontmatter
+\pagenumbering{roman}
+\setcounter{page}{1}
+\pagestyle{plain}
+\tableofcontents 
+\listoffigures
+\listoftables
+
+% === NỘI DUNG CHÍNH
+\cleardoublepage
+\mainmatter
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{plain}
+\chapter{Tổng quan và Xây dựng mô hình }
+    \input{chapters/chap1_intro}
+
+\chapter{Cơ sở lý thuyết và Phương pháp hình học}
+    \input{chapters/chap2_basic}
+    \input{chapters/Phương pháp hình học}
+    
+\chapter{Thuật toán Đơn hình}
+    \input{chapters/Simplex_Method}
+    
+\chapter{Bài toán Đối ngẫu}
+    \input{chapters/chap3_bai_toan_doi_ngau}
+
+
+\chapter{Bài toán Vận tải}
+    \input{chapters/chap4_bai_toan_van_tai}
+
+\chapter{Luyện tập và Đề thi mẫu}
+    \section{Luyện tập}
+    \input{chapters/bai_tap_chuong_1}
+    \input{chapters/bai_tap_chuong_1b}
+    % \section{Đề thi mẫu}
+    \input{sample-test/sample-test}
+    \input{sample-test/sample-test-keys}
+    
+% ===== PHỤ LỤC
+\cleardoublepage
+\appendix
+\pagestyle{plain}
+\addcontentsline{toc}{part}{PHỤ LỤC}
+% contents
+\input{appendix/appendix_symbols}
+\input{appendix/appendix_simplex_tables}
+\input{appendix/appendix_formulas}
+
+\end{document} % Kết thúc tài liệu

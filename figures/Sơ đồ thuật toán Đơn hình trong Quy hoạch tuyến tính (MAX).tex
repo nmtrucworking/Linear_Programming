@@ -1,0 +1,57 @@
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{
+    \begin{tikzpicture}[
+        node distance=1.2cm and 2cm,
+        box/.style={rectangle, draw=black, thick, minimum width=4.5cm, minimum height=1.2cm, align=center, fill=blue!5, rounded corners=4pt, font=\normalsize},
+        decision/.style={diamond, draw=orange!90!black, thick, minimum width=3cm, minimum height=3cm, align=center, fill=orange!10, aspect=1.8, font=\normalsize\bfseries},
+        term/.style={rectangle, draw=green!60!black, thick, minimum width=3.5cm, minimum height=1.2cm, align=center, fill=green!10, rounded corners=4pt, font=\normalsize\bfseries},
+        termbad/.style={rectangle, draw=red!60!black, thick, minimum width=3.5cm, minimum height=1.2cm, align=center, fill=red!10, rounded corners=4pt, font=\normalsize\bfseries},
+        arrow/.style={->, >=stealth, thick, rounded corners=6pt}
+    ]
+
+    % --- CÁC KHỐI CHỨC NĂNG ---
+    % Khối bắt đầu
+    \node (start) [box, rounded corners=15pt, fill=black!10, draw=black, font=\normalsize\bfseries] {BẮT ĐẦU};
+    
+    % Khối khởi tạo
+    \node (init) [box, below=0.8cm of start] {Lập bảng Đơn hình khởi tạo \&\\Tính các hệ số ước lượng $\Delta_j$};
+    
+    % Điều kiện tối ưu
+    \node (check_opt) [decision, below=0.8cm of init] {$\forall \Delta_j \ge 0 \; ?$};
+    \node (opt_found) [term, right=1.5cm of check_opt] {DỪNG THUẬT TOÁN\\Đã đạt Phương án tối ưu};
+    
+    % Chọn cột xoay
+    \node (pivot_col) [box, below=0.8cm of check_opt] {Chọn cột xoay $k$ (Biến vào)\\($\Delta_k = \min \Delta_j < 0$)};
+    
+    % Điều kiện không giới hạn
+    \node (check_bound) [decision, below=0.8cm of pivot_col] {$\forall a_{ik} \le 0 \; ?$};
+    \node (unbounded) [termbad, right=1.5cm of check_bound] {DỪNG THUẬT TOÁN\\Bài toán không giới hạn\\(Hàm mục tiêu vô cực)};
+    
+    % Chọn hàng xoay
+    \node (ratios) [box, below=0.8cm of check_bound] {Tính tỷ số $\lambda_i = \frac{b_i}{a_{ik}}$ (chỉ xét $a_{ik} > 0$)\\ Chọn hàng xoay $r$ (Biến ra): $\lambda_r = \min \lambda_i$};
+    
+    % Biến đổi Gauss
+    \node (gauss) [box, left=2.5cm of pivot_col, fill=purple!5, draw=purple, thick] {Biến đổi Gauss-Jordan\\(Cập nhật lại bảng mới)};
+
+    % --- CÁC ĐƯỜNG KẾT NỐI ---
+    \draw[arrow] (start) -- (init);
+    \draw[arrow] (init) -- (check_opt);
+    
+    % Nhánh kiểm tra tối ưu
+    \draw[arrow] (check_opt) -- node[above, font=\footnotesize\bfseries, text=green!60!black] {ĐÚNG} (opt_found);
+    \draw[arrow] (check_opt) -- node[right, font=\footnotesize\bfseries, text=red] {SAI (Chưa T.Ư)} (pivot_col);
+    
+    % Nhánh kiểm tra vô giới hạn
+    \draw[arrow] (pivot_col) -- (check_bound);
+    \draw[arrow] (check_bound) -- node[above, font=\footnotesize\bfseries, text=red] {ĐÚNG} (unbounded);
+    \draw[arrow] (check_bound) -- node[right, font=\footnotesize\bfseries, text=green!60!black] {SAI} (ratios);
+    
+    % Vòng lặp xoay bảng
+    \draw[arrow] (ratios.west) -| (gauss.south);
+    \draw[arrow] (gauss.north) |- (init.west);
+
+    \end{tikzpicture}
+}
+\caption{Sơ đồ thuật toán Đơn hình chi tiết cho bài toán quy hoạch tuyến tính (MAX)}
+\end{figure}

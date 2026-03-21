@@ -1,0 +1,91 @@
+\subsubsection*{Mẹo tính nhanh: Quy tắc ``chữ L ngược''}
+
+Để tránh nhầm lẫn khi tính $\Delta_j$ theo công thức gốc, ta có thể hình dung phép tính dưới dạng đồ họa sơ đồ sau. Các phép nhân được thực hiện theo chiều dọc từ trên xuống, sau đó trừ đi hệ số trên cùng:
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.8cm and 2cm,
+        cell/.style={rectangle, draw, thick, minimum width=1.5cm, minimum height=0.8cm, align=center},
+        highlight/.style={fill=blue!10, draw=blue, thick},
+        target/.style={fill=red!10, draw=red, thick},
+        arrow/.style={->, >=stealth, thick, blue}
+    ]
+
+    \node (cb_title) {\textbf{Cột $\mathbf{C_b}$}};
+    \node[cell, highlight, below=0.2cm of cb_title] (cb1) {$C_1$};
+    \node[cell, highlight, below=of cb1] (cb2) {$C_2$};
+    \node[below=0.4cm of cb2] (cb_dots) {$\vdots$};
+    \node[cell, highlight, below=0.4cm of cb_dots] (cbm) {$C_m$};
+
+    \node[right=3cm of cb_title] (xj_title) {\textbf{Cột $\mathbf{x_j}$}};
+    \node[cell, target, below=0.2cm of xj_title, label=right:\textcolor{red}{$- c_j$ (Trừ đi)}] (cj) {$c_j$};
+    \node[cell, highlight, below=0.8cm of cj] (a1j) {$a_{1j}$};
+    \node[cell, highlight, below=of a1j] (a2j) {$a_{2j}$};
+    \node[below=0.4cm of a2j] (aj_dots) {$\vdots$};
+    \node[cell, highlight, below=0.4cm of aj_dots] (amj) {$a_{mj}$};
+
+    \node[cell, fill=green!15, draw=green!60!black, thick, below=0.8cm of amj] (deltaj) {$\mathbf{\Delta_j}$};
+
+    \draw[arrow] (cb1.east) -- node[above] {$\times$} (a1j.west);
+    \draw[arrow] (cb2.east) -- node[above] {$\times$} (a2j.west);
+    \draw[arrow] (cbm.east) -- node[above] {$\times$} (amj.west);
+
+    \draw[->, >=stealth, thick, red] (cj.west) to[out=180, in=180] node[left] {Trừ đi (-)} (deltaj.west);
+
+    \draw[dashed, blue, thick, rounded corners]
+        ([xshift=-0.5cm, yshift=0.3cm]cb1.north west) rectangle
+        ([xshift=0.5cm, yshift=-0.3cm]amj.south east);
+
+    \node[right=1.5cm of a2j, text=blue, align=left] {\textbf{Bước 1:}\\Tính tổng các\\tích vô hướng ($\Sigma$)};
+    \node[right=1.5cm of deltaj, text=black, align=left] {\textbf{Bước 2:}\\Ghi kết quả vào $\Delta_j$};
+
+    \end{tikzpicture}
+    \caption{Trực quan hóa cách tính hệ số ước lượng $\Delta_j$}
+\end{figure}
+
+\subsubsection*{Ví dụ minh họa: Tính $\Delta_2$ tại Bảng đơn hình 2}
+
+Dưới đây là sơ đồ minh họa cách tính $\Delta_2$ ở Bảng đơn hình 2 (được trích từ bài toán ở phần Sample Test).
+Ta có cột hệ số cơ sở $\mathbf{C_b} = (0, 15, 0)^T$, cột $\mathbf{x_2} = (-4, 2, -3)^T$ và hệ số hàm mục tiêu $c_2 = 9$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.8cm and 2.5cm,
+        cell/.style={rectangle, draw, thick, minimum width=1.5cm, minimum height=0.8cm, align=center},
+        highlight/.style={fill=blue!10, draw=blue, thick},
+        target/.style={fill=red!10, draw=red, thick},
+        result/.style={fill=green!15, draw=green!60!black, thick},
+        arrow/.style={->, >=stealth, thick, blue}
+    ]
+
+    \node (cb_title) {\textbf{Cột $\mathbf{C_b}$}};
+    \node[cell, highlight, below=0.2cm of cb_title] (cb1) {$0$};
+    \node[cell, highlight, below=0.5cm of cb1] (cb2) {$15$};
+    \node[cell, highlight, below=0.5cm of cb2] (cb3) {$0$};
+
+    \node[right=3cm of cb_title] (xj_title) {\textbf{Cột $\mathbf{x_2}$}};
+    \node[cell, target, below=0.2cm of xj_title, label=right:\textcolor{red}{$- 9$ (Trừ đi $c_2$)}] (cj) {$9$};
+    \node[cell, highlight, below=0.8cm of cj] (a1j) {$-4$};
+    \node[cell, highlight, below=0.5cm of a1j] (a2j) {$2$};
+    \node[cell, highlight, below=0.5cm of a2j] (a3j) {$-3$};
+
+    \node[cell, result, below=0.8cm of a3j] (deltaj) {$\mathbf{21}$};
+
+    \draw[arrow] (cb1.east) -- node[above] {$\times$} (a1j.west);
+    \draw[arrow] (cb2.east) -- node[above] {$\times$} (a2j.west);
+    \draw[arrow] (cb3.east) -- node[above] {$\times$} (a3j.west);
+
+    \draw[->, >=stealth, thick, red] (cj.west) to[out=180, in=180] node[left, align=center] {Trừ đi\\$(-)$} (deltaj.west);
+
+    \draw[dashed, blue, thick, rounded corners]
+        ([xshift=-0.5cm, yshift=0.3cm]cb1.north west) rectangle
+        ([xshift=0.5cm, yshift=-0.3cm]a3j.south east);
+
+    \node[right=1.5cm of a2j, text=blue, align=left] {\textbf{Bước 1: Tổng tích vô hướng ($\Sigma$)}\\$0 \times (-4) + 15 \times 2 + 0 \times (-3)$\\$= 0 + 30 + 0$\\$= \mathbf{30}$};
+    \node[right=1.5cm of deltaj, text=black, align=left] {\textbf{Bước 2: Trừ đi $c_2$}\\$30 - 9 = \mathbf{21}$\\$\rightarrow \Delta_2 = 21$};
+
+    \end{tikzpicture}
+    \caption{Ví dụ thực tế: Tính $\Delta_2$ theo quy tắc ``Chữ L ngược''}
+\end{figure}

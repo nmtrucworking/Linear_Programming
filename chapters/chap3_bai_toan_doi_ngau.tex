@@ -1,0 +1,125 @@
+% \chapter{Bài toán đối ngẫu}
+
+\section{Ý nghĩa và cách lập bài toán đối ngẫu}
+
+\subsection{Ý nghĩa thực tế của bài toán đối ngẫu}
+Trong thực tiễn kinh tế, mỗi bài toán Quy hoạch tuyến tính (gọi là bài toán gốc) luôn tồn tại song song một bài toán "anh em" với nó, được gọi là bài toán đối ngẫu. 
+
+\begin{exampleblock}{Ví dụ minh họa}
+Giả sử bạn là giám đốc của một công ty sản xuất (Công ty A) đang giải bài toán lập kế hoạch sản xuất tối ưu nhằm tối đa hóa lợi nhuận (tìm Max) dựa trên số lượng nguyên liệu giới hạn đang có trong kho [2]. Lúc này, một đối tác (Công ty B) đến đề nghị mua lại \textit{toàn bộ nguyên liệu} của bạn thay vì để bạn tự sản xuất [2].
+
+Vấn đề đặt ra cho Công ty B là: \textit{Phải định giá mua mỗi đơn vị nguyên liệu là bao nhiêu để tổng chi phí mua là nhỏ nhất (tìm Min), nhưng vẫn đủ sức thuyết phục Công ty A bán lại (tức là giá mua nguyên liệu không được thấp hơn giá trị lợi nhuận mà Công ty A có thể tự làm ra)?} [2].
+
+Bài toán định giá mua nguyên liệu của Công ty B chính là \textbf{Bài toán đối ngẫu} của bài toán sản xuất ban đầu [2].
+\end{exampleblock}
+
+\section{Quy tắc lập bài toán đối ngẫu}
+
+Mối quan hệ chuyển đổi giữa bài toán gốc và bài toán đối ngẫu được thiết lập cực kỳ chặt chẽ. Một cách tổng quát, nếu bài toán gốc $(P)$ tìm giá trị lớn nhất (Max) thì bài toán đối ngẫu $(D)$ sẽ tìm giá trị nhỏ nhất (Min) và ngược lại [1]. 
+
+Để thuận tiện cho việc lập mô hình, quy tắc chuyển đổi được tóm tắt qua hệ thống các bảng dưới đây:
+
+\subsubsection{1. Bảng quy tắc tổng hợp bằng ký hiệu toán học}
+Dưới đây là bảng ánh xạ 1-1 giữa các ràng buộc và biến số của hai bài toán được trình bày hoàn toàn bằng ngôn ngữ toán học [1].
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Bài toán xuất phát (Gốc)} & $\Leftrightarrow$ & \textbf{Bài toán đối ngẫu} \\
+        \hline
+        \textbf{$Z = \sum_{j=1}^{n} c_j x_j \rightarrow \max$} & $\Leftrightarrow$ & \textbf{$Z' = \sum_{i=1}^{m} b_i y_i \rightarrow \min$} \\
+        \hline
+        $\sum_{j=1}^{n} a_{ij} x_j \le b_i$ & $\Leftrightarrow$ & $y_i \ge 0$ \\
+        $\sum_{j=1}^{n} a_{ij} x_j \ge b_i$ & $\Leftrightarrow$ & $y_i \le 0$ \\
+        $\sum_{j=1}^{n} a_{ij} x_j = b_i$ & $\Leftrightarrow$ & $y_i$ tùy ý \\
+        \hline
+        $x_j \ge 0$ & $\Leftrightarrow$ & $\sum_{i=1}^{m} a_{ij} y_i \ge c_j$ \\
+        $x_j \le 0$ & $\Leftrightarrow$ & $\sum_{i=1}^{m} a_{ij} y_i \le c_j$ \\
+        $x_j$ tùy ý & $\Leftrightarrow$ & $\sum_{i=1}^{m} a_{ij} y_i = c_j$ \\
+        \hline
+    \end{tabular}
+    \caption{Bảng quy tắc chuyển đổi đối ngẫu (Dạng ký hiệu toán học)}
+    \label{tab:doi_ngau_ky_hieu}
+\end{table}
+
+\textit{Mẹo ghi nhớ từ Bảng \ref{tab:doi_ngau_ky_hieu}:} Ràng buộc dấu (RBD) của bài toán này sẽ quyết định dấu của Ràng buộc chính (RBC) trong bài toán kia, và ngược lại [2].
+
+\vspace{0.3cm}
+\subsubsection{2. Phân tách quy tắc theo dạng hàm mục tiêu}
+Để tránh nhầm lẫn trong quá trình làm bài, quy tắc trên được phân tách riêng biệt cho 2 dạng bài toán: từ Max sang Min và từ Min sang Max.
+
+\textbf{Dạng 1: Chuyển từ bài toán Max sang Min} \\
+Đối với bài toán gốc tìm Max, ràng buộc mang dấu ``$\le$'' và biến ``$\ge 0$'' được coi là các dấu "chuẩn".
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|l|c|l|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{Bài toán Gốc (Max)}} & \textbf{$\rightarrow$} & \multicolumn{1}{c|}{\textbf{Bài toán Đối ngẫu (Min)}} \\
+        \hline
+        \textbf{Ràng buộc chính thứ $i$:} & & \textbf{Ràng buộc dấu của biến $y_i$:} \\
+        1. Dấu ``$\le$'' (Dấu chuẩn) & $\rightarrow$ & 1. $y_i \ge 0$ (Dấu chuẩn) \\
+        2. Dấu ``$\ge$'' (Ngược chuẩn) & $\rightarrow$ & 2. $y_i \le 0$ \\
+        3. Dấu ``$=$'' & $\rightarrow$ & 3. $y_i$ tùy ý (không hạn chế dấu) \\
+        \hline
+        \textbf{Ràng buộc dấu của biến $x_j$:} & & \textbf{Ràng buộc chính thứ $j$:} \\
+        1. $x_j \ge 0$ (Dấu chuẩn) & $\rightarrow$ & 1. Dấu ``$\ge$'' (Dấu chuẩn của Min) \\
+        2. $x_j \le 0$ (Ngược chuẩn) & $\rightarrow$ & 2. Dấu ``$\le$'' \\
+        3. $x_j$ tùy ý & $\rightarrow$ & 3. Dấu ``$=$'' \\
+        \hline
+    \end{tabular}
+    \caption{Quy tắc chuyển đổi từ bài toán Max sang Min}
+    \label{tab:doi_ngau_max_min}
+\end{table}
+
+\vspace{0.3cm}
+\textbf{Dạng 2: Chuyển từ bài toán Min sang Max} \\
+Đối với bài toán gốc tìm Min, mọi thứ đảo ngược lại: ràng buộc mang dấu ``$\ge$'' và biến ``$\ge 0$'' mới được coi là các dấu "chuẩn".
+
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|l|c|l|}
+        \hline
+        \multicolumn{1}{|c|}{\textbf{Bài toán Gốc (Min)}} & \textbf{$\rightarrow$} & \multicolumn{1}{c|}{\textbf{Bài toán Đối ngẫu (Max)}} \\
+        \hline
+        \textbf{Ràng buộc chính thứ $i$:} & & \textbf{Ràng buộc dấu của biến $y_i$:} \\
+        1. Dấu ``$\ge$'' (Dấu chuẩn) & $\rightarrow$ & 1. $y_i \ge 0$ (Dấu chuẩn) \\
+        2. Dấu ``$\le$'' (Ngược chuẩn) & $\rightarrow$ & 2. $y_i \le 0$ \\
+        3. Dấu ``$=$'' & $\rightarrow$ & 3. $y_i$ tùy ý (không hạn chế dấu) \\
+        \hline
+        \textbf{Ràng buộc dấu của biến $x_j$:} & & \textbf{Ràng buộc chính thứ $j$:} \\
+        1. $x_j \ge 0$ (Dấu chuẩn) & $\rightarrow$ & 1. Dấu ``$\le$'' (Dấu chuẩn của Max) \\
+        2. $x_j \le 0$ (Ngược chuẩn) & $\rightarrow$ & 2. Dấu ``$\ge$'' \\
+        3. $x_j$ tùy ý & $\rightarrow$ & 3. Dấu ``$=$'' \\
+        \hline
+    \end{tabular}
+    \caption{Quy tắc chuyển đổi từ bài toán Min sang Max}
+    \label{tab:doi_ngau_min_max}
+\end{table}
+
+\subsection{Các định lý đối ngẫu cốt lõi}
+Mối quan hệ chặt chẽ giữa bài toán gốc $(P)$ và bài toán đối ngẫu $(D)$ được thể hiện qua 3 định lý toán học cực kỳ quan trọng sau:
+
+\begin{theorem}[\textbf{Định lý đối ngẫu yếu}]
+Nếu $x^*$ là một phương án tùy ý của bài toán gốc $(P)$ tìm Max, và $y^*$ là một phương án tùy ý của bài toán đối ngẫu $(D)$ tìm Min, thì ta luôn có: $Z(x^*) \le Z'(y^*)$ [4]. \\
+\textit{Hệ quả:} Nếu tìm được một cặp phương án $(x_0, y_0)$ sao cho $Z(x_0) = Z'(y_0)$, thì $x_0$ và $y_0$ chính là các phương án tối ưu của $(P)$ và $(D)$ [4].
+\end{theorem}
+
+\begin{theorem}[\textbf{Định lý đối ngẫu mạnh}]
+Nếu bài toán gốc $(P)$ có phương án tối ưu $x^*$, thì bài toán đối ngẫu $(D)$ cũng chắc chắn có phương án tối ưu $y^*$, và giá trị tối ưu của hai hàm mục tiêu luôn bằng nhau: $Z_{max} = Z'_{min}$ [5].
+\end{theorem}
+
+\begin{theorem}[\textbf{Định lý độ lệch bù yếu (Complementary Slackness)}]
+Điều kiện cần và đủ để phương án $x^0$ của $(P)$ và $y^0$ của $(D)$ cùng là Phương án tối ưu là chúng phải thỏa mãn hệ thức độ lệch bù. Nói một cách dễ hiểu, trong từng cặp ràng buộc đối ngẫu:
+\begin{itemize}
+    \item Nếu ràng buộc chính thứ $i$ của bài toán này \textbf{thỏa mãn lỏng} (dấu bất đẳng thức thực sự $>$ hoặc $<$), thì biến đối ngẫu tương ứng của bài toán kia bắt buộc phải \textbf{bằng 0} ($y_i = 0$ hoặc $x_i = 0$) [11].
+    \item Nếu biến mang giá trị \textbf{khác 0} ($x_j > 0$ hoặc $y_i > 0$), thì ràng buộc chính tương ứng bên bài toán kia bắt buộc phải \textbf{thỏa mãn chặt} (xảy ra dấu bằng $=$) [11].
+\end{itemize}
+\end{theorem}
+
+\section{Phương pháp Bảng cấu trúc ánh xạ}
+    \input{chapters/section - Thiết lập bài toán đối ngẫu}

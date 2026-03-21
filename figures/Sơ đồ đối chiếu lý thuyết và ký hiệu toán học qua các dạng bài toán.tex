@@ -1,0 +1,86 @@
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}[
+        node distance=2.5cm, % Thu hẹp khoảng cách giữa các hộp một chút
+        box/.style={rectangle, rounded corners=8pt, thick, align=left, inner sep=8pt, drop shadow={opacity=0.1}},
+        arrow/.style={->, >=stealth, line width=1.5pt}
+    ]
+
+    % ==========================================
+    % KHỐI 1: TỔNG QUÁT
+    % ==========================================
+    \node[box, fill=blue!5, draw=blue!80!black] (tongquat) {
+        \renewcommand{\arraystretch}{1.6}
+        % Chỉnh độ rộng cột nhỏ lại để không bị tràn lề
+        \begin{tabular}{p{7cm} | p{6.5cm}}
+            \textbf{\Large 1. Dạng Tổng Quát} & \textbf{\Large Mô hình Toán học} \\[0.1cm]
+            $\bullet$ \textbf{Hàm mục tiêu:} $Z \rightarrow \max$ hoặc $\min$ & 
+            $\displaystyle Z = \sum_{j=1}^n c_j x_j \rightarrow \max (\min)$ \\
+            $\bullet$ \textbf{Ràng buộc chính:} Có thể chứa $\le, \ge$ hoặc $=$ & 
+            % Dàn phẳng các dấu để không bị giãn chiều cao
+            $\displaystyle \sum_{j=1}^n a_{ij} x_j \in \{\le, \ge, =\} \, b_i$ \\
+            $\bullet$ \textbf{Ràng buộc dấu:} $x_j \ge 0, \le 0$ hoặc tùy ý & 
+            $\displaystyle x_j \in \{\ge 0, \le 0, \text{tùy ý}\}$
+        \end{tabular}
+    };
+
+    % ==========================================
+    % KHỐI 2: CHÍNH TẮC
+    % ==========================================
+    \node[box, fill=green!5, draw=green!60!black, below=2.5cm of tongquat] (chinhtac) {
+        \renewcommand{\arraystretch}{1.6}
+        \begin{tabular}{p{7cm} | p{6.5cm}}
+            \textbf{\Large 2. Dạng Chính Tắc} & \textbf{\Large Mô hình Toán học} \\[0.1cm]
+            $\bullet$ \textbf{Hàm mục tiêu:} $Z \rightarrow \max$ hoặc $\min$ & 
+            $\displaystyle Z = \sum_{j=1}^n c_j x_j \rightarrow \max (\min)$ \\
+            $\bullet$ \textbf{Ràng buộc chính:} \textcolor{red}{\textbf{Bắt buộc là dấu $=$}} & 
+            $\displaystyle \sum_{j=1}^n a_{ij} x_j \;\textcolor{red}{=}\; b_i$ \\
+            $\bullet$ \textbf{Ràng buộc dấu:} \textcolor{red}{\textbf{Mọi biến $x_j \ge 0$}} & 
+            $\displaystyle x_j \;\textcolor{red}{\ge 0}$
+        \end{tabular}
+    };
+
+    % ==========================================
+    % KHỐI 3: CHUẨN TẮC
+    % ==========================================
+    \node[box, fill=orange!5, draw=orange!80!black, below=2.5cm of chinhtac] (chuantac) {
+        \renewcommand{\arraystretch}{1.6}
+        \begin{tabular}{p{7cm} | p{6.5cm}}
+            \textbf{\Large 3. Dạng Chuẩn Tắc} & \textbf{\Large Mô hình Toán học} \\[0.1cm]
+            $\bullet$ \textbf{Hàm mục tiêu:} $Z \rightarrow \max$ hoặc $\min$ & 
+            $\displaystyle Z = \sum_{j=1}^n c_j x_j \rightarrow \max (\min)$ \\
+            $\bullet$ \textbf{Ràng buộc \& Vế phải:} Dấu $=$ và \textcolor{red}{\textbf{$b_i \ge 0$}} & 
+            $\displaystyle \sum_{j=1}^n a_{ij} x_j = b_i \quad (\textcolor{red}{b_i \ge 0})$ \\
+            $\bullet$ \textbf{Cơ sở:} \textcolor{red}{\textbf{Đủ $m$ biến cơ sở}} (Ma trận $I_m$) & 
+            $\displaystyle \textcolor{red}{x_i} + \sum_{k=m+1}^n a_{ik} x_k = b_i$ \\
+            $\bullet$ \textbf{Ràng buộc dấu:} Mọi biến $x_j \ge 0$ & 
+            $\displaystyle x_j \ge 0$
+        \end{tabular}
+    };
+
+    % ==========================================
+    % MŨI TÊN VÀ TEXT GIẢI THÍCH
+    % ==========================================
+    
+    % Từ Tổng quát -> Chính tắc
+    \draw[arrow, blue!80!black] (tongquat.south) -- (chinhtac.north) 
+        node[midway, fill=white, draw=blue!80!black, thick, rounded corners, align=center, inner sep=6pt, drop shadow={opacity=0.1}] {
+            \textbf{\textcolor{blue!80!black}{Bước 1: Khử bất phương trình \& Dấu âm}}\\
+            $\le$ thì \textbf{cộng} biến phụ \quad $\Big|$ \quad $\ge$ thì \textbf{trừ} biến phụ \\
+            $x_j \le 0 \Rightarrow$ Đặt $x'_j = -x_j$ \quad $\Big|$ \quad $x_j$ tùy ý $\Rightarrow$ Đặt $x_j = x'_j - x''_j$
+        };
+
+    % Từ Chính tắc -> Chuẩn tắc
+    \draw[arrow, green!60!black] (chinhtac.south) -- (chuantac.north) 
+        node[midway, fill=white, draw=green!60!black, thick, rounded corners, align=center, inner sep=6pt, drop shadow={opacity=0.1}] {
+            \textbf{\textcolor{green!60!black}{Bước 2: Chuẩn bị cơ sở cho thuật toán}}\\
+            $b_i < 0 \Rightarrow$ Nhân cả 2 vế phương trình với $(-1)$ \\
+            Thiếu biến cơ sở $\Rightarrow$ Cộng \textbf{biến giả} (Kèm theo thêm $\pm M$ vào $Z$)
+        };
+
+    \end{tikzpicture}
+    }
+    \caption{Sơ đồ đối chiếu lý thuyết và ký hiệu toán học qua các dạng bài toán}
+    \label{fig:flowchart_forms}
+\end{figure}

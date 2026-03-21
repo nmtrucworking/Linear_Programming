@@ -1,0 +1,90 @@
+\chapter{Bảng Simplex mẫu}
+
+Phục lục cung cấp sơ đồ cấu trúc tổng quát của \textit{Bảng đơn hình (Simplex Table)} và một biểu mẫu thực tế được điền đầy đủ số liệu để tiện tra cứu, đối chiếu trong quá trình giải các bài toán QHTT
+
+\section*{1. Sơ đồ cấu trúc tổng quát}
+Dưới đây là cấu trúc nền tảng của một bảng đơn hình, thể hiện vị trí của các biến, hệ số hàm mục tiêu, cột phương án và dòng hệ số ước lượng.
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA ($b_i$)}} & $x_1$ & $x_2$ & $\dots$ & $x_n$ & \multirow{2}{*}{\textbf{Tỷ số $\lambda$}} \\
+        \cline{4-7}
+        & & & $c_1$ & $c_2$ & $\dots$ & $c_n$ & \\
+        \hline
+        $x_1$ & $C_1$ & $b_1$ & $a_{11}$ & $a_{12}$ & $\dots$ & $a_{1n}$ & $\lambda_1$ \\
+        \hline
+        $x_2$ & $C_2$ & $b_2$ & $a_{21}$ & $a_{22}$ & $\dots$ & $a_{2n}$ & $\lambda_2$ \\
+        \hline
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\vdots$ \\
+        \hline
+        $x_m$ & $C_m$ & $b_m$ & $a_{m1}$ & $a_{m2}$ & $\dots$ & $a_{mn}$ & $\lambda_m$ \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & $\mathbf{Z(x^0)}$ & $\Delta_1$ & $\Delta_2$ & $\dots$ & $\Delta_n$ & \\
+        \hline
+    \end{tabular}
+    \caption{Sơ đồ cấu trúc tổng quát của Bảng đơn hình}
+\end{table}
+
+\textbf{Quy ước ghi chú:}
+\begin{itemize}
+    \item \textbf{Cột $\mathbf{C_b}$ (hay $c_i$):} Cột hệ số hàm mục tiêu của các biến cơ sở $x_i$.
+    \item \textbf{Cột PA ($b_i$):} Cột Phương Án, chứa giá trị vế phải ứng với các biến cơ sở.
+    \item \textbf{Dòng thứ 1 và 2:} Ghi danh sách các biến $x_j$ của bài toán và hệ số $c_j$ tương ứng trên hàm mục tiêu.
+    \item \textbf{Dòng $\Delta_j$:} Ghi các hệ số ước lượng của biến $x_j$. Ô nằm dưới cột PA là giá trị hàm mục tiêu $Z(x^0)$ tại bước lặp hiện hành.
+\end{itemize}
+
+\newpage
+\section*{2. Biểu mẫu Bảng đơn hình thực tế}
+Dưới đây là một biểu mẫu bảng đơn hình xuất phát và tối ưu được trích xuất từ bài toán sản xuất (tìm Max). Sinh viên có thể dùng làm mẫu để trình bày bài thi.
+
+\textbf{Bảng xuất phát (Chưa tối ưu):}
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA}} & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & \multirow{2}{*}{\textbf{Tỷ số $\lambda$}} \\
+        \cline{4-9}
+        & & & 11 & 9 & 15 & 0 & 0 & 0 & \\
+        \hline
+        $x_4$ & 0 & 21000 & 5 & 4 & 4 & 1 & 0 & 0 & 5250 \\
+        \hline
+        $x_5$ & 0 & 15000 & 3 & 6 & \textbf{3} & 0 & 1 & 0 & \textbf{5000} $\rightarrow$ \\
+        \hline
+        $x_6$ & 0 & 26000 & 3 & 7 & 5 & 0 & 0 & 1 & 5200 \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & \textbf{Z = 0} & -11 & -9 & \textbf{-15} $\uparrow$ & 0 & 0 & 0 & \\
+        \hline
+    \end{tabular}
+    \caption{Mẫu Bảng đơn hình xuất phát}
+\end{table}
+
+\textit{Nhận xét biểu mẫu:} Bảng trên minh họa cách chọn phần tử trụ là $3$ (in đậm). Cột mũi tên đi lên $\uparrow$ biểu diễn biến vào cơ sở ($x_3$) do có $\Delta_j$ âm nhỏ nhất. Dòng mũi tên đi ngang $\rightarrow$ biểu diễn biến ra khỏi cơ sở ($x_5$) do có tỷ số $\lambda$ nhỏ nhất.
+
+\vspace{0.5cm}
+\textbf{Bảng tối ưu (Đã thỏa mãn tiêu chuẩn):}
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Cơ sở}} & \multirow{2}{*}{$\mathbf{C_b}$} & \multirow{2}{*}{\textbf{PA}} & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\
+        \cline{4-9}
+        & & & 11 & 9 & 15 & 0 & 0 & 0 \\
+        \hline
+        $x_4$ & 0 & 1000 & 1 & -4 & 0 & 1 & -4/3 & 0 \\
+        \hline
+        $x_3$ & 15 & 5000 & 1 & 2 & 1 & 0 & 1/3 & 0 \\
+        \hline
+        $x_6$ & 0 & 1000 & -2 & -3 & 0 & 0 & -5/3 & 1 \\
+        \hline
+        \multicolumn{2}{|c|}{$\Delta_j$} & \textbf{Z = 75000} & 4 & 21 & 0 & 0 & 5 & 0 \\
+        \hline
+    \end{tabular}
+    \caption{Mẫu Bảng đơn hình tối ưu}
+\end{table}
+
+\textit{Nhận xét biểu mẫu:} Bảng trên minh họa trạng thái dừng của thuật toán. Do đang giải bài toán Max nên khi toàn bộ dòng $\Delta_j \ge 0$, phương án hiện hành được xác nhận là tối ưu. Cột tỷ số $\lambda$ được lược bỏ do không cần xoay bảng thêm nữa.
+Đoạn code trên cung cấp cả Sơ đồ tổng quát lẫn Biểu mẫu thực tiễn, đóng vai trò như một 

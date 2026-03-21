@@ -1,0 +1,122 @@
+\subsection{Phương pháp góc Tây Bắc (Northwest Corner Method)}
+
+Phương pháp góc Tây Bắc là một kỹ thuật giải quyết bài toán vận tải bằng cách ưu tiên phân bổ hàng hóa vào ô nằm ở vị trí trên cùng bên trái (góc Tây Bắc) của bảng phân phát, hoàn toàn không quan tâm đến cước phí vận chuyển. Dưới đây là các bước thực hiện phương pháp này:
+
+\begin{enumerate}
+    \item \textbf{Xác định ô góc Tây Bắc:} Luôn chọn ô nằm ở vị trí trên cùng bên trái của phần bảng phân phát chưa bị gạch bỏ (ô có chỉ số dòng và cột nhỏ nhất còn lại).
+    
+    \item \textbf{Phân bổ hàng hóa:} Phân bổ lượng hàng hóa tối đa có thể vào ô vừa chọn theo công thức: $x_{ij} = \min(a_i, b_j)$ (với $a_i$ là khả năng cung cấp còn lại của trạm phát $P_i$, và $b_j$ là nhu cầu còn lại của trạm thu $T_j$).
+    
+    \item \textbf{Cập nhật và Gạch bỏ:} 
+    \begin{itemize}
+        \item Cập nhật lại lượng cung: $a_i \leftarrow a_i - x_{ij}$.
+        \item Cập nhật lại lượng cầu: $b_j \leftarrow b_j - x_{ij}$.
+        \item Trạm nào (phát hoặc thu) giảm về 0 trước thì gạch bỏ dòng hoặc cột tương ứng khỏi bảng. Nếu cả cung và cầu cùng về 0 đồng thời, ưu tiên gạch một chiều (dòng hoặc cột), chiều còn lại giữ nguyên giá trị 0 để xét tiếp.
+    \end{itemize}
+    
+    \item \textbf{Lặp lại:} Tiếp tục lặp lại quá trình trên (luôn chọn góc Tây Bắc của phần bảng còn lại) cho đến khi tất cả nhu cầu và cung cấp đều về 0.
+\end{enumerate}
+
+\textbf{Lưu ý:} Phương pháp góc Tây Bắc rất dễ thực hiện và có tính hệ thống cao. Tuy nhiên, do hoàn toàn bỏ qua yếu tố chi phí, phương án xuất phát thu được thường có tổng cước phí khá cao và tốn nhiều bước lặp hơn để tối ưu bằng phương pháp Thế vị.
+
+\textbf{Tổng quát Phương pháp}:
+\begin{itemize}
+    \item Luôn ưu tiên ô $(i, j)$ có chỉ số nhỏ nhất.
+    \item Điền lượng hàng phân phối $x_{ij} = \min(a_i, b_j)$.
+    \item Cập nhật lại cung và cầu, gạch bỏ các trạm đã hoàn thành và "tịnh tiến" sang cột bên phải hoặc xuống dòng bên dưới.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{0.95\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.2]},
+        line cap=rect,
+        line join=miter,
+        cell/.style={
+            rectangle,
+            draw=black,
+            line width=0.5pt,
+            minimum width=3.5cm,
+            minimum height=1.5cm,
+            align=center,
+            anchor=center,
+            inner sep=2pt
+        },
+        ampersand replacement=\&
+    ]
+        % 1. Vẽ ma trận 3x4
+        \matrix (M) [
+            matrix of nodes,
+            nodes={cell},
+            nodes in empty cells,
+            column sep=-0.5pt,
+            row sep=-0.5pt
+        ]
+        {
+            |[alias=diag]| \& |[alias=b1]| $\cancel{300} \rightarrow 0 : T_1$ \& |[alias=b2]| $\cancel{500} \rightarrow \cancel{100} \rightarrow 0 : T_2$ \& |[alias=b3]| $\cancel{100} \rightarrow 0 : T_3$ \\
+            |[alias=a1]| $\cancel{700} \rightarrow \cancel{400} \rightarrow 0: P_1$ \& |[alias=cell11]| $5 \mid 300$ \& |[alias=cell12]| $6 \mid 400$ \& |[alias=cell13]| $4 \mid 0$ \\
+            |[alias=a2]| $\cancel{200} \rightarrow \cancel{100} \rightarrow 0 : P_2$ \& |[alias=cell21]| $8 \mid 0$ \& |[alias=cell22]| $9 \mid 100$ \& |[alias=cell23]| $5 \mid 100$ \\
+        };
+
+        % Ký hiệu x_ij ở góc dưới-trái từng ô
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell11.south west) {$x_{11}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell12.south west) {$x_{12}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell13.south west) {$x_{13}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell21.south west) {$x_{21}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell22.south west) {$x_{22}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell23.south west) {$x_{23}$};
+
+        % 2. Xử lý ô 1x1 (Đường chéo và Label)
+        \draw[black!70, thick] (diag.north west) -- (diag.south east);
+        \node[anchor=north east, xshift=-3pt, yshift=-3pt, font=\footnotesize, fill=white, inner sep=1pt] at (diag.north east) {Trạm thu ($T_j$)};
+        \node[anchor=south west, xshift=3pt, yshift=3pt, font=\footnotesize, fill=white, inner sep=1pt] at (diag.south west) {Trạm phát ($P_i$)};
+
+        % Khoanh đỏ ô xuất phát đầu tiên x_11 để nhấn mạnh
+        \draw[red, thick, rounded corners] ([xshift=5pt,yshift=-5pt]cell11.north west) rectangle ([xshift=-5pt,yshift=5pt]cell11.south east);
+
+    \end{tikzpicture}
+    }
+    \caption{Ví dụ Phương pháp góc Tây Bắc trong bài toán vận tải}
+    \label{fig:nw-corner-method-transport}
+\end{figure}
+
+\textbf{Diễn giải chi tiết các bước điền:}
+\begin{enumerate}
+    \item Bắt đầu từ ô góc Tây Bắc của toàn bảng là $x_{11}$.
+    \begin{itemize}
+        \item Phân bổ: $x_{11} = \min(b_1^{(1)}, a_1^{(1)}) = \min(300, 700) = 300$.
+        \item Cập nhật: $a_1^{(2)} = 700 - 300 = 400$; $b_1^{(2)} = 300 - 300 = 0$.
+        \item Do $b_1 = 0$, ta \textbf{gạch bỏ cột $T_1$} khỏi các bước xét tiếp theo.
+    \end{itemize}
+    
+    \item Ô góc Tây Bắc của phần bảng còn lại (từ cột 2) là $x_{12}$.
+    \begin{itemize}
+        \item Phân bổ: $x_{12} = \min(b_2^{(1)}, a_1^{(2)}) = \min(500, 400) = 400$.
+        \item Cập nhật: $a_1^{(3)} = 400 - 400 = 0$; $b_2^{(2)} = 500 - 400 = 100$.
+        \item Do $a_1 = 0$, ta \textbf{gạch bỏ dòng $P_1$}.
+    \end{itemize}
+    
+    \item Ô góc Tây Bắc của phần bảng còn lại (chỉ còn dòng 2, cột 2 và 3) là $x_{22}$.
+    \begin{itemize}
+        \item Phân bổ: $x_{22} = \min(b_2^{(2)}, a_2^{(1)}) = \min(100, 200) = 100$.
+        \item Cập nhật: $a_2^{(2)} = 200 - 100 = 100$; $b_2^{(3)} = 100 - 100 = 0$.
+        \item Do $b_2 = 0$, ta \textbf{gạch bỏ cột $T_2$}.
+    \end{itemize}
+    
+    \item Ô duy nhất còn lại ở góc Tây Bắc (và cũng là ô cuối cùng) là $x_{23}$.
+    \begin{itemize}
+        \item Phân bổ: $x_{23} = \min(b_3^{(1)}, a_2^{(2)}) = \min(100, 100) = 100$.
+        \item Cập nhật: $a_2^{(3)} = 0$; $b_3^{(2)} = 0$.
+        \item Tất cả cung và cầu đều đã về 0. Quá trình kết thúc.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Kết luận:} Phương án cơ bản xuất phát thu được là:
+\[ X^0 = \begin{pmatrix} 300 & 400 & 0 \\ 0 & 100 & 100 \end{pmatrix} \]
+$X^0$ có 4 ô chọn = $m + n - 1 = 2 + 3 - 1 = 4$ \\
+$\Rightarrow X^0$ là phương án cơ bản không suy biến. \\
+Với tổng cước phí vận chuyển ban đầu là: 
+$Z = (300 \times 5) + (400 \times 6) + (100 \times 9) + (100 \times 5) = 1500 + 2400 + 900 + 500 = 5300$.
+
+\textit{Nhận xét:} Trong trường hợp bài toán cụ thể này, phương pháp góc Tây Bắc ngẫu nhiên cho ra kết quả ($Z = 5300$) tốt hơn so với phương pháp chi phí thấp nhất ($Z = 5500$) do tránh được việc phải dồn một lượng lớn hàng (200 đơn vị) vào ô có cước phí cực cao ($c_{22}=9$). Tuy nhiên, đây chỉ là một trường hợp cụ thể và không phải lúc nào phương pháp góc Tây Bắc cũng cho ra phương án tốt hơn. Do đó, việc lựa chọn phương pháp khởi tạo phù hợp với đặc điểm của bài toán là rất quan trọng để đạt được hiệu quả tối ưu nhanh chóng.

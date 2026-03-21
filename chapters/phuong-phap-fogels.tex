@@ -1,0 +1,166 @@
+\subsection{Phương pháp xấp xỉ Vogel (Vogel's Approximation Method - VAM / Fogels)}
+
+Phương pháp Vogel (hay Fogels) là một kỹ thuật tìm phương án xuất phát tối ưu hơn bằng cách đánh giá chi phí cơ hội (độ chênh lệch cước phí) nếu không chọn ô có cước phí thấp nhất. Các bước thực hiện như sau:
+
+\begin{enumerate}
+    \item \textbf{Tính độ chênh lệch (Penalty - $\Delta$):} Trên mỗi dòng và mỗi cột chưa bị gạch bỏ, tìm hai ô có cước phí thấp nhất ($c_{min1}$) và thấp thứ hai ($c_{min2}$). Tính độ chênh lệch: $\Delta = c_{min2} - c_{min1}$ và ghi ra rìa ngoài của bảng. (Nếu chỉ còn 1 ô chưa gạch trên dòng/cột, $\Delta$ chính là cước phí của ô đó).
+    
+    \item \textbf{Chọn dòng/cột ưu tiên:} Chọn dòng hoặc cột có độ chênh lệch $\Delta$ lớn nhất (khoanh tròn lại). Nếu có nhiều $\Delta$ bằng nhau, ta có thể chọn tùy ý (thường ưu tiên dòng/cột chứa ô có cước phí $c_{min1}$ nhỏ hơn để tối ưu chi phí).
+    
+    \item \textbf{Phân bổ hàng hóa:} Trong dòng hoặc cột vừa được chọn, tìm ô có cước phí nhỏ nhất ($c_{min1}$). Phân bổ lượng hàng tối đa có thể vào ô này: $x_{ij} = \min(a_i, b_j)$.
+    
+    \item \textbf{Cập nhật và Gạch bỏ:} Cập nhật lại cung $a_i \leftarrow a_i - x_{ij}$ và cầu $b_j \leftarrow b_j - x_{ij}$. Trạm nào giảm về 0 trước thì gạch bỏ dòng hoặc cột đó.
+    
+    \item \textbf{Lặp lại:} Lặp lại từ \textbf{Bước 1} (tính lại các $\Delta$ mới cho phần bảng còn lại) cho đến khi chỉ còn lại 1 dòng hoặc 1 cột thì phân bổ nốt lượng hàng dựa vào cước phí, không cần tính $\Delta$ nữa.
+\end{enumerate}
+
+\textbf{Tổng quát hóa:} Phương pháp Vogel có thể được mô tả bằng công thức toán học như sau:
+\begin{enumerate}
+    \item Tính $\Delta$ cho tất cả dòng và cột chưa gạch bỏ.
+    \item Chọn dòng/cột có $\max \Delta$.
+    \begin{itemize}
+        \begin{formula}
+            \Delta_i = c_{min2} - c_{min1} \quad \text{(cho dòng $i$)}
+        \end{formula}
+        \begin{formula}
+            \Delta_j = c_{min2} - c_{min1} \quad \text{(cho cột $j$)}
+        \end{formula}
+    \end{itemize}
+    \item Phân bổ vào ô có cước phí nhỏ nhất ($x_{ij} = \min(p_i, t_j)$) trên dòng/cột đó.
+    \item Cập nhật cung cầu và gạch bỏ nếu cần.
+\end{enumerate}
+
+Trong đó:
+\begin{itemize}
+    \item $c_{min1}$: Cước phí nhỏ nhất trên dòng/cột đang xét.
+    \item $c_{min2}$: Cước phí nhỏ thứ hai trên dòng/cột đang xét.
+    \item $\Delta$: Độ chênh lệch giữa cước phí nhỏ thứ hai và cước phí nhỏ nhất, phản ánh chi phí cơ hội nếu không chọn ô có cước phí thấp nhất.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{1\textwidth}{!}{%
+    \begin{tikzpicture}[
+        >={Stealth[scale=1.2]},
+        line cap=rect,
+        line join=miter,
+        cell/.style={
+            rectangle,
+            draw=black,
+            line width=0.5pt,
+            minimum width=3.4cm,
+            minimum height=1.6cm,
+            align=center,
+            anchor=center,
+            inner sep=2pt
+        },
+        pcell/.style={
+            rectangle,
+            draw=none,
+            minimum width=1.2cm,
+            minimum height=1.6cm,
+            align=center,
+            anchor=center,
+            font=\bfseries\color{black!70}
+        },
+        rcell/.style={
+            rectangle,
+            draw=none,
+            minimum width=3.4cm,
+            minimum height=0.8cm,
+            align=center,
+            anchor=center,
+            font=\bfseries\color{black!70}
+        },
+        corner/.style={
+            rectangle,
+            draw=none,
+            minimum width=3.4cm,
+            minimum height=0.8cm,
+            align=center,
+            anchor=center,
+            font=\bfseries\color{black}
+        },
+        ampersand replacement=\&
+    ]
+        % 1. Vẽ ma trận mở rộng chứa cả Delta
+        \matrix (M) [
+            matrix of nodes,
+            nodes in empty cells,
+            column sep=-0.5pt,
+            row sep=-0.5pt
+        ]
+        {
+            |[cell, alias=diag]| \& |[cell]| $\cancel{300} \rightarrow 0 : T_1$ \& |[cell]| $\cancel{500} \rightarrow \cancel{100} \rightarrow 0 : T_2$ \& |[cell]| $\cancel{100} \rightarrow 0 : T_3$ \& |[pcell]| $\Delta^{(1)}$ \& |[pcell]| $\Delta^{(2)}$ \\
+            |[cell]| $\cancel{700} \rightarrow \cancel{400} \rightarrow 0: P_1$ \& |[cell, alias=cell11]| $5 \mid 300$ \& |[cell, alias=cell12]| $6 \mid 400$ \& |[cell, alias=cell13]| $4 \mid 0$ \& |[pcell]| 1 \& |[pcell]| 1 \\
+            |[cell]| $\cancel{200} \rightarrow \cancel{100} \rightarrow 0 : P_2$ \& |[cell, alias=cell21]| $8 \mid 0$ \& |[cell, alias=cell22]| $9 \mid 100$ \& |[cell, alias=cell23]| $5 \mid 100$ \& |[pcell, alias=dP2_1]| 3 \& |[pcell]| 1 \\
+            |[corner]| $\Delta^{(1)}$ \& |[rcell]| 3 \& |[rcell]| 3 \& |[rcell]| 1 \& \& \\
+            |[corner]| $\Delta^{(2)}$ \& |[rcell, alias=dT1_2]| 3 \& |[rcell]| 3 \& |[rcell]| -- \& \& \\
+        };
+
+        % Ký hiệu x_ij ở góc dưới-trái từng ô
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell11.south west) {$x_{11}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell12.south west) {$x_{12}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell13.south west) {$x_{13}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell21.south west) {$x_{21}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell22.south west) {$x_{22}$};
+        \node[anchor=south west, xshift=2pt, yshift=2pt, font=\scriptsize] at (cell23.south west) {$x_{23}$};
+
+        % 2. Xử lý ô 1x1 (Đường chéo và Label)
+        \draw[black!70, thick] (diag.north west) -- (diag.south east);
+        \node[anchor=north east, xshift=-3pt, yshift=-3pt, font=\footnotesize, fill=white, inner sep=1pt] at (diag.north east) {Trạm thu ($T_j$)};
+        \node[anchor=south west, xshift=3pt, yshift=3pt, font=\footnotesize, fill=white, inner sep=1pt] at (diag.south west) {Trạm phát ($P_i$)};
+
+        % ---------------------------------------------------------
+        % 3. KHOANH TRÒN VÀ VẼ MŨI TÊN (ĐÃ TỐI ƯU THẨM MỸ)
+        % ---------------------------------------------------------
+        
+        % LẦN LẶP 1 (MÀU ĐỎ)
+        \node[draw=red, circle, thick, inner sep=1pt, minimum size=1.8em] at (dP2_1) {};
+        % Ép mũi tên đi sát mép trên của ô để không đâm qua chữ ở giữa
+        \draw[->, red, dashed, thick] ([yshift=0.55cm]dP2_1.west) -- ([yshift=0.55cm]cell23.east);
+        
+        % LẦN LẶP 2 (MÀU XANH DƯƠNG)
+        \node[draw=blue, circle, thick, inner sep=1pt, minimum size=1.8em] at (dT1_2) {};
+        % Ép mũi tên đi sát mép phải của ô để không đâm qua chữ ở giữa
+        \draw[->, blue, dashed, thick] ([xshift=1.4cm]dT1_2.north) -- ([xshift=1.4cm]cell11.south);
+
+    \end{tikzpicture}
+    }
+    \caption{Ví dụ Phương pháp Vogel với bảng tính $\Delta$ và luồng phân bổ chi tiết}
+    \label{fig:vogel-method-transport}
+\end{figure}
+
+\textbf{Diễn giải chi tiết các bước tính toán:}
+
+\begin{enumerate}
+    \item \textbf{Lần lặp 1 (\textcolor{red}{Đường đứt nét màu đỏ}):} 
+    \begin{itemize}
+        \item Tính $\Delta^{(1)}$: $\Delta_{P1} = 5 - 4 = 1$; $\Delta_{P2} = 8 - 5 = 3$; $\Delta_{T1} = 8 - 5 = 3$; $\Delta_{T2} = 9 - 6 = 3$; $\Delta_{T3} = 5 - 4 = 1$.
+        \item $\max \Delta = 3$ (xuất hiện ở $P_2, T_1, T_2$). Chọn tùy ý dòng $P_2$ (\textcolor{red}{khoanh đỏ}).
+        \item Trên dòng $P_2$, ô có cước phí nhỏ nhất là $c_{23} = 5$. Phân bổ $x_{23} = \min(100, 200) = 100$.
+        \item Cập nhật: Trạm $T_3$ đã nhận đủ 100 $\rightarrow$ \textbf{Gạch bỏ cột $T_3$}. Cung $P_2$ còn lại 100.
+    \end{itemize}
+    
+    \item \textbf{Lần lặp 2 (\textcolor{blue}{Đường đứt nét màu xanh dương}):} (Bỏ qua cột $T_3$)
+    \begin{itemize}
+        \item Tính $\Delta^{(2)}$: $\Delta_{P1} = 6 - 5 = 1$; $\Delta_{P2} = 9 - 8 = 1$; $\Delta_{T1} = 8 - 5 = 3$; $\Delta_{T2} = 9 - 6 = 3$.
+        \item $\max \Delta = 3$ (xuất hiện ở $T_1, T_2$). Chọn cột $T_1$ (\textcolor{blue}{khoanh xanh}).
+        \item Trên cột $T_1$, ô có cước phí nhỏ nhất là $c_{11} = 5$. Phân bổ $x_{11} = \min(300, 700) = 300$.
+        \item Cập nhật: Trạm $T_1$ đã nhận đủ 300 $\rightarrow$ \textbf{Gạch bỏ cột $T_1$}. Cung $P_1$ còn lại 400.
+    \end{itemize}
+
+    \item \textbf{Phân bổ phần còn lại:} 
+    \begin{itemize}
+        \item Bảng lúc này chỉ còn duy nhất cột $T_2$. Ta không cần tính $\Delta$ nữa mà dồn lượng cung còn lại của $P_1$ và $P_2$ vào cột này.
+        \item Cấp $x_{12} = \min(500, 400) = 400 \rightarrow$ \textbf{Gạch bỏ dòng $P_1$}.
+        \item Cầu $T_2$ còn thiếu 100, lấy nốt từ $P_2$: $x_{22} = \min(100, 100) = 100$.
+        \item Mọi cung cầu đều về 0. Thuật toán kết thúc.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Kết luận:} Phương án cơ bản xuất phát thu được là:
+\[ X^0 = \begin{pmatrix} 300 & 400 & 0 \\ 0 & 100 & 100 \end{pmatrix} \]
+$X^0$ có 4 ô chọn = $m + n - 1 = 2 + 3 - 1 = 4 \Rightarrow X^0$ là phương án cơ bản không suy biến. \\
+Tổng cước phí vận chuyển ban đầu là: 
+$Z = (300 \times 5) + (400 \times 6) + (100 \times 9) + (100 \times 5) = 1500 + 2400 + 900 + 500 = 5300$.
